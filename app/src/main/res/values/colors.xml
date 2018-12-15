@@ -3,4 +3,11 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <!--COLORS OF THE LOGO-->
+    <color name="logoBlueBookColor">#4DA5B9</color>
+    <color name="logoGreenBookColor">#41A85E</color>
+    <color name="logoYellowBookColor">#FBD741</color>
+    <color name="logoRedBookColor">#DA4343</color>
+
 </resources>
