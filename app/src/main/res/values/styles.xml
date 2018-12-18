@@ -2,7 +2,6 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -17,4 +16,17 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <!--STYLE TO CENTER ITEMS-->
+    <style name="ConstraintCenter">
+        <item name="layout_constraintBottom_toBottomOf">parent</item>
+        <item name="layout_constraintTop_toTopOf">parent</item>
+        <item name="layout_constraintLeft_toLeftOf">parent</item>
+        <item name="layout_constraintRight_toRightOf">parent</item>
+    </style>
+
+    <!--STYLE TO CENTER HORIZONTAL-->
+    <style name="ConstraintCenterHorizontal">
+        <item name="layout_constraintLeft_toLeftOf">parent</item>
+        <item name="layout_constraintRight_toRightOf">parent</item>
+    </style>
 </resources>
