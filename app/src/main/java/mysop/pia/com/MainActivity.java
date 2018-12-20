@@ -15,6 +15,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.GridView;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -22,8 +31,13 @@ public class MainActivity extends AppCompatActivity {
 
 
     @BindView(R.id.gridview_categories)
-    RecyclerView gridviewCategories;
+    GridView gridviewCategories;
     CategoryGridAdapter mCategoryGridAdpater;
+    private ChildEventListener mChildEventListener;
+
+    // Firebase instance variables
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mCategoryDatabaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +47,14 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ButterKnife.bind(this);
 
-        gridviewCategories.setLayoutManager( new GridLayoutManager(this, 2));
-        mCategoryGridAdpater = new CategoryGridAdapter(this);
+
+        // Initialize Firebase components
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mCategoryDatabaseReference = mFirebaseDatabase.getReference().child("categories");
+
+        // Initialize message ListView and its adapter
+        List<FbCategory> fireBaseCategory = new ArrayList<>();
+        mCategoryGridAdpater = new CategoryGridAdapter(this, R.layout.categories_layout, fireBaseCategory);
         gridviewCategories.setAdapter(mCategoryGridAdpater);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -45,6 +65,35 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(addCategory);
             }
         });
+
+        mChildEventListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                FbCategory category = dataSnapshot.getValue(FbCategory.class);
+                mCategoryGridAdpater.add(category);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        mCategoryDatabaseReference.addChildEventListener(mChildEventListener);
     }
 
     @Override
