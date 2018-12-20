@@ -2,6 +2,7 @@ package mysop.pia.com;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,12 +25,13 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapte
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-
+//      USE BUUTTERKNIFE TO BIND VIEWS
         @BindView(R.id.textview_category_title)
         TextView textviewCategoryTitle;
         @BindView(R.id.imageview_category)
         ImageView imageviewCategory;
-
+        @BindView(R.id.constrantlayout_category)
+        ConstraintLayout constraintLayoutCategory;
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -42,6 +44,8 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapte
         viewHolder.textviewCategoryTitle.setText("test123");
 //        LOADS THE CATEGORY LOGO
         Picasso.get().load(R.drawable.ic_home).into(viewHolder.imageviewCategory);
+//        SET BACKGROUND COLOR OF LAYOUT
+        viewHolder.constraintLayoutCategory.setBackgroundResource(R.color.logoGreenBookColor);
     }
 
     @NonNull
