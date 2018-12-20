@@ -1,5 +1,6 @@
 package mysop.pia.com;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.View;
@@ -42,6 +43,10 @@ public class AddCategory extends Activity {
 //                THIS WILL SAVE THE CATEGORY INFO
                 FbCategory category = new FbCategory(editTextCategoryName.getText().toString());
                 mCategoryDatabaseReference.push().setValue(category);
+
+                Intent returnHome = new Intent(AddCategory.this, MainActivity.class);
+                startActivity(returnHome);
+                finish();
             }
         });
 

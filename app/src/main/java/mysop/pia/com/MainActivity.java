@@ -1,19 +1,16 @@
 package mysop.pia.com;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -32,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.gridview_categories)
     GridView gridviewCategories;
-    CategoryGridAdapter mCategoryGridAdpater;
+    CategoryAdapter mCategoryGridAdpater;
     private ChildEventListener mChildEventListener;
 
     // Firebase instance variables
@@ -47,15 +44,8 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ButterKnife.bind(this);
 
-
-        // Initialize Firebase components
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mCategoryDatabaseReference = mFirebaseDatabase.getReference().child("categories");
-
-        // Initialize message ListView and its adapter
-        List<FbCategory> fireBaseCategory = new ArrayList<>();
-        mCategoryGridAdpater = new CategoryGridAdapter(this, R.layout.categories_layout, fireBaseCategory);
-        gridviewCategories.setAdapter(mCategoryGridAdpater);
+//        START FIREBASE AND ADAPTER
+        setupFirebaseAdapter();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -80,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-
             }
 
             @Override
@@ -112,5 +101,17 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void setupFirebaseAdapter() {
+
+        // Initialize Firebase components
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mCategoryDatabaseReference = mFirebaseDatabase.getReference().child("categories");
+
+        // Initialize message ListView and its adapter
+        List<FbCategory> fireBaseCategory = new ArrayList<>();
+        mCategoryGridAdpater = new CategoryAdapter(this, R.layout.categories_layout, fireBaseCategory);
+        gridviewCategories.setAdapter(mCategoryGridAdpater);
     }
 }

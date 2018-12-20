@@ -13,7 +13,10 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -21,15 +24,15 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CategoryGridAdapter extends ArrayAdapter<FbCategory> {
+public class CategoryAdapter extends ArrayAdapter<FbCategory> {
 
-    public CategoryGridAdapter(Context context, int categories_layout, List<FbCategory> fireBaseCategory) {
+    public CategoryAdapter(Context context, int categories_layout, List<FbCategory> fireBaseCategory) {
         super(context, categories_layout, fireBaseCategory);
     }
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
             convertView = ((Activity) getContext()).getLayoutInflater().inflate(R.layout.categories_layout, parent, false);
         }
