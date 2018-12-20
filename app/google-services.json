@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "17556903476",
+    "firebase_url": "https://mysop-64a55.firebaseio.com",
+    "project_id": "mysop-64a55",
+    "storage_bucket": "mysop-64a55.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:17556903476:android:148895a30d630dfc",
+        "android_client_info": {
+          "package_name": "mysop.pia.com"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "17556903476-m14f5pk7nccc5hsierp6jol5nok15thf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "mysop.pia.com",
+            "certificate_hash": "726b4757c0823115c90d2a9b5a969abde8cb9f19"
+          }
+        },
+        {
+          "client_id": "17556903476-fukobrqddrvis58ad68ni67ha1b4imh4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEkGrpy4Adn9MLVVr1stgJlYbL-wrh49s"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "17556903476-fukobrqddrvis58ad68ni67ha1b4imh4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
