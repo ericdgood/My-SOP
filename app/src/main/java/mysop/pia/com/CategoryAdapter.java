@@ -2,6 +2,7 @@ package mysop.pia.com;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -37,12 +38,29 @@ public class CategoryAdapter extends ArrayAdapter<FbCategory> {
             convertView = ((Activity) getContext()).getLayoutInflater().inflate(R.layout.categories_layout, parent, false);
         }
 
-        TextView categoryTitle = convertView.findViewById(R.id.textview_category_title);
+        TextView textViewcategoryTitle = convertView.findViewById(R.id.textview_category_title);
+        ConstraintLayout constraintLayoutCategory = convertView.findViewById(R.id.constrantlayout_category);
 
+//        GETS POSITION AND SHOWS CATEGORY NAME
         FbCategory categories = getItem(position);
+        String categoryTitle = categories.getCategoryName();
+        textViewcategoryTitle.setText(categoryTitle);
 
-        categoryTitle.setText(categories.getCategoryName());
+//        ONCLICK CATEGORY. PASS NAME
+        onClickCategory(constraintLayoutCategory, categoryTitle);
 
         return convertView;
     }
+
+    private void onClickCategory(ConstraintLayout constraintLayoutCategory, final String categoryTitle){
+        constraintLayoutCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent listOfSOPs = new Intent(getContext(), ListofSOPs.class);
+                listOfSOPs.putExtra("categoryTitle", categoryTitle);
+                getContext().startActivity(listOfSOPs);
+            }
+        });
+    }
+
 }

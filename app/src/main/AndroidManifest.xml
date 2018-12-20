@@ -21,7 +21,10 @@
         </activity>
         <activity
             android:name=".AddCategory"
-            android:label="@string/title_activity_add_category"></activity>
+            android:label="@string/title_activity_add_category" />
+        <activity
+            android:name=".ListofSOPs"
+            android:label="@string/title_activity_listof_sops"></activity>
     </application>
 
 </manifest>
