@@ -41,11 +41,11 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapte
     @Override
     public void onBindViewHolder(@NonNull CategoryGridAdapter.ViewHolder viewHolder, int i) {
 //        LOADS THE CATEGORY NAME
-        viewHolder.textviewCategoryTitle.setText("test123");
+        viewHolder.textviewCategoryTitle.setText("Work");
 //        LOADS THE CATEGORY LOGO
-        Picasso.get().load(R.drawable.ic_home).into(viewHolder.imageviewCategory);
+        Picasso.get().load(R.drawable.mysop_logo).into(viewHolder.imageviewCategory);
 //        SET BACKGROUND COLOR OF LAYOUT
-        viewHolder.constraintLayoutCategory.setBackgroundResource(R.color.logoGreenBookColor);
+//        viewHolder.constraintLayoutCategory.setBackgroundTint();
     }
 
     @NonNull

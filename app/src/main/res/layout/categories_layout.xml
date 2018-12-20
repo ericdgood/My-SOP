@@ -6,12 +6,12 @@
     android:layout_height="200dp"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/logoBlueBookColor">
+    android:background="@drawable/category_border">
 
     <ImageView
         android:id="@+id/imageview_category"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         tools:src="@drawable/ic_home"
         style="@style/ConstraintCenter"/>
 
