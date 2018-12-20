@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,6 +8,7 @@
     tools:context=".MainActivity">
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/tool"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
@@ -15,8 +16,8 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
@@ -24,8 +25,9 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/gridview_categories"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:numColumns="2"/>
+        android:layout_height="wrap_content"
+        android:numColumns="2"
+        app:layout_constraintTop_toBottomOf="@id/tool"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -33,6 +35,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        app:srcCompat="@android:drawable/ic_dialog_email"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
 
-</FrameLayout>
+</android.support.constraint.ConstraintLayout>
