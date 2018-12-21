@@ -22,8 +22,8 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <GridView
-        android:id="@+id/gridview_categories"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview_categories"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:numColumns="2"

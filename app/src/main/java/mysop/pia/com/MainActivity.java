@@ -1,16 +1,19 @@
 package mysop.pia.com;
 
+import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.GridLayout;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -23,18 +26,17 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import mysop.pia.com.Categories.AddCategory;
+import mysop.pia.com.Categories.CategoryRecyclerAdapter;
+import mysop.pia.com.RoomData.AppDatabase;
+import mysop.pia.com.RoomData.MySOPs;
 
 public class MainActivity extends AppCompatActivity {
 
-
-    @BindView(R.id.gridview_categories)
-    GridView gridviewCategories;
-    CategoryAdapter mCategoryGridAdpater;
-    private ChildEventListener mChildEventListener;
-
-    // Firebase instance variables
-    private FirebaseDatabase mFirebaseDatabase;
-    private DatabaseReference mCategoryDatabaseReference;
+private List<MySOPs> sopList = new ArrayList<>();
+    @BindView(R.id.recyclerview_categories)
+    RecyclerView recyclerViewCategories;
+    private CategoryRecyclerAdapter recyclerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +46,16 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ButterKnife.bind(this);
 
-//        START FIREBASE AND ADAPTER
-        setupFirebaseAdapter();
+        recyclerViewCategories.setLayoutManager(new GridLayoutManager(this, 2));
+
+        final AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "mysop")
+                .fallbackToDestructiveMigration()
+                .allowMainThreadQueries()
+                .build();
+
+        sopList = db.mysopDao().getAllMovies();
+        recyclerAdapter = new CategoryRecyclerAdapter(sopList, this);
+        recyclerViewCategories.setAdapter(recyclerAdapter);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -55,34 +65,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(addCategory);
             }
         });
-
-        mChildEventListener = new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                FbCategory category = dataSnapshot.getValue(FbCategory.class);
-                mCategoryGridAdpater.add(category);
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        };
-        mCategoryDatabaseReference.addChildEventListener(mChildEventListener);
     }
 
     @Override
@@ -103,15 +85,4 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void setupFirebaseAdapter() {
-
-        // Initialize Firebase components
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mCategoryDatabaseReference = mFirebaseDatabase.getReference().child("categories");
-
-        // Initialize message ListView and its adapter
-        List<FbCategory> fireBaseCategory = new ArrayList<>();
-        mCategoryGridAdpater = new CategoryAdapter(this, R.layout.categories_layout, fireBaseCategory);
-        gridviewCategories.setAdapter(mCategoryGridAdpater);
-    }
 }

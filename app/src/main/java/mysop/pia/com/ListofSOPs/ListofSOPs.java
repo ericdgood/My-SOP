@@ -1,4 +1,4 @@
-package mysop.pia.com;
+package mysop.pia.com.ListofSOPs;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import mysop.pia.com.R;
 
 public class ListofSOPs extends Activity {
 
