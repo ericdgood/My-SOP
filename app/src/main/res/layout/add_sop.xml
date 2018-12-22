@@ -1,6 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/textview_new_sop_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create a new SOP"
+        android:textSize="21sp"
+        style="@style/ConstraintCenterHorizontal"/>
+
+    <EditText
+        android:id="@+id/edittext_add_sop_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="SOP Title"
+        app:layout_constraintTop_toBottomOf="@id/textview_new_sop_label"/>
+
+    <EditText
+        android:id="@+id/edittext_add_numberof_steps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/ConstraintCenterHorizontal"
+        android:inputType="number"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/edittext_add_sop_title"
+        android:hint="Number of steps"/>
+
+    <Button
+        android:id="@+id/button_add_sop_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/edittext_add_numberof_steps"
+        android:text="Save SOP"/>
 
 </android.support.constraint.ConstraintLayout>
