@@ -29,4 +29,10 @@
         <item name="layout_constraintLeft_toLeftOf">parent</item>
         <item name="layout_constraintRight_toRightOf">parent</item>
     </style>
+
+    <!--STYLE TO CENTER VERTICALLY-->
+    <style name="ConstraintCenterVertical">
+        <item name="layout_constraintTop_toTopOf">parent</item>
+        <item name="layout_constraintBottom_toBottomOf">parent</item>
+    </style>
 </resources>

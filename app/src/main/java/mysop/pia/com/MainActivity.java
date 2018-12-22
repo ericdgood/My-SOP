@@ -23,7 +23,7 @@ import mysop.pia.com.RoomData.MySOPs;
 
 public class MainActivity extends AppCompatActivity {
 
-private List<MySOPs> sopList = new ArrayList<>();
+    private List<MySOPs> sopList = new ArrayList<>();
     @BindView(R.id.recyclerview_categories)
     RecyclerView recyclerViewCategories;
     @BindView(R.id.fab)
@@ -63,7 +63,7 @@ private List<MySOPs> sopList = new ArrayList<>();
         return super.onOptionsItemSelected(item);
     }
 
-    private void setupRecylerviewDBAndAdapter(){
+    private void setupRecylerviewDBAndAdapter() {
 
 
 //      SETUP RECYCLERVIEW AND ADAPTER
@@ -73,7 +73,7 @@ private List<MySOPs> sopList = new ArrayList<>();
         recyclerViewCategories.setAdapter(categoriesRecyclerAdapter);
     }
 
-    public AppDatabase roomDatabase(){
+    public AppDatabase roomDatabase() {
         return Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "mysop")
                 .fallbackToDestructiveMigration()
                 .allowMainThreadQueries()

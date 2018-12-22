@@ -1,18 +1,22 @@
 package mysop.pia.com.ListofSOPs;
 
+import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import mysop.pia.com.Categories.CategoryRecyclerAdapter;
+import mysop.pia.com.MainActivity;
 import mysop.pia.com.R;
+import mysop.pia.com.RoomData.SOPRoomData;
+import mysop.pia.com.RoomData.SopAppDatabase;
 
 public class ListofSOPs extends Activity {
 
@@ -20,6 +24,8 @@ public class ListofSOPs extends Activity {
     RecyclerView recyclerviewListofSOPs;
     @BindView(R.id.fab_addsop)
     FloatingActionButton fabAddSOP;
+
+    private List<SOPRoomData> listOfSOPs = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +43,16 @@ public class ListofSOPs extends Activity {
     }
 
     private void setupRecyclerviewAndAdapter(){
-        ListofSOPsAdapter SOPsRecyclerAdapter = new ListofSOPsAdapter(this);
+        listOfSOPs = sopRoomDatabase().listOfSOPs().getAllSOPs();
+        ListofSOPsAdapter SOPsRecyclerAdapter = new ListofSOPsAdapter(this, listOfSOPs);
         recyclerviewListofSOPs.setLayoutManager(new LinearLayoutManager(this));
         recyclerviewListofSOPs.setAdapter(SOPsRecyclerAdapter);
     }
 
+    public SopAppDatabase sopRoomDatabase() {
+        return Room.databaseBuilder(getApplicationContext(), SopAppDatabase.class, "sopinfo")
+                .fallbackToDestructiveMigration()
+                .allowMainThreadQueries()
+                .build();
+    }
 }
