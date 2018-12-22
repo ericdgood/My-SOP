@@ -10,10 +10,10 @@ import java.util.List;
 public interface MySopDao {
 
     @Query("SELECT * FROM MYSOP")
-    List<MySOPs> getAllMovies();
+    List<MySOPs> getAllSOPs();
 
     @Insert
-    void insertAll(MySOPs... movies);
+    void insertAll(MySOPs... sops);
 //
 //    @Query("DELETE FROM favorite_movies WHERE movieId = :movieId")
 //    void deleteByUserId(String movieId);

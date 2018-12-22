@@ -8,12 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import mysop.pia.com.FbCategory;
 import mysop.pia.com.MainActivity;
 import mysop.pia.com.R;
 import mysop.pia.com.RoomData.AppDatabase;
