@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -66,15 +65,18 @@ private List<MySOPs> sopList = new ArrayList<>();
 
     private void setupRecylerviewDBAndAdapter(){
 
-        final AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "mysop")
-                .fallbackToDestructiveMigration()
-                .allowMainThreadQueries()
-                .build();
 
 //      SETUP RECYCLERVIEW AND ADAPTER
-        sopList = db.mysopDao().getAllSOPs();
+        sopList = roomDatabase().mysopDao().getAllSOPs();
         CategoryRecyclerAdapter categoriesRecyclerAdapter = new CategoryRecyclerAdapter(sopList, this);
         recyclerViewCategories.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerViewCategories.setAdapter(categoriesRecyclerAdapter);
+    }
+
+    public AppDatabase roomDatabase(){
+        return Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "mysop")
+                .fallbackToDestructiveMigration()
+                .allowMainThreadQueries()
+                .build();
     }
 }

@@ -21,6 +21,7 @@ public class AddCategory extends Activity {
     EditText editTextCategoryName;
     @BindView(R.id.button_save)
     Button buttonSave;
+    MainActivity main;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,25 +29,17 @@ public class AddCategory extends Activity {
         setContentView(R.layout.add_category);
         ButterKnife.bind(this);
 
-        final AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "mysop")
-                .fallbackToDestructiveMigration()
-                .allowMainThreadQueries()
-                .build();
-
-        buttonSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String categoryTitle = editTextCategoryName.getText().toString();
+        buttonSave.setOnClickListener(v -> {
+            String categoryTitle = editTextCategoryName.getText().toString();
 
 
 //                THIS WILL SAVE THE CATEGORY INFO
-                MySOPs category = new MySOPs(categoryTitle);
-                db.mysopDao().insertAll(category);
+            MySOPs category = new MySOPs(categoryTitle);
+            main.roomDatabase().mysopDao().insertAll(category);
 
-                Intent returnHome = new Intent(AddCategory.this, MainActivity.class);
-                startActivity(returnHome);
-                finish();
-            }
+            Intent returnHome = new Intent(AddCategory.this, MainActivity.class);
+            startActivity(returnHome);
+            finish();
         });
 
     }

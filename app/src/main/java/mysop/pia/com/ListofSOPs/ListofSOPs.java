@@ -1,7 +1,9 @@
 package mysop.pia.com.ListofSOPs;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +18,8 @@ public class ListofSOPs extends Activity {
 
     @BindView(R.id.recyclerview_list_of_sops)
     RecyclerView recyclerviewListofSOPs;
+    @BindView(R.id.fab_addsop)
+    FloatingActionButton fabAddSOP;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +28,11 @@ public class ListofSOPs extends Activity {
         ButterKnife.bind(this);
 
         setupRecyclerviewAndAdapter();
+
+        fabAddSOP.setOnClickListener(v -> {
+            Intent addNewSOP = new Intent(this, AddSOP.class);
+            startActivity(addNewSOP);
+        });
 
     }
 
