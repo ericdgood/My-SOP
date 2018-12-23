@@ -33,7 +33,6 @@ public class AddSOP extends AppCompatActivity{
 
 
         buttonAddStep.setOnClickListener(v -> {
-//            THIS WILL SAVE THE SOP INFO
             String addSopTitle = editTextAddSopTitle.getText().toString();
 
 //            SOPRoomData newSOP = new SOPRoomData(categoryName, addSopTitle);

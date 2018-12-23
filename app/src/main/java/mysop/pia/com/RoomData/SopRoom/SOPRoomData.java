@@ -16,9 +16,17 @@ public class SOPRoomData {
     @ColumnInfo(name = "sopTitle")
     private String sopTitle;
 
-    public SOPRoomData(String categoryName, String sopTitle) {
+    @ColumnInfo(name = "stepTitle")
+    private String stepTitle;
+
+    @ColumnInfo(name = "stepNumber")
+    private int stepNumber;
+
+    public SOPRoomData(String categoryName, String sopTitle, String stepTitle, int stepNumber) {
         this.categoryName = categoryName;
         this.sopTitle = sopTitle;
+        this.stepTitle = stepTitle;
+        this.stepNumber = stepNumber;
     }
 
     public int getId() {
@@ -37,9 +45,11 @@ public class SOPRoomData {
         return sopTitle;
     }
 
-    public void setSopTitle(String sopTitle) {
-        this.sopTitle = sopTitle;
+    public String getStepTitle() {
+        return stepTitle;
     }
 
-
+    public int getStepNumber() {
+        return stepNumber;
+    }
 }
