@@ -36,29 +36,19 @@ public class AddStep extends AppCompatActivity {
 //      GETS SOPTITLE FROM ADD SOP INTENT
         String sopTitle = getIntent().getStringExtra("sopTitle");
         int stepNumber = getIntent().getIntExtra("stepNumber", 1);
+        setStepText(stepNumber);
 
-        String stepConcat = "Step" + stepNumber;
-        textviewStepCount.setText(stepConcat);
-
-        completeSOP();
-        addStepToRoom(sopTitle, stepNumber);
-    }
-
-    private void completeSOP(){
+//      DO THIS IF SOP IS COMPLETED
         buttonCompleteSOP.setOnClickListener(v -> {
-//      TODO:save last step
+            AddStepToRoomDatabase(sopTitle, stepNumber);
+
             Intent returnToListOfSOPs = new Intent(this, ListofSOPs.class);
             startActivity(returnToListOfSOPs);
             finish();
         });
-    }
-
-    public void addStepToRoom(String sopTitle, int stepNumber){
+//        DO THIS IF ANOTHER STEP IS ADDED
         buttonAddAnotherStep.setOnClickListener((View v) -> {
-            String stepTitle = ediitTextStepTitle.getText().toString();
-//            SAVE STEPS FOR SOP
-            StepsRoomData newStep = new StepsRoomData(sopTitle, stepTitle, stepNumber);
-            stepsRoomDatabase().listOfSteps().insertSteps(newStep);
+            AddStepToRoomDatabase(sopTitle, stepNumber);
 
             Intent nextStep = new Intent(this, AddStep.class);
             int nextStepNum = stepNumber + 1;
@@ -69,10 +59,23 @@ public class AddStep extends AppCompatActivity {
         });
     }
 
+    private void AddStepToRoomDatabase(String sopTitle, int stepNumber){
+        String stepTitle = ediitTextStepTitle.getText().toString();
+
+//            SAVE STEPS FOR SOP
+        StepsRoomData newStep = new StepsRoomData(sopTitle, stepTitle, stepNumber);
+        stepsRoomDatabase().listOfSteps().insertSteps(newStep);
+    }
+
     public StepsAppDatabase stepsRoomDatabase() {
         return Room.databaseBuilder(getApplicationContext(), StepsAppDatabase.class, "steps")
                 .fallbackToDestructiveMigration()
                 .allowMainThreadQueries()
                 .build();
+    }
+
+    public void setStepText(int stepNumber){
+        String stepConcat = "Step" + stepNumber;
+        textviewStepCount.setText(stepConcat);
     }
 }
