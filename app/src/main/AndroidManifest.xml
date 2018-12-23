@@ -24,9 +24,12 @@
             android:label="@string/title_activity_add_category" />
         <activity
             android:name=".ListofSOPs.ListofSOPs"
-            android:label="@string/title_activity_listof_sops"></activity>
+            android:label="@string/title_activity_listof_sops" />
         <activity android:name=".ListofSOPs.AddSOP" />
         <activity android:name=".Steps.AddStep" />
+        <activity
+            android:name=".Steps.ListOfSteps"
+            android:label="@string/title_activity_main2"></activity>
     </application>
 
 </manifest>

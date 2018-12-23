@@ -1,7 +1,9 @@
 package mysop.pia.com.ListofSOPs;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import mysop.pia.com.R;
 import mysop.pia.com.RoomData.SopRoom.SOPRoomData;
+import mysop.pia.com.Steps.ListOfSteps;
 
 public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Viewholder> {
 
@@ -31,6 +34,8 @@ public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Vi
         TextView textViewListOfSopsTitle;
         @BindView(R.id.textview_list_sops_number_of_steps)
         TextView textviewNumberOfSteps;
+        @BindView(R.id.constrain_layout_list_of_sop_layout)
+        ConstraintLayout constrainListOfSOPs;
 
         public Viewholder(@NonNull View itemView) {
             super(itemView);
@@ -43,6 +48,12 @@ public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Vi
         viewholder.textViewListOfSopsTitle.setText(listOfSOPS.get(postion).getSopTitle());
         String numberOfSteps = String.valueOf(listOfSOPS.get(postion).getStepNumber());
         viewholder.textviewNumberOfSteps.setText(numberOfSteps);
+
+        viewholder.constrainListOfSOPs.setOnClickListener(v -> {
+            Intent listOfSteps = new Intent(context, ListOfSteps.class);
+            listOfSteps.putExtra("sopTitle", listOfSOPS.get(postion).getSopTitle());
+            context.startActivity(listOfSteps);
+        });
     }
 
     @NonNull
