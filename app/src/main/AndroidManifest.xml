@@ -26,7 +26,7 @@
             android:name=".ListofSOPs.ListofSOPs"
             android:label="@string/title_activity_listof_sops"></activity>
         <activity android:name=".ListofSOPs.AddSOP" />
-        <activity android:name=".ListofSOPs.AddStep" />
+        <activity android:name=".Steps.AddStep" />
     </application>
 
 </manifest>

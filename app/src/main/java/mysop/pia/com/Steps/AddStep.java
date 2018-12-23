@@ -1,4 +1,4 @@
-package mysop.pia.com.ListofSOPs;
+package mysop.pia.com.Steps;
 
 import android.arch.persistence.room.Room;
 import android.content.Intent;
@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import mysop.pia.com.ListofSOPs.ListofSOPs;
 import mysop.pia.com.R;
 import mysop.pia.com.RoomData.SopRoom.SOPRoomData;
 import mysop.pia.com.RoomData.SopRoom.SopAppDatabase;
