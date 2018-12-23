@@ -43,6 +43,7 @@ public class AddSOP extends AppCompatActivity{
             Intent addStep = new Intent(AddSOP.this, AddStep.class);
             addStep.putExtra("sopTitle", addSopTitle);
             startActivity(addStep);
+            finish();
         });
     }
 

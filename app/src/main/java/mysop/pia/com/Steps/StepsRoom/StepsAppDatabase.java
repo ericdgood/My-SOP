@@ -1,12 +1,11 @@
-package mysop.pia.com.Steps.SopRoom;
+package mysop.pia.com.Steps.StepsRoom;
 
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.RoomDatabase;
 
-import mysop.pia.com.ListofSOPs.SopRoom.SOPRoomData;
-import mysop.pia.com.ListofSOPs.SopRoom.SOPinterface;
-
-@Database(entities = {StepsRoomData.class}, version = 1)
+@Database(entities = {StepsRoomData.class}, version = 2)
 public abstract class StepsAppDatabase extends RoomDatabase {
     public abstract Stepsinterface listOfSteps();
 }
+
+//VERSION 2 - ADDED STEP TITLE AND CHANGED NUMBER OF STEPS TO INT

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout android:id="@+id/constrain_layout_list_step"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:padding="6dp"
+    android:background="@drawable/category_border"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/textview_step_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="32sp"
+        tools:text="1"/>
+
+    <TextView
+        android:id="@+id/textview_step_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="This is a sample of a step title"
+        app:layout_constraintLeft_toRightOf="@id/textview_step_number"
+        style="@style/ConstraintCenterVertical"
+        android:paddingLeft="8dp"
+        android:textSize="18sp"/>
+
+</android.support.constraint.ConstraintLayout>

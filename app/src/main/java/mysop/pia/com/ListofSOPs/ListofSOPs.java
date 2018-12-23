@@ -25,8 +25,6 @@ public class ListofSOPs extends AppCompatActivity {
     @BindView(R.id.fab_addsop)
     FloatingActionButton fabAddSOP;
 
-    private List<SOPRoomData> listOfSOPs = new ArrayList<>();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +42,7 @@ public class ListofSOPs extends AppCompatActivity {
     }
 
     private void setupRecyclerviewAndAdapter(){
-        listOfSOPs = sopRoomDatabase().listOfSOPs().getAllSOPs(CategoryRecyclerAdapter.categoryName);
+        List<SOPRoomData> listOfSOPs = sopRoomDatabase().listOfSOPs().getAllSOPs(CategoryRecyclerAdapter.categoryName);
         ListofSOPsAdapter SOPsRecyclerAdapter = new ListofSOPsAdapter(this, listOfSOPs);
         recyclerviewListofSOPs.setLayoutManager(new LinearLayoutManager(this));
         recyclerviewListofSOPs.setAdapter(SOPsRecyclerAdapter);

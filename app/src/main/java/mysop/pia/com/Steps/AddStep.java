@@ -14,12 +14,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import mysop.pia.com.ListofSOPs.ListofSOPs;
 import mysop.pia.com.R;
-import mysop.pia.com.ListofSOPs.SopRoom.SOPRoomData;
-import mysop.pia.com.ListofSOPs.SopRoom.SopAppDatabase;
-import mysop.pia.com.Steps.SopRoom.StepsAppDatabase;
-import mysop.pia.com.Steps.SopRoom.StepsRoomData;
-
-import static mysop.pia.com.Categories.CategoryRecyclerAdapter.categoryName;
+import mysop.pia.com.Steps.StepsRoom.StepsAppDatabase;
+import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
 
 public class AddStep extends AppCompatActivity {
 
@@ -45,28 +41,29 @@ public class AddStep extends AppCompatActivity {
         textviewStepCount.setText(stepConcat);
 
         completeSOP();
-        addStepToRoom(stepNumber);
+        addStepToRoom(sopTitle, stepNumber);
     }
 
     private void completeSOP(){
         buttonCompleteSOP.setOnClickListener(v -> {
-
+//      TODO:save last step
             Intent returnToListOfSOPs = new Intent(this, ListofSOPs.class);
             startActivity(returnToListOfSOPs);
             finish();
         });
     }
 
-    public void addStepToRoom(int stepNumber){
+    public void addStepToRoom(String sopTitle, int stepNumber){
         buttonAddAnotherStep.setOnClickListener((View v) -> {
             String stepTitle = ediitTextStepTitle.getText().toString();
 //            SAVE STEPS FOR SOP
-            StepsRoomData newStep = new StepsRoomData(stepTitle, stepNumber);
+            StepsRoomData newStep = new StepsRoomData(sopTitle, stepTitle, stepNumber);
             stepsRoomDatabase().listOfSteps().insertSteps(newStep);
 
             Intent nextStep = new Intent(this, AddStep.class);
             int nextStepNum = stepNumber + 1;
             nextStep.putExtra("stepNumber", nextStepNum);
+            nextStep.putExtra("sopTitle", sopTitle);
             startActivity(nextStep);
             finish();
         });

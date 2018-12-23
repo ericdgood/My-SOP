@@ -23,7 +23,7 @@ public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Vi
     private List<SOPRoomData> listOfSOPS;
     Context context;
 
-    public ListofSOPsAdapter(Context context, List<SOPRoomData> listOfSOPs) {
+    ListofSOPsAdapter(Context context, List<SOPRoomData> listOfSOPs) {
         this.context = context;
         this.listOfSOPS = listOfSOPs;
     }
@@ -37,7 +37,7 @@ public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Vi
         @BindView(R.id.constrain_layout_list_of_sop_layout)
         ConstraintLayout constrainListOfSOPs;
 
-        public Viewholder(@NonNull View itemView) {
+        Viewholder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
