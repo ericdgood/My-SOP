@@ -27,8 +27,6 @@ public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Vi
 
     public class Viewholder extends RecyclerView.ViewHolder {
 //        BINDVIEWS HERE
-        @BindView(R.id.textview_list_sops_number_of_steps)
-        TextView textviewListOfSopsNumberOfSTeps;
         @BindView(R.id.textview_list_sops_title)
         TextView textViewListOfSopsTitle;
 
@@ -40,7 +38,6 @@ public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ListofSOPsAdapter.Viewholder viewholder, int postion) {
-        viewholder.textviewListOfSopsNumberOfSTeps.setText(listOfSOPS.get(postion).getSopNumberOfSteps());
         viewholder.textViewListOfSopsTitle.setText(listOfSOPS.get(postion).getSopTitle());
     }
 

@@ -21,10 +21,8 @@ public class AddSOP extends AppCompatActivity{
     private static final String TAG = "test";
     @BindView(R.id.edittext_add_sop_title)
     EditText editTextAddSopTitle;
-    @BindView(R.id.edittext_add_numberof_steps)
-    EditText editTextAddNumberOfSteps;
-    @BindView(R.id.button_add_sop_save)
-    Button buttonAddSopSave;
+    @BindView(R.id.button_add_sop_add_step)
+    Button buttonAddStep;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,26 +32,16 @@ public class AddSOP extends AppCompatActivity{
 
 
 
-        buttonAddSopSave.setOnClickListener(v -> {
+        buttonAddStep.setOnClickListener(v -> {
 //            THIS WILL SAVE THE SOP INFO
             String addSopTitle = editTextAddSopTitle.getText().toString();
-            String addNumberOfSteps = editTextAddNumberOfSteps.getText().toString();
-            String categoryName = CategoryRecyclerAdapter.categoryName;
 
-            SOPRoomData newSOP = new SOPRoomData(categoryName, addSopTitle, addNumberOfSteps);
+//            SOPRoomData newSOP = new SOPRoomData(categoryName, addSopTitle);
+//            sopRoomDatabase().listOfSOPs().insertSop(newSOP);
 
-            sopRoomDatabase().listOfSOPs().insertSop(newSOP);
-
-            Intent returnToListOfSOPs = new Intent(AddSOP.this, ListofSOPs.class);
-            startActivity(returnToListOfSOPs);
-            finish();
+            Intent addStep = new Intent(AddSOP.this, AddStep.class);
+            addStep.putExtra("sopTitle", addSopTitle);
+            startActivity(addStep);
         });
-    }
-
-    public SopAppDatabase sopRoomDatabase() {
-        return Room.databaseBuilder(getApplicationContext(), SopAppDatabase.class, "sopinfo")
-                .fallbackToDestructiveMigration()
-                .allowMainThreadQueries()
-                .build();
     }
 }
