@@ -1,4 +1,4 @@
-package mysop.pia.com.RoomData;
+package mysop.pia.com.RoomData.SopRoom;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
@@ -9,8 +9,8 @@ import java.util.List;
 @Dao
 public interface SOPinterface {
 
-    @Query("SELECT * FROM SOPINFO")
-    List<SOPRoomData> getAllSOPs();
+    @Query("SELECT * FROM SOPINFO WHERE :categoryNamePass = categoryName")
+    List<SOPRoomData> getAllSOPs(String categoryNamePass);
 
     @Insert
     void insertSop(SOPRoomData... newsop);

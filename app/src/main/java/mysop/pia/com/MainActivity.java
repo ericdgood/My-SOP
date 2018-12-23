@@ -18,8 +18,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import mysop.pia.com.Categories.AddCategory;
 import mysop.pia.com.Categories.CategoryRecyclerAdapter;
-import mysop.pia.com.RoomData.AppDatabase;
-import mysop.pia.com.RoomData.MySOPs;
+import mysop.pia.com.RoomData.CatergoryRoom.AppDatabase;
+import mysop.pia.com.RoomData.CatergoryRoom.MySOPs;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -15,14 +15,14 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import mysop.pia.com.ListofSOPs.ListofSOPs;
-import mysop.pia.com.MainActivity;
 import mysop.pia.com.R;
-import mysop.pia.com.RoomData.MySOPs;
+import mysop.pia.com.RoomData.CatergoryRoom.MySOPs;
 
 public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecyclerAdapter.Viewholder> {
 
     private List<MySOPs> categoryList;
     Context context;
+    public static String categoryName;
 
     public CategoryRecyclerAdapter(List<MySOPs> sopCategories, Context context) {
         this.context = context;
@@ -47,9 +47,9 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
 
         viewholder.categoryLayout.setOnClickListener((View view) -> {
             Intent categorySops = new Intent(context, ListofSOPs.class);
+            categorySops.putExtra("categoryNamePass", categoryList.get(position).getCategoryTitle());
+            categoryName = categoryList.get(position).getCategoryTitle();
             context.startActivity(categorySops);
-
-
         });
     }
 

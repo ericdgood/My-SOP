@@ -4,7 +4,6 @@ import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -12,8 +11,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import mysop.pia.com.MainActivity;
 import mysop.pia.com.R;
-import mysop.pia.com.RoomData.AppDatabase;
-import mysop.pia.com.RoomData.MySOPs;
+import mysop.pia.com.RoomData.CatergoryRoom.AppDatabase;
+import mysop.pia.com.RoomData.CatergoryRoom.MySOPs;
 
 public class AddCategory extends Activity {
 
@@ -35,13 +34,19 @@ public class AddCategory extends Activity {
 
 //                THIS WILL SAVE THE CATEGORY INFO
             MySOPs category = new MySOPs(categoryTitle);
-            main.roomDatabase().mysopDao().insertAll(category);
+            roomDatabase().mysopDao().insertAll(category);
 
             Intent returnHome = new Intent(AddCategory.this, MainActivity.class);
             startActivity(returnHome);
             finish();
         });
+    }
 
+    public AppDatabase roomDatabase() {
+        return Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "mysop")
+                .fallbackToDestructiveMigration()
+                .allowMainThreadQueries()
+                .build();
     }
 
 }

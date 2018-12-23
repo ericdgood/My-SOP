@@ -1,4 +1,4 @@
-package mysop.pia.com.RoomData;
+package mysop.pia.com.RoomData.SopRoom;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
@@ -10,13 +10,17 @@ public class SOPRoomData {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
+    @ColumnInfo(name = "categoryName")
+    private String categoryName;
+
     @ColumnInfo(name = "sopTitle")
     private String sopTitle;
 
     @ColumnInfo(name = "sopNumberOfSteps")
     private String sopNumberOfSteps;
 
-    public SOPRoomData(String sopTitle, String sopNumberOfSteps) {
+    public SOPRoomData(String categoryName, String sopTitle, String sopNumberOfSteps) {
+        this.categoryName = categoryName;
         this.sopTitle = sopTitle;
         this.sopNumberOfSteps = sopNumberOfSteps;
     }
@@ -27,6 +31,10 @@ public class SOPRoomData {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
     }
 
     public String getSopTitle() {

@@ -1,4 +1,4 @@
-package mysop.pia.com.RoomData;
+package mysop.pia.com.RoomData.CatergoryRoom;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;

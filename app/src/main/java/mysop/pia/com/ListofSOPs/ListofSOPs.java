@@ -3,8 +3,8 @@ package mysop.pia.com.ListofSOPs;
 import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Activity;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -13,12 +13,12 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import mysop.pia.com.MainActivity;
+import mysop.pia.com.Categories.CategoryRecyclerAdapter;
 import mysop.pia.com.R;
-import mysop.pia.com.RoomData.SOPRoomData;
-import mysop.pia.com.RoomData.SopAppDatabase;
+import mysop.pia.com.RoomData.SopRoom.SOPRoomData;
+import mysop.pia.com.RoomData.SopRoom.SopAppDatabase;
 
-public class ListofSOPs extends Activity {
+public class ListofSOPs extends AppCompatActivity {
 
     @BindView(R.id.recyclerview_list_of_sops)
     RecyclerView recyclerviewListofSOPs;
@@ -38,12 +38,13 @@ public class ListofSOPs extends Activity {
         fabAddSOP.setOnClickListener(v -> {
             Intent addNewSOP = new Intent(this, AddSOP.class);
             startActivity(addNewSOP);
+            finish();
         });
 
     }
 
     private void setupRecyclerviewAndAdapter(){
-        listOfSOPs = sopRoomDatabase().listOfSOPs().getAllSOPs();
+        listOfSOPs = sopRoomDatabase().listOfSOPs().getAllSOPs(CategoryRecyclerAdapter.categoryName);
         ListofSOPsAdapter SOPsRecyclerAdapter = new ListofSOPsAdapter(this, listOfSOPs);
         recyclerviewListofSOPs.setLayoutManager(new LinearLayoutManager(this));
         recyclerviewListofSOPs.setAdapter(SOPsRecyclerAdapter);
