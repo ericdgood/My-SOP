@@ -16,13 +16,9 @@ public class SOPRoomData {
     @ColumnInfo(name = "sopTitle")
     private String sopTitle;
 
-    @ColumnInfo(name = "numberOfSteps")
-    private int numberOfSteps;
-
-    public SOPRoomData(String categoryName, String sopTitle, int numberOfSteps) {
+    public SOPRoomData(String categoryName, String sopTitle) {
         this.categoryName = categoryName;
         this.sopTitle = sopTitle;
-        this.numberOfSteps = numberOfSteps;
     }
 
     public int getId() {
@@ -41,8 +37,5 @@ public class SOPRoomData {
         return sopTitle;
     }
 
-    public int getNumberOfSteps() {
-        return numberOfSteps;
-    }
 
 }

@@ -46,8 +46,6 @@ public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ListofSOPsAdapter.Viewholder viewholder, int postion) {
         viewholder.textViewListOfSopsTitle.setText(listOfSOPS.get(postion).getSopTitle());
-        String numberOfSteps = String.valueOf(listOfSOPS.get(postion).getNumberOfSteps());
-        viewholder.textviewNumberOfSteps.setText(numberOfSteps);
 
         viewholder.constrainListOfSOPs.setOnClickListener(v -> {
             Intent listOfSteps = new Intent(context, ListOfSteps.class);

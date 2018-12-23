@@ -44,26 +44,17 @@ public class AddStep extends AppCompatActivity {
         String stepConcat = "Step" + stepNumber;
         textviewStepCount.setText(stepConcat);
 
-        completeSOP(sopTitle, stepNumber);
+        completeSOP();
         addStepToRoom(stepNumber);
     }
 
-    private void completeSOP(String sopTitle, int stepNumber){
+    private void completeSOP(){
         buttonCompleteSOP.setOnClickListener(v -> {
-//          SAVE SOP INFO
-            SOPRoomData newSOP = new SOPRoomData(categoryName, sopTitle, stepNumber);
-            sopRoomDatabase().listOfSOPs().insertSop(newSOP);
 
             Intent returnToListOfSOPs = new Intent(this, ListofSOPs.class);
             startActivity(returnToListOfSOPs);
+            finish();
         });
-    }
-
-    public SopAppDatabase sopRoomDatabase() {
-        return Room.databaseBuilder(getApplicationContext(), SopAppDatabase.class, "sopinfo")
-                .fallbackToDestructiveMigration()
-                .allowMainThreadQueries()
-                .build();
     }
 
     public void addStepToRoom(int stepNumber){
@@ -72,10 +63,12 @@ public class AddStep extends AppCompatActivity {
 //            SAVE STEPS FOR SOP
             StepsRoomData newStep = new StepsRoomData(stepTitle, stepNumber);
             stepsRoomDatabase().listOfSteps().insertSteps(newStep);
+
             Intent nextStep = new Intent(this, AddStep.class);
             int nextStepNum = stepNumber + 1;
             nextStep.putExtra("stepNumber", nextStepNum);
             startActivity(nextStep);
+            finish();
         });
     }
 
