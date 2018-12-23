@@ -1,4 +1,4 @@
-package mysop.pia.com.RoomData.SopRoom;
+package mysop.pia.com.ListofSOPs.SopRoom;
 
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.RoomDatabase;

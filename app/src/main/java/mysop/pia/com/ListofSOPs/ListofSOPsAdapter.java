@@ -15,7 +15,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import mysop.pia.com.R;
-import mysop.pia.com.RoomData.SopRoom.SOPRoomData;
+import mysop.pia.com.ListofSOPs.SopRoom.SOPRoomData;
 import mysop.pia.com.Steps.ListOfSteps;
 
 public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Viewholder> {

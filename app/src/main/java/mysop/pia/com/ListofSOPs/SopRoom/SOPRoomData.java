@@ -1,4 +1,4 @@
-package mysop.pia.com.RoomData.SopRoom;
+package mysop.pia.com.ListofSOPs.SopRoom;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;

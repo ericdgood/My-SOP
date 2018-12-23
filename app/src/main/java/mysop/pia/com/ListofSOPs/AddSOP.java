@@ -31,9 +31,6 @@ public class AddSOP extends AppCompatActivity{
         buttonAddStep.setOnClickListener(v -> {
             String addSopTitle = editTextAddSopTitle.getText().toString();
 
-//            SOPRoomData newSOP = new SOPRoomData(categoryName, addSopTitle);
-//            sopRoomDatabase().listOfSOPs().insertSop(newSOP);
-
             Intent addStep = new Intent(AddSOP.this, AddStep.class);
             addStep.putExtra("sopTitle", addSopTitle);
             startActivity(addStep);

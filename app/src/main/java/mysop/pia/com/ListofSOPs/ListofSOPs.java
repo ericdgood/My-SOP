@@ -15,8 +15,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import mysop.pia.com.Categories.CategoryRecyclerAdapter;
 import mysop.pia.com.R;
-import mysop.pia.com.RoomData.SopRoom.SOPRoomData;
-import mysop.pia.com.RoomData.SopRoom.SopAppDatabase;
+import mysop.pia.com.ListofSOPs.SopRoom.SOPRoomData;
+import mysop.pia.com.ListofSOPs.SopRoom.SopAppDatabase;
 
 public class ListofSOPs extends AppCompatActivity {
 
@@ -56,4 +56,6 @@ public class ListofSOPs extends AppCompatActivity {
                 .allowMainThreadQueries()
                 .build();
     }
+
+
 }

@@ -16,7 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import mysop.pia.com.ListofSOPs.ListofSOPs;
 import mysop.pia.com.R;
-import mysop.pia.com.RoomData.CatergoryRoom.MySOPs;
+import mysop.pia.com.Categories.CatergoryRoom.MySOPs;
 
 public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecyclerAdapter.Viewholder> {
 

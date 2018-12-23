@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -14,8 +13,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import mysop.pia.com.ListofSOPs.ListofSOPs;
 import mysop.pia.com.R;
-import mysop.pia.com.RoomData.SopRoom.SOPRoomData;
-import mysop.pia.com.RoomData.SopRoom.SopAppDatabase;
+import mysop.pia.com.ListofSOPs.SopRoom.SOPRoomData;
+import mysop.pia.com.ListofSOPs.SopRoom.SopAppDatabase;
 
 import static mysop.pia.com.Categories.CategoryRecyclerAdapter.categoryName;
 
