@@ -47,7 +47,6 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
 
         viewholder.categoryLayout.setOnClickListener((View view) -> {
             Intent categorySops = new Intent(context, ListofSOPs.class);
-            categorySops.putExtra("categoryNamePass", categoryList.get(position).getCategoryTitle());
             categoryName = categoryList.get(position).getCategoryTitle();
             context.startActivity(categorySops);
         });
