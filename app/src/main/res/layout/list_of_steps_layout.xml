@@ -22,8 +22,19 @@
         android:layout_height="wrap_content"
         tools:text="This is a sample of a step title"
         app:layout_constraintLeft_toRightOf="@id/textview_step_number"
-        style="@style/ConstraintCenterVertical"
         android:paddingLeft="8dp"
         android:textSize="18sp"/>
+
+    <ImageView
+        android:id="@+id/imageview_list_steps_image"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:layout_constraintTop_toBottomOf="@id/textview_step_title"/>
+
+    <TextView
+        android:id="@+id/textview_list_steps_description"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        app:layout_constraintLeft_toRightOf="@id/imageview_list_steps_image"/>
 
 </android.support.constraint.ConstraintLayout>

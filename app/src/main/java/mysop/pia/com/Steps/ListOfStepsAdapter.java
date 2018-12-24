@@ -1,13 +1,19 @@
 package mysop.pia.com.Steps;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
+import java.net.URI;
 import java.util.List;
 
 import butterknife.BindView;
@@ -31,6 +37,10 @@ public class ListOfStepsAdapter extends RecyclerView.Adapter<ListOfStepsAdapter.
         TextView textviewStepNumber;
         @BindView(R.id.textview_step_title)
         TextView textviewStepTitle;
+        @BindView(R.id.imageview_list_steps_image)
+        ImageView imageviewStepImage;
+        @BindView(R.id.textview_list_steps_description)
+        TextView textviewDescription;
 
         Viewholder(@NonNull View itemView) {
             super(itemView);
@@ -42,6 +52,12 @@ public class ListOfStepsAdapter extends RecyclerView.Adapter<ListOfStepsAdapter.
     public void onBindViewHolder(@NonNull ListOfStepsAdapter.Viewholder viewholder, int position) {
         viewholder.textviewStepNumber.setText(String.valueOf(listOfSteps.get(position).getStepNumber()));
         viewholder.textviewStepTitle.setText(listOfSteps.get(position).getStepTitle());
+        viewholder.textviewDescription.setText(listOfSteps.get(position).getStepDescription());
+        viewholder.imageviewStepImage.setImageURI(Uri.parse(listOfSteps.get(position).getImageURI()));
+//        if (listOfSteps.get(position).getImageURI() == null){
+//            viewholder.imageviewStepImage.setVisibility(View.VISIBLE);
+//            Picasso.get().load(Uri.parse(listOfSteps.get(position).getImageURI())).into(viewholder.imageviewStepImage);
+//        }
     }
 
     @NonNull
