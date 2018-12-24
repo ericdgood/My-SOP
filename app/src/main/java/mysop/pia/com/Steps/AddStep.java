@@ -5,6 +5,8 @@ import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -21,6 +23,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -142,16 +146,10 @@ public class AddStep extends AppCompatActivity {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // GALLERY PERMISSION GRANTED. THIS OPENS GALLERY CHOOSER
-                    Intent getIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                    getIntent.setType("image/*");
-
-                    Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    pickIntent.setType("image/*");
-
-                    Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
-                    chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickIntent});
-
-                    startActivityForResult(chooserIntent, 2);
+                    Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                    intent.addCategory(Intent.CATEGORY_OPENABLE);
+                    intent.setType("image/*");
+                    startActivityForResult(intent, 2);
                 } else {
                     // permission denied, boo!
                     Toast.makeText(this, "Permission denied to read your External storage", Toast.LENGTH_SHORT).show();
@@ -192,14 +190,14 @@ public class AddStep extends AppCompatActivity {
 //                RESULTS FROM CAMERA CAPTURE
         if (requestCode == 2) {
             if (data != null) {
-                imageUri = data.getData();
-                imageviewImagePreview.setImageURI(imageUri);
                 imageviewImagePreview.setVisibility(View.VISIBLE);
+                imageUri = data.getData();
+                Picasso.get().load(imageUri).into(imageviewImagePreview);
             }
             if (imageUri == null && mCameraFileName != null) {
-                imageUri = Uri.fromFile(new File(mCameraFileName));
-                imageviewImagePreview.setImageURI(imageUri);
                 imageviewImagePreview.setVisibility(View.VISIBLE);
+                imageUri = Uri.fromFile(new File(mCameraFileName));
+                Picasso.get().load(imageUri).into(imageviewImagePreview);
             }
         }
     }

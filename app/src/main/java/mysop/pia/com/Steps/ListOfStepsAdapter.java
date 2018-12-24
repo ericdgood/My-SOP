@@ -53,11 +53,7 @@ public class ListOfStepsAdapter extends RecyclerView.Adapter<ListOfStepsAdapter.
         viewholder.textviewStepNumber.setText(String.valueOf(listOfSteps.get(position).getStepNumber()));
         viewholder.textviewStepTitle.setText(listOfSteps.get(position).getStepTitle());
         viewholder.textviewDescription.setText(listOfSteps.get(position).getStepDescription());
-        viewholder.imageviewStepImage.setImageURI(Uri.parse(listOfSteps.get(position).getImageURI()));
-//        if (listOfSteps.get(position).getImageURI() == null){
-//            viewholder.imageviewStepImage.setVisibility(View.VISIBLE);
-//            Picasso.get().load(Uri.parse(listOfSteps.get(position).getImageURI())).into(viewholder.imageviewStepImage);
-//        }
+        Picasso.get().load(Uri.parse(listOfSteps.get(position).getImageURI())).into(viewholder.imageviewStepImage);
     }
 
     @NonNull
