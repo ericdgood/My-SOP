@@ -59,6 +59,7 @@ public class AddStep extends AppCompatActivity {
     ImageView imageviewImagePreview;
 
     Uri imageUri;
+    String image;
     int PERMISSION_GALLERY = 1;
     int PERMISSION_CAMERA = 2;
     String mCameraFileName;
@@ -106,9 +107,15 @@ public class AddStep extends AppCompatActivity {
     private void AddStepToRoomDatabase(String sopTitle, int stepNumber) {
         String stepTitle = ediitTextStepTitle.getText().toString();
         String stepDescription = edittextDescription.getText().toString();
+        
+        if (imageUri != null){
+            image = imageUri.toString();
+        } else {
+            image = null;
+        }
 
 //            SAVE STEPS FOR SOP
-        StepsRoomData newStep = new StepsRoomData(sopTitle, stepTitle, stepNumber, stepDescription, imageUri.toString());
+        StepsRoomData newStep = new StepsRoomData(sopTitle, stepTitle, stepNumber, stepDescription, image);
         stepsRoomDatabase().listOfSteps().insertSteps(newStep);
     }
 
