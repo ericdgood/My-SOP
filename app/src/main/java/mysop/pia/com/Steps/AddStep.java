@@ -60,6 +60,9 @@ public class AddStep extends AppCompatActivity {
 
     Uri imageUri;
     String image;
+    String stepTitle;
+    String sopTitle;
+    int stepNumber;
     int PERMISSION_GALLERY = 1;
     int PERMISSION_CAMERA = 2;
     String mCameraFileName;
@@ -78,45 +81,52 @@ public class AddStep extends AppCompatActivity {
         setContentView(R.layout.add_step);
         ButterKnife.bind(this);
 //      GETS SOPTITLE FROM ADD SOP INTENT
-        String sopTitle = getIntent().getStringExtra("sopTitle");
-        int stepNumber = getIntent().getIntExtra("stepNumber", 1);
+        sopTitle = getIntent().getStringExtra("sopTitle");
+        stepNumber = getIntent().getIntExtra("stepNumber", 1);
         setStepText(stepNumber);
         pickImageFromGallery();
 
 //      DO THIS IF SOP IS COMPLETED
         buttonCompleteSOP.setOnClickListener(v -> {
-            AddStepToRoomDatabase(sopTitle, stepNumber);
-
-            Intent returnToListOfSOPs = new Intent(this, ListofSOPs.class);
-            startActivity(returnToListOfSOPs);
-            finish();
+            if (AddStepToRoomDatabase()) {
+                Intent returnToListOfSOPs = new Intent(this, ListofSOPs.class);
+                startActivity(returnToListOfSOPs);
+                finish();
+            }
         });
 //        DO THIS IF ANOTHER STEP IS ADDED
         buttonAddAnotherStep.setOnClickListener((View v) -> {
-            AddStepToRoomDatabase(sopTitle, stepNumber);
-
-            Intent nextStep = new Intent(this, AddStep.class);
-            int nextStepNum = stepNumber + 1;
-            nextStep.putExtra("stepNumber", nextStepNum);
-            nextStep.putExtra("sopTitle", sopTitle);
-            startActivity(nextStep);
-            finish();
+            if (AddStepToRoomDatabase()) {
+                Intent nextStep = new Intent(this, AddStep.class);
+                int nextStepNum = stepNumber + 1;
+                nextStep.putExtra("stepNumber", nextStepNum);
+                nextStep.putExtra("sopTitle", sopTitle);
+                startActivity(nextStep);
+                finish();
+            }
         });
     }
 
-    private void AddStepToRoomDatabase(String sopTitle, int stepNumber) {
-        String stepTitle = ediitTextStepTitle.getText().toString();
-        String stepDescription = edittextDescription.getText().toString();
-        
-        if (imageUri != null){
-            image = imageUri.toString();
-        } else {
-            image = null;
-        }
+    private boolean AddStepToRoomDatabase() {
+        stepTitle = ediitTextStepTitle.getText().toString();
+        Log.i(TAG, "AddStepToRoomDatabase: " + stepTitle);
+        if (!stepTitle.equals("")) {
+            String stepDescription = edittextDescription.getText().toString();
+
+            if (imageUri != null) {
+                image = imageUri.toString();
+            } else {
+                image = null;
+            }
 
 //            SAVE STEPS FOR SOP
-        StepsRoomData newStep = new StepsRoomData(sopTitle, stepTitle, stepNumber, stepDescription, image);
-        stepsRoomDatabase().listOfSteps().insertSteps(newStep);
+            StepsRoomData newStep = new StepsRoomData(sopTitle, stepTitle, stepNumber, stepDescription, image);
+            stepsRoomDatabase().listOfSteps().insertSteps(newStep);
+            return true;
+        } else {
+            Toast.makeText(this, "Please enter a title for the step", Toast.LENGTH_SHORT).show();
+            return false;
+        }
     }
 
     public StepsAppDatabase stepsRoomDatabase() {
@@ -130,7 +140,8 @@ public class AddStep extends AppCompatActivity {
         String stepConcat = "Step" + stepNumber;
         textviewStepCount.setText(stepConcat);
     }
-//  THIS CREATS THE IMAGE AS A BUTTON TO OPEN GALLERY OR CAMERA
+
+    //  THIS CREATS THE IMAGE AS A BUTTON TO OPEN GALLERY OR CAMERA
     public void pickImageFromGallery() {
         imageviewGallery.setOnClickListener(v -> {
             ActivityCompat.requestPermissions(this,
@@ -143,7 +154,8 @@ public class AddStep extends AppCompatActivity {
                     PERMISSION_CAMERA);
         });
     }
-//    THIS ASKS FOR PERMISSION FOR GALLER AND CAMERA AND CREATES INTENT
+
+    //    THIS ASKS FOR PERMISSION FOR GALLER AND CAMERA AND CREATES INTENT
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String permissions[], @NonNull int[] grantResults) {
@@ -190,7 +202,8 @@ public class AddStep extends AppCompatActivity {
 
         }
     }
-//    THIS GETS RESULTS FROM GALLERY OR CAMERA INTENT AND SHOWS PREVIEW AND SAVES
+
+    //    THIS GETS RESULTS FROM GALLERY OR CAMERA INTENT AND SHOWS PREVIEW AND SAVES
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
