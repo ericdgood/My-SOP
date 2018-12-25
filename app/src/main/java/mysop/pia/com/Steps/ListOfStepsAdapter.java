@@ -52,12 +52,8 @@ public class ListOfStepsAdapter extends RecyclerView.Adapter<ListOfStepsAdapter.
     public void onBindViewHolder(@NonNull ListOfStepsAdapter.Viewholder viewholder, int position) {
         viewholder.textviewStepNumber.setText(String.valueOf(listOfSteps.get(position).getStepNumber()));
         viewholder.textviewStepTitle.setText(listOfSteps.get(position).getStepTitle());
-        viewholder.textviewDescription.setText(listOfSteps.get(position).getStepDescription());
-        if (listOfSteps.get(position).getImageURI() != null) {
-            Picasso.get().load(Uri.parse(listOfSteps.get(position).getImageURI())).into(viewholder.imageviewStepImage);
-        } else {
-            viewholder.imageviewStepImage.setVisibility(View.GONE);
-        }
+        pictureVisibility(viewholder, position);
+        descriptionVisibility(viewholder, position);
     }
 
     @NonNull
@@ -70,5 +66,21 @@ public class ListOfStepsAdapter extends RecyclerView.Adapter<ListOfStepsAdapter.
     @Override
     public int getItemCount() {
         return listOfSteps.size();
+    }
+
+    private void pictureVisibility(Viewholder viewholder, int position){
+        if (listOfSteps.get(position).getImageURI() != null) {
+            Picasso.get().load(Uri.parse(listOfSteps.get(position).getImageURI())).into(viewholder.imageviewStepImage);
+        } else {
+            viewholder.imageviewStepImage.setVisibility(View.GONE);
+        }
+    }
+
+    private void descriptionVisibility(Viewholder viewholder, int position){
+        if (!listOfSteps.get(position).getStepDescription().equals("")) {
+            viewholder.textviewDescription.setText(listOfSteps.get(position).getStepDescription());
+        } else {
+            viewholder.textviewDescription.setVisibility(View.GONE);
+        }
     }
 }
