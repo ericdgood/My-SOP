@@ -24,7 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -212,12 +212,12 @@ public class AddStep extends AppCompatActivity {
             if (data != null) {
                 imageviewImagePreview.setVisibility(View.VISIBLE);
                 imageUri = data.getData();
-                Picasso.get().load(imageUri).into(imageviewImagePreview);
+                Glide.with(this).load(imageUri).into(imageviewImagePreview);
             }
             if (imageUri == null && mCameraFileName != null) {
                 imageviewImagePreview.setVisibility(View.VISIBLE);
                 imageUri = Uri.fromFile(new File(mCameraFileName));
-                Picasso.get().load(imageUri).into(imageviewImagePreview);
+                Glide.with(this).load(imageUri).into(imageviewImagePreview);
             }
         }
     }

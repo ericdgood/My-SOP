@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,9 +56,9 @@ public class StepActivity extends AppCompatActivity {
 
     private void pictureVisibility(){
         if (stringPicture != null) {
-            Picasso.get().load(stringPicture).into(imageviewStepPicture);
+            Glide.with(this).load(stringPicture).into(imageviewStepPicture);
         } else {
-            Picasso.get().load(R.drawable.mysop_logo).into(imageviewStepPicture);
+            Glide.with(this).load(R.drawable.mysop_logo).into(imageviewStepPicture);
         }
     }
 
