@@ -1,8 +1,10 @@
 package mysop.pia.com.Steps;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,14 +35,12 @@ public class ListOfStepsAdapter extends RecyclerView.Adapter<ListOfStepsAdapter.
     }
 
     public class Viewholder extends RecyclerView.ViewHolder {
-        @BindView(R.id.textview_step_number)
+        @BindView(R.id.textview_step_list_number)
         TextView textviewStepNumber;
-        @BindView(R.id.textview_step_title)
+        @BindView(R.id.textview_step_list_title)
         TextView textviewStepTitle;
-        @BindView(R.id.imageview_list_steps_image)
-        ImageView imageviewStepImage;
-        @BindView(R.id.textview_list_steps_description)
-        TextView textviewDescription;
+        @BindView(R.id.constrain_layout_list_step)
+        ConstraintLayout constraintListOfSteps;
 
         Viewholder(@NonNull View itemView) {
             super(itemView);
@@ -50,10 +50,19 @@ public class ListOfStepsAdapter extends RecyclerView.Adapter<ListOfStepsAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ListOfStepsAdapter.Viewholder viewholder, int position) {
+//        SHOWS STEP NUMBERS
         viewholder.textviewStepNumber.setText(String.valueOf(listOfSteps.get(position).getStepNumber()));
+//        SHOWS STEP TITLE
         viewholder.textviewStepTitle.setText(listOfSteps.get(position).getStepTitle());
-        pictureVisibility(viewholder, position);
-        descriptionVisibility(viewholder, position);
+
+        viewholder.constraintListOfSteps.setOnClickListener(v -> {
+        Intent goToStep = new Intent(context, StepActivity.class);
+        goToStep.putExtra("picture", listOfSteps.get(position).getImageURI());
+        goToStep.putExtra("description", listOfSteps.get(position).getStepDescription());
+        goToStep.putExtra("stepTitle",listOfSteps.get(position).getStepTitle());
+        goToStep.putExtra("stepNumber", String.valueOf(listOfSteps.get(position).getStepNumber()));
+        context.startActivity(goToStep);
+        });
     }
 
     @NonNull
@@ -66,21 +75,5 @@ public class ListOfStepsAdapter extends RecyclerView.Adapter<ListOfStepsAdapter.
     @Override
     public int getItemCount() {
         return listOfSteps.size();
-    }
-
-    private void pictureVisibility(Viewholder viewholder, int position){
-        if (listOfSteps.get(position).getImageURI() != null) {
-            Picasso.get().load(Uri.parse(listOfSteps.get(position).getImageURI())).into(viewholder.imageviewStepImage);
-        } else {
-            viewholder.imageviewStepImage.setVisibility(View.GONE);
-        }
-    }
-
-    private void descriptionVisibility(Viewholder viewholder, int position){
-        if (!listOfSteps.get(position).getStepDescription().equals("")) {
-            viewholder.textviewDescription.setText(listOfSteps.get(position).getStepDescription());
-        } else {
-            viewholder.textviewDescription.setVisibility(View.GONE);
-        }
     }
 }

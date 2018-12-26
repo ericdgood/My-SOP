@@ -33,7 +33,8 @@
         <activity android:name=".Steps.AddStep" />
         <activity
             android:name=".Steps.ListOfSteps"
-            android:label="@string/title_list_of_steps"></activity>
+            android:label="@string/title_list_of_steps" />
+        <activity android:name=".Steps.StepActivity"></activity>
     </application>
 
 </manifest>
