@@ -7,9 +7,13 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import mysop.pia.com.Categories.CatergoryRoom.MySOPs;
 import mysop.pia.com.ListofSOPs.SopRoom.SOPRoomData;
 import mysop.pia.com.ListofSOPs.SopRoom.SopAppDatabase;
 import mysop.pia.com.R;
@@ -24,6 +28,8 @@ public class AddSOP extends AppCompatActivity{
     EditText editTextAddSopTitle;
     @BindView(R.id.button_add_sop_add_step)
     Button buttonAddStep;
+    String SOPTitlesCheck;
+    String addSopTitle;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,16 +40,18 @@ public class AddSOP extends AppCompatActivity{
 
 
         buttonAddStep.setOnClickListener(v -> {
-            String addSopTitle = editTextAddSopTitle.getText().toString();
-
 //          SAVE SOP INFO
-            SOPRoomData newSOP = new SOPRoomData(categoryName, addSopTitle);
-            sopRoomDatabase().listOfSOPs().insertSop(newSOP);
+            addSopTitle = editTextAddSopTitle.getText().toString();
 
-            Intent addStep = new Intent(AddSOP.this, AddStep.class);
-            addStep.putExtra("sopTitle", addSopTitle);
-            startActivity(addStep);
-            finish();
+            if (checkDuplicateSOP()) {
+                SOPRoomData newSOP = new SOPRoomData(categoryName, addSopTitle);
+                sopRoomDatabase().listOfSOPs().insertSop(newSOP);
+
+                Intent addStep = new Intent(AddSOP.this, AddStep.class);
+                addStep.putExtra("sopTitle", addSopTitle);
+                startActivity(addStep);
+                finish();
+            }
         });
     }
 
@@ -52,5 +60,22 @@ public class AddSOP extends AppCompatActivity{
                 .fallbackToDestructiveMigration()
                 .allowMainThreadQueries()
                 .build();
+    }
+
+    private boolean checkDuplicateSOP(){
+        List<SOPRoomData> SOPs = sopRoomDatabase().listOfSOPs().getAllSOPs(categoryName);
+
+        for (int i = 0; i < SOPs.size(); i++) {
+            SOPTitlesCheck = String.valueOf(SOPs.get(i).getSopTitle().toUpperCase());
+
+            if (SOPTitlesCheck.equals(addSopTitle.toUpperCase())) {
+                Toast.makeText(this, "This SOP already exists", Toast.LENGTH_LONG).show();
+                return false;
+            } else if (addSopTitle.equals("")){
+                Toast.makeText(this, "Please enter a SOP name", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        }
+        return true;
     }
 }
