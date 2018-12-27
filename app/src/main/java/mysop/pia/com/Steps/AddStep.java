@@ -88,8 +88,9 @@ public class AddStep extends AppCompatActivity {
 //      DO THIS IF SOP IS COMPLETED
         buttonCompleteSOP.setOnClickListener(v -> {
             if (AddStepToRoomDatabase()) {
-                Intent returnToListOfSOPs = new Intent(this, ListofSOPs.class);
-                startActivity(returnToListOfSOPs);
+                Intent goToNewSOP = new Intent(this, ListOfSteps.class);
+                goToNewSOP.putExtra("sopTitle", sopTitle);
+                startActivity(goToNewSOP);
                 finish();
             }
         });

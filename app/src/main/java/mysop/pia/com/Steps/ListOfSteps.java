@@ -65,6 +65,7 @@ public class ListOfSteps extends AppCompatActivity {
             addStep.putExtra("sopTitle", sopTitle);
             addStep.putExtra("stepNumber", listOfStepsSize + 1);
             startActivity(addStep);
+            finish();
         });
     }
 }
