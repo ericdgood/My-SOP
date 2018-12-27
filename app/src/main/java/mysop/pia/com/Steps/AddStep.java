@@ -40,7 +40,6 @@ import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
 
 public class AddStep extends AppCompatActivity {
 
-    private static final String TAG = "test";
     @BindView(R.id.textview_add_sop_step_count)
     TextView textviewStepCount;
     @BindView(R.id.edittext_add_step_title)
@@ -109,7 +108,6 @@ public class AddStep extends AppCompatActivity {
 
     private boolean AddStepToRoomDatabase() {
         stepTitle = ediitTextStepTitle.getText().toString();
-        Log.i(TAG, "AddStepToRoomDatabase: " + stepTitle);
         if (!stepTitle.equals("")) {
             String stepDescription = edittextDescription.getText().toString();
 

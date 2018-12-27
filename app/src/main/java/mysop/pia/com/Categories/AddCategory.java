@@ -28,7 +28,6 @@ public class AddCategory extends Activity {
     Button buttonSave;
     String categoryTitle;
     String catTitlesCheck;
-    boolean check = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
