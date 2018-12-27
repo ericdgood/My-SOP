@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -63,13 +64,14 @@ public class AddSOP extends AppCompatActivity{
     }
 
     private boolean checkDuplicateSOP(){
-        List<SOPRoomData> SOPs = sopRoomDatabase().listOfSOPs().getAllSOPs(categoryName);
+        List<SOPRoomData> SOPs = sopRoomDatabase().listOfSOPs().getAllSOPs();
 
         for (int i = 0; i < SOPs.size(); i++) {
             SOPTitlesCheck = String.valueOf(SOPs.get(i).getSopTitle().toUpperCase());
 
             if (SOPTitlesCheck.equals(addSopTitle.toUpperCase())) {
-                Toast.makeText(this, "This SOP already exists", Toast.LENGTH_LONG).show();
+                String sopCategory = SOPs.get(i).getCategoryName();
+                Toast.makeText(this, "This SOP already exists in " + sopCategory + " category", Toast.LENGTH_LONG).show();
                 return false;
             } else if (addSopTitle.equals("")){
                 Toast.makeText(this, "Please enter a SOP name", Toast.LENGTH_SHORT).show();

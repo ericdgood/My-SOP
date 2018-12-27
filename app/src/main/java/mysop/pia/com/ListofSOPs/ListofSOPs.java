@@ -3,10 +3,13 @@ package mysop.pia.com.ListofSOPs;
 import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +28,9 @@ public class ListofSOPs extends AppCompatActivity {
     @BindView(R.id.fab_addsop)
     FloatingActionButton fabAddSOP;
 
+    List<SOPRoomData> listOfSOPs = new ArrayList<>();
+    String sopTitleDelete;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,13 +42,26 @@ public class ListofSOPs extends AppCompatActivity {
         fabAddSOP.setOnClickListener(v -> {
             Intent addNewSOP = new Intent(this, AddSOP.class);
             startActivity(addNewSOP);
-            finish();
         });
+////        SWIPE TO DELETE
+//        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
+//                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+//            @Override
+//            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
+//                return false;
+//            }
+//
+//            @Override
+//            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
+//                sopRoomDatabase().listOfSOPs().deleteSOP(setupRecyclerviewAndAdapter());
+//                Toast.makeText(ListofSOPs.this, sopTitleDelete +" has been deleted", Toast.LENGTH_SHORT).show();
+//            }
+//        }).attachToRecyclerView(recyclerviewListofSOPs);
 
     }
 
     private void setupRecyclerviewAndAdapter(){
-        List<SOPRoomData> listOfSOPs = sopRoomDatabase().listOfSOPs().getAllSOPs(CategoryRecyclerAdapter.categoryName);
+        listOfSOPs = sopRoomDatabase().listOfSOPs().getAllSOPsPerCat(CategoryRecyclerAdapter.categoryName);
         ListofSOPsAdapter SOPsRecyclerAdapter = new ListofSOPsAdapter(this, listOfSOPs);
         recyclerviewListofSOPs.setLayoutManager(new LinearLayoutManager(this));
         recyclerviewListofSOPs.setAdapter(SOPsRecyclerAdapter);
@@ -54,6 +73,4 @@ public class ListofSOPs extends AppCompatActivity {
                 .allowMainThreadQueries()
                 .build();
     }
-
-
 }

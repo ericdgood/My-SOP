@@ -92,7 +92,7 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
                     public void onClick(DialogInterface dialog, int which) {
                         // continue with delete
                         db.mysopDao().deleteCategory(categoryName);
-                        Toast.makeText(context, categoryName + " is Deleted" + position, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, categoryName + " is Deleted", Toast.LENGTH_SHORT).show();
                         categoryList.remove(position);
                         notifyDataSetChanged();
                     }

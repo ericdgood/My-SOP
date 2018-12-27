@@ -10,8 +10,15 @@ import java.util.List;
 public interface SOPinterface {
 
     @Query("SELECT * FROM SOPINFO WHERE :categoryNamePass = categoryName")
-    List<SOPRoomData> getAllSOPs(String categoryNamePass);
+    List<SOPRoomData> getAllSOPsPerCat(String categoryNamePass);
+
+    @Query("SELECT * FROM SOPINFO")
+    List<SOPRoomData> getAllSOPs();
 
     @Insert
     void insertSop(SOPRoomData... newsop);
+
+    @Query("DELETE FROM SOPINFO WHERE :sopTitle = sopTitle")
+    void deleteSOP(String sopTitle);
+
 }

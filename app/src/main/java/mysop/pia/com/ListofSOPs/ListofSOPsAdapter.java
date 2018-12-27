@@ -5,15 +5,18 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import mysop.pia.com.ListofSOPs.SopRoom.SopAppDatabase;
 import mysop.pia.com.R;
 import mysop.pia.com.ListofSOPs.SopRoom.SOPRoomData;
 import mysop.pia.com.Steps.ListOfSteps;
@@ -21,7 +24,7 @@ import mysop.pia.com.Steps.ListOfSteps;
 public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Viewholder> {
 
     private List<SOPRoomData> listOfSOPS;
-    Context context;
+    private Context context;
 
     ListofSOPsAdapter(Context context, List<SOPRoomData> listOfSOPs) {
         this.context = context;
