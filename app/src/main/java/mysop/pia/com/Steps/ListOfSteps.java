@@ -7,7 +7,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -30,7 +29,7 @@ public class ListOfSteps extends AppCompatActivity {
 
     List<StepsRoomData> listOfSteps = new ArrayList<>();
     String sopTitle;
-    int lastStep;
+    ListOfStepsAdapter StepsRecyclerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +41,28 @@ public class ListOfSteps extends AppCompatActivity {
         textviewTitle.setText(sopTitle);
         setupRecyclerviewAndAdapter(sopTitle);
         fabAddStep();
+
+//        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.UP | ItemTouchHelper.DOWN) {
+//            @Override
+//            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder dragged, @NonNull RecyclerView.ViewHolder target) {
+//                int position_dragged = dragged.getAdapterPosition();
+//                int position_target = target.getAdapterPosition();
+//
+//                Collections.swap(listOfSteps, position_dragged, position_target);
+//                StepsRecyclerAdapter.notifyItemMoved(position_dragged, position_target);
+//                return false;
+//            }
+//
+//            @Override
+//            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+//
+//            }
+//        }).attachToRecyclerView(recyclerviewListOfSteps);
     }
 
     private void setupRecyclerviewAndAdapter(String sopTitle) {
         listOfSteps = stepsRoomDatabase().listOfSteps().getAllSteps(sopTitle);
-        ListOfStepsAdapter StepsRecyclerAdapter = new ListOfStepsAdapter(this, listOfSteps);
+        StepsRecyclerAdapter = new ListOfStepsAdapter(this, listOfSteps);
         recyclerviewListOfSteps.setLayoutManager(new LinearLayoutManager(this));
         recyclerviewListOfSteps.setAdapter(StepsRecyclerAdapter);
     }

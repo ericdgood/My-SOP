@@ -1,26 +1,19 @@
 package mysop.pia.com.Steps;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-
-import java.io.File;
-import java.net.URI;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import mysop.pia.com.ListofSOPs.SopRoom.SOPRoomData;
 import mysop.pia.com.R;
 import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
 
@@ -63,6 +56,7 @@ public class ListOfStepsAdapter extends RecyclerView.Adapter<ListOfStepsAdapter.
 
         viewholder.constraintListOfSteps.setOnClickListener(v -> {
         Intent goToStep = new Intent(context, StepActivity.class);
+        goToStep.putExtra("sopTitle", listOfSteps.get(position).getSopTitle());
         stepImage = listOfSteps.get(position).getImageURI();
         stepDescrition = listOfSteps.get(position).getStepDescription();
         stepTitle = listOfSteps.get(position).getStepTitle();

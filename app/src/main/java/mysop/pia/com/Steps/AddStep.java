@@ -1,22 +1,16 @@
 package mysop.pia.com.Steps;
 
-import android.Manifest;
 import android.arch.persistence.room.Room;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,7 +27,6 @@ import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import mysop.pia.com.ListofSOPs.ListofSOPs;
 import mysop.pia.com.R;
 import mysop.pia.com.Steps.StepsRoom.StepsAppDatabase;
 import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
@@ -138,7 +131,6 @@ public class AddStep extends AppCompatActivity {
             StepsRoomData newStep = new StepsRoomData(sopTitle, stepTitle, stepNumber, stepDescription, image);
             if (!editStep) {
                 stepsRoomDatabase().listOfSteps().insertSteps(newStep);
-                Toast.makeText(this, "Step was added", Toast.LENGTH_SHORT).show();
                 return true;
             } else {
                 newStep.setId(ListOfStepsAdapter.stepId);
@@ -166,9 +158,9 @@ public class AddStep extends AppCompatActivity {
 
     private void editStep() {
         editStep = getIntent().getBooleanExtra("editStep", false);
-        stepTitle = ListOfStepsAdapter.stepTitle;
-        stepDescription = ListOfStepsAdapter.stepDescrition;
-        image = ListOfStepsAdapter.stepImage;
+        stepTitle = getIntent().getStringExtra("stepTitle");
+        stepDescription = getIntent().getStringExtra("stepDescription");
+        image = getIntent().getStringExtra("editImage");
 
         if (editStep) {
 //            DO THIS IF MENU EDIT TEXT WAS SELECTED

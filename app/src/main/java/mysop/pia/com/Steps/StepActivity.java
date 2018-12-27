@@ -1,13 +1,10 @@
 package mysop.pia.com.Steps;
 
 import android.content.Intent;
-import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -94,6 +91,9 @@ public class StepActivity extends AppCompatActivity {
             Intent editStep = new Intent(this, AddStep.class);
             editStep.putExtra("editStep", true);
             editStep.putExtra("stepNumber",Integer.valueOf(stringStepNumber));
+            editStep.putExtra("stepTitle", stringStepTitle);
+            editStep.putExtra("stepDescription", stringDescription);
+            editStep.putExtra("editImage", stringPicture);
             startActivity(editStep);
             finish();
             return true;
