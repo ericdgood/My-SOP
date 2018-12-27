@@ -40,6 +40,7 @@ import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
 
 public class AddStep extends AppCompatActivity {
 
+    private static final String TAG = "Testing";
     @BindView(R.id.textview_add_sop_step_count)
     TextView textviewStepCount;
     @BindView(R.id.edittext_add_step_title)
@@ -56,11 +57,16 @@ public class AddStep extends AppCompatActivity {
     ImageView imageviewCamera;
     @BindView(R.id.imageview_add_step_image_preview)
     ImageView imageviewImagePreview;
+    @BindView(R.id.button_add_step_save_edit)
+    Button buttonEditStepSave;
+
 
     Uri imageUri;
     String image;
     String stepTitle;
     String sopTitle;
+    String stepDescription;
+    boolean editStep;
     int stepNumber;
     int PERMISSION_GALLERY = 1;
     int PERMISSION_CAMERA = 2;
@@ -80,10 +86,12 @@ public class AddStep extends AppCompatActivity {
         setContentView(R.layout.add_step);
         ButterKnife.bind(this);
 //      GETS SOPTITLE FROM ADD SOP INTENT
-        sopTitle = getIntent().getStringExtra("sopTitle");
+        sopTitle = ListOfStepsAdapter.sopTitle;
         stepNumber = getIntent().getIntExtra("stepNumber", 1);
         setStepText(stepNumber);
         pickImageFromGallery();
+        editStep();
+        setStepTitle();
 
 //      DO THIS IF SOP IS COMPLETED
         buttonCompleteSOP.setOnClickListener(v -> {
@@ -107,10 +115,18 @@ public class AddStep extends AppCompatActivity {
         });
     }
 
+    private void setStepTitle() {
+        if (!editStep) {
+            setTitle("Add Step");
+        } else {
+            setTitle("Edit Step");
+        }
+    }
+
     private boolean AddStepToRoomDatabase() {
         stepTitle = ediitTextStepTitle.getText().toString();
         if (!stepTitle.equals("")) {
-            String stepDescription = edittextDescription.getText().toString();
+            stepDescription = edittextDescription.getText().toString();
 
             if (imageUri != null) {
                 image = imageUri.toString();
@@ -120,8 +136,16 @@ public class AddStep extends AppCompatActivity {
 
 //            SAVE STEPS FOR SOP
             StepsRoomData newStep = new StepsRoomData(sopTitle, stepTitle, stepNumber, stepDescription, image);
-            stepsRoomDatabase().listOfSteps().insertSteps(newStep);
-            return true;
+            if (!editStep) {
+                stepsRoomDatabase().listOfSteps().insertSteps(newStep);
+                Toast.makeText(this, "Step was added", Toast.LENGTH_SHORT).show();
+                return true;
+            } else {
+                Log.i(TAG, "AddStepToRoomDatabase: " + newStep);
+                stepsRoomDatabase().listOfSteps().updateStep(newStep);
+                Toast.makeText(this, "Edits were saved", Toast.LENGTH_SHORT).show();
+                return true;
+            }
         } else {
             Toast.makeText(this, "Please enter a title for the step", Toast.LENGTH_SHORT).show();
             return false;
@@ -140,7 +164,36 @@ public class AddStep extends AppCompatActivity {
         textviewStepCount.setText(stepConcat);
     }
 
-    //  THIS CREATS THE IMAGE AS A BUTTON TO OPEN GALLERY OR CAMERA
+    private void editStep() {
+        editStep = getIntent().getBooleanExtra("editStep", false);
+        stepTitle = getIntent().getStringExtra("stepTitle");
+        stepDescription = getIntent().getStringExtra("stepDescription");
+        image = getIntent().getStringExtra("editImage");
+
+        if (editStep) {
+//            DO THIS IF MENU EDIT TEXT WAS SELECTED
+            ediitTextStepTitle.setText(stepTitle);
+            edittextDescription.setText(stepDescription);
+            buttonAddAnotherStep.setVisibility(View.GONE);
+            buttonCompleteSOP.setVisibility(View.GONE);
+            buttonEditStepSave.setVisibility(View.VISIBLE);
+            if (image != null) {
+                imageviewImagePreview.setVisibility(View.VISIBLE);
+                Glide.with(this).load(image).into(imageviewImagePreview);
+            }
+
+            buttonEditStepSave.setOnClickListener(v -> {
+                if (AddStepToRoomDatabase()) {
+                    Intent goToNewSOP = new Intent(this, ListOfSteps.class);
+                    goToNewSOP.putExtra("sopTitle", sopTitle);
+                    startActivity(goToNewSOP);
+                    finish();
+                }
+            });
+        }
+    }
+
+    //  THIS CREATES THE IMAGE AS A BUTTON TO OPEN GALLERY OR CAMERA
     public void pickImageFromGallery() {
         imageviewGallery.setOnClickListener(v -> {
             ActivityCompat.requestPermissions(this,

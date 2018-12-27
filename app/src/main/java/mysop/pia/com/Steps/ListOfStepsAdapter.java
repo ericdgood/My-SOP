@@ -27,6 +27,7 @@ public class ListOfStepsAdapter extends RecyclerView.Adapter<ListOfStepsAdapter.
 
     private List<StepsRoomData> listOfSteps;
     Context context;
+    public static String sopTitle;
 
     ListOfStepsAdapter(Context context, List<StepsRoomData> listOfSteps) {
         this.context = context;
@@ -60,6 +61,7 @@ public class ListOfStepsAdapter extends RecyclerView.Adapter<ListOfStepsAdapter.
         goToStep.putExtra("description", listOfSteps.get(position).getStepDescription());
         goToStep.putExtra("stepTitle",listOfSteps.get(position).getStepTitle());
         goToStep.putExtra("stepNumber", String.valueOf(listOfSteps.get(position).getStepNumber()));
+        sopTitle = listOfSteps.get(position).getSopTitle();
         context.startActivity(goToStep);
         });
     }
