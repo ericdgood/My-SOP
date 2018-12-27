@@ -22,11 +22,6 @@ public class ListOfStepsAdapter extends RecyclerView.Adapter<ListOfStepsAdapter.
 
     private List<StepsRoomData> listOfSteps;
     Context context;
-    public static String sopTitle;
-    public static String stepImage;
-    public static String stepDescrition;
-    public static String stepTitle;
-    public static String stepNumber;
     public static int stepId;
 
     ListOfStepsAdapter(Context context, List<StepsRoomData> listOfSteps) {
@@ -43,20 +38,19 @@ public class ListOfStepsAdapter extends RecyclerView.Adapter<ListOfStepsAdapter.
         attachments(position, viewholder);
 
         viewholder.constraintListOfSteps.setOnClickListener(v -> {
-        Intent goToStep = new Intent(context, StepActivity.class);
-        goToStep.putExtra("sopTitle", listOfSteps.get(position).getSopTitle());
-        stepImage = listOfSteps.get(position).getImageURI();
-        stepDescrition = listOfSteps.get(position).getStepDescription();
-        stepTitle = listOfSteps.get(position).getStepTitle();
-        stepNumber = String.valueOf(listOfSteps.get(position).getStepNumber());
-        sopTitle = listOfSteps.get(position).getSopTitle();
-        stepId = listOfSteps.get(position).getId();
-        context.startActivity(goToStep);
+            Intent goToStep = new Intent(context, StepActivity.class);
+            goToStep.putExtra("sopTitle", listOfSteps.get(position).getSopTitle());
+            stepId = listOfSteps.get(position).getId();
+            goToStep.putExtra("stepImage", listOfSteps.get(position).getImageURI());
+            goToStep.putExtra("stepTitle", listOfSteps.get(position).getStepTitle());
+            goToStep.putExtra("stepDescription", listOfSteps.get(position).getStepDescription());
+            goToStep.putExtra("stepNumber",String.valueOf(listOfSteps.get(position).getStepNumber()));
+            context.startActivity(goToStep);
         });
     }
 
-    private void attachments(int position, Viewholder viewholder){
-        if (listOfSteps.get(position).getImageURI() != null || !listOfSteps.get(position).getStepDescription().equals("")){
+    private void attachments(int position, Viewholder viewholder) {
+        if (listOfSteps.get(position).getImageURI() != null || !listOfSteps.get(position).getStepDescription().equals("")) {
             viewholder.imageviewAttachment.setVisibility(View.VISIBLE);
         }
     }

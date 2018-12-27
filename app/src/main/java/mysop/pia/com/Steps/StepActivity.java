@@ -30,6 +30,7 @@ public class StepActivity extends AppCompatActivity {
     String stringDescription;
     String stringStepTitle;
     String stringStepNumber;
+    String StringSopTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,10 +51,12 @@ public class StepActivity extends AppCompatActivity {
     }
 
     private void getPassedStepExtra() {
-       stringPicture = ListOfStepsAdapter.stepImage;
-       stringDescription = ListOfStepsAdapter.stepDescrition;
-       stringStepTitle = ListOfStepsAdapter.stepTitle;
-       stringStepNumber = ListOfStepsAdapter.stepNumber;
+//        PASSED FROM LIST OF STEPS ADAPTER
+        stringPicture = getIntent().getStringExtra("stepImage");
+        stringDescription = getIntent().getStringExtra("stepDescription");
+        stringStepTitle = getIntent().getStringExtra("stepTitle");
+        stringStepNumber = getIntent().getStringExtra("stepNumber");
+        StringSopTitle = getIntent().getStringExtra("sopTitle");
     }
 
     private void pictureVisibility(){
@@ -85,6 +88,7 @@ public class StepActivity extends AppCompatActivity {
             editStep.putExtra("stepTitle", stringStepTitle);
             editStep.putExtra("stepDescription", stringDescription);
             editStep.putExtra("editImage", stringPicture);
+            editStep.putExtra("sopTitle", StringSopTitle);
             startActivity(editStep);
             finish();
         });

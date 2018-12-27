@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -79,7 +80,7 @@ public class AddStep extends AppCompatActivity {
         setContentView(R.layout.add_step);
         ButterKnife.bind(this);
 //      GETS SOPTITLE FROM ADD SOP INTENT
-        sopTitle = ListOfStepsAdapter.sopTitle;
+        sopTitle = getIntent().getStringExtra("sopTitle");
         stepNumber = getIntent().getIntExtra("stepNumber", 1);
         setStepText();
         pickImageFromGallery();
@@ -177,6 +178,7 @@ public class AddStep extends AppCompatActivity {
             buttonEditStepSave.setOnClickListener(v -> {
                 if (AddStepToRoomDatabase()) {
                     Intent goToNewSOP = new Intent(this, ListOfSteps.class);
+                    Log.i(TAG, "editStep: " + sopTitle);
                     goToNewSOP.putExtra("sopTitle", sopTitle);
                     startActivity(goToNewSOP);
                     finish();
