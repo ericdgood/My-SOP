@@ -7,6 +7,8 @@ import android.arch.persistence.room.Update;
 
 import java.util.List;
 
+import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
+
 @Dao
 public interface Stepsinterface {
 
@@ -16,6 +18,6 @@ public interface Stepsinterface {
     @Insert
     void insertSteps(StepsRoomData... steps);
 
-    @Update
+    @Update (onConflict = REPLACE)
     void updateStep(StepsRoomData... steps);
 }

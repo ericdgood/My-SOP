@@ -166,9 +166,9 @@ public class AddStep extends AppCompatActivity {
 
     private void editStep() {
         editStep = getIntent().getBooleanExtra("editStep", false);
-        stepTitle = getIntent().getStringExtra("stepTitle");
-        stepDescription = getIntent().getStringExtra("stepDescription");
-        image = getIntent().getStringExtra("editImage");
+        stepTitle = ListOfStepsAdapter.stepTitle;
+        stepDescription = ListOfStepsAdapter.stepDescrition;
+        image = ListOfStepsAdapter.stepImage;
 
         if (editStep) {
 //            DO THIS IF MENU EDIT TEXT WAS SELECTED

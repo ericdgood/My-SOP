@@ -51,10 +51,10 @@ public class StepActivity extends AppCompatActivity {
     }
 
     private void getPassedStepExtra() {
-       stringPicture = getIntent().getStringExtra("picture");
-       stringDescription = getIntent().getStringExtra("description");
-       stringStepTitle = getIntent().getStringExtra("stepTitle");
-       stringStepNumber = getIntent().getStringExtra("stepNumber");
+       stringPicture = ListOfStepsAdapter.stepImage;
+       stringDescription = ListOfStepsAdapter.stepDescrition;
+       stringStepTitle = ListOfStepsAdapter.stepTitle;
+       stringStepNumber = ListOfStepsAdapter.stepNumber;
     }
 
     private void pictureVisibility(){
@@ -93,10 +93,7 @@ public class StepActivity extends AppCompatActivity {
         if (id == R.id.menu_step_edit_step) {
             Intent editStep = new Intent(this, AddStep.class);
             editStep.putExtra("editStep", true);
-            editStep.putExtra("stepNumber", Integer.valueOf(stringStepNumber));
-            editStep.putExtra("stepTitle", stringStepTitle);
-            editStep.putExtra("stepDescription", stringDescription);
-            editStep.putExtra("editImage", stringPicture);
+            editStep.putExtra("stepNumber", stringStepNumber);
             startActivity(editStep);
             return true;
         }
