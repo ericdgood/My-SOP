@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
 //      SETUP RECYCLERVIEW AND ADAPTER
         sopList = roomDatabase().mysopDao().getAllSOPs();
-        CategoryRecyclerAdapter categoriesRecyclerAdapter = new CategoryRecyclerAdapter(sopList, this);
+        CategoryRecyclerAdapter categoriesRecyclerAdapter = new CategoryRecyclerAdapter(sopList, this, roomDatabase());
         recyclerViewCategories.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerViewCategories.setAdapter(categoriesRecyclerAdapter);
     }

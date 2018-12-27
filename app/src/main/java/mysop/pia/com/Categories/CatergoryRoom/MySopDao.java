@@ -14,9 +14,9 @@ public interface MySopDao {
 
     @Insert
     void insertAll(MySOPs... sops);
-//
-//    @Query("DELETE FROM favorite_movies WHERE movieId = :movieId")
-//    void deleteByUserId(String movieId);
+
+    @Query("DELETE FROM MYSOP WHERE :categoryName = categoryTitle")
+    void deleteCategory(String categoryName);
 //
 //    @Query("SELECT starStatus FROM favorite_movies WHERE movieId = :movieId")
 //    int getStarStatus(String movieId);
