@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -25,6 +26,8 @@ public class ListofSOPs extends AppCompatActivity {
 
     @BindView(R.id.recyclerview_list_of_sops)
     RecyclerView recyclerviewListofSOPs;
+    @BindView(R.id.listsop_categorytitle)
+    TextView textviewCategoryListTitle;
     @BindView(R.id.fab_addsop)
     FloatingActionButton fabAddSOP;
 
@@ -36,6 +39,8 @@ public class ListofSOPs extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_of_sops);
         ButterKnife.bind(this);
+
+        setUpPage();
 
         setupRecyclerviewAndAdapter();
 
@@ -58,6 +63,11 @@ public class ListofSOPs extends AppCompatActivity {
 //            }
 //        }).attachToRecyclerView(recyclerviewListofSOPs);
 
+    }
+
+    private void setUpPage() {
+        String titleConcat = "List of " + CategoryRecyclerAdapter.categoryName + " SOPs";
+        textviewCategoryListTitle.setText(titleConcat);
     }
 
     private void setupRecyclerviewAndAdapter(){

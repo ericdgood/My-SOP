@@ -10,7 +10,7 @@
         android:id="@+id/listsop_categorytitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="List of SOPs"
+        tools:text="List of House SOPs"
         style="@style/ConstraintCenterHorizontal"
         android:textSize="28sp"/>
     
