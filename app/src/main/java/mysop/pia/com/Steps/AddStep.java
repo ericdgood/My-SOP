@@ -88,7 +88,7 @@ public class AddStep extends AppCompatActivity {
 //      GETS SOPTITLE FROM ADD SOP INTENT
         sopTitle = ListOfStepsAdapter.sopTitle;
         stepNumber = getIntent().getIntExtra("stepNumber", 1);
-        setStepText(stepNumber);
+        setStepText();
         pickImageFromGallery();
         editStep();
         setStepTitle();
@@ -141,7 +141,7 @@ public class AddStep extends AppCompatActivity {
                 Toast.makeText(this, "Step was added", Toast.LENGTH_SHORT).show();
                 return true;
             } else {
-                Log.i(TAG, "AddStepToRoomDatabase: " + newStep);
+                newStep.setId(ListOfStepsAdapter.stepId);
                 stepsRoomDatabase().listOfSteps().updateStep(newStep);
                 Toast.makeText(this, "Edits were saved", Toast.LENGTH_SHORT).show();
                 return true;
@@ -159,7 +159,7 @@ public class AddStep extends AppCompatActivity {
                 .build();
     }
 
-    public void setStepText(int stepNumber) {
+    public void setStepText() {
         String stepConcat = "Step" + stepNumber;
         textviewStepCount.setText(stepConcat);
     }

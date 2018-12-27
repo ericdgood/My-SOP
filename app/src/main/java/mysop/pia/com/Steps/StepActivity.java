@@ -93,8 +93,9 @@ public class StepActivity extends AppCompatActivity {
         if (id == R.id.menu_step_edit_step) {
             Intent editStep = new Intent(this, AddStep.class);
             editStep.putExtra("editStep", true);
-            editStep.putExtra("stepNumber", stringStepNumber);
+            editStep.putExtra("stepNumber",Integer.valueOf(stringStepNumber));
             startActivity(editStep);
+            finish();
             return true;
         }
 
