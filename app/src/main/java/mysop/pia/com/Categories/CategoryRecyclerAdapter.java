@@ -1,7 +1,6 @@
 package mysop.pia.com.Categories;
 
 import android.app.AlertDialog;
-import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,10 +20,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import mysop.pia.com.Categories.CatergoryRoom.AppDatabase;
-import mysop.pia.com.ListofSOPs.ListofSOPs;
-import mysop.pia.com.MainActivity;
-import mysop.pia.com.R;
 import mysop.pia.com.Categories.CatergoryRoom.MySOPs;
+import mysop.pia.com.ListofSOPs.ListofSOPs;
+import mysop.pia.com.R;
 
 public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecyclerAdapter.Viewholder> {
 
@@ -42,6 +41,8 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
         @BindView(R.id.textview_category_title) TextView categoryTitle;
         @BindView(R.id.constrantlayout_category)
         ConstraintLayout categoryLayout;
+        @BindView(R.id.imageview_category)
+        ImageView imageviewCategory;
 
         Viewholder(@NonNull View itemView) {
             super(itemView);
