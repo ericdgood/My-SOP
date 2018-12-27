@@ -26,5 +26,14 @@
         android:textSize="18sp"
         style="@style/ConstraintCenterVertical"/>
 
+    <ImageView
+        android:id="@+id/imageView_step_list_attachment"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/ic_action_attachment_2"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
 
 </android.support.constraint.ConstraintLayout>
