@@ -2,9 +2,8 @@ package mysop.pia.com.Steps;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,6 +23,8 @@ public class StepActivity extends AppCompatActivity {
     ImageView imageviewStepPicture;
     @BindView(R.id.textview_step_description)
     TextView textviewStepDescription;
+    @BindView(R.id.fab_step_edit)
+    FloatingActionButton fabStepEdit;
 
     String stringPicture;
     String stringDescription;
@@ -41,6 +42,7 @@ public class StepActivity extends AppCompatActivity {
         setStepTitle();
         pictureVisibility();
         descriptionVisibility();
+        editStep();
     }
 
     private void setStepTitle() {
@@ -75,19 +77,8 @@ public class StepActivity extends AppCompatActivity {
         setTitle(stepNumberConCat);
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.step_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.menu_step_edit_step) {
+    private void editStep(){
+        fabStepEdit.setOnClickListener(v -> {
             Intent editStep = new Intent(this, AddStep.class);
             editStep.putExtra("editStep", true);
             editStep.putExtra("stepNumber",Integer.valueOf(stringStepNumber));
@@ -96,9 +87,6 @@ public class StepActivity extends AppCompatActivity {
             editStep.putExtra("editImage", stringPicture);
             startActivity(editStep);
             finish();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        });
     }
 }

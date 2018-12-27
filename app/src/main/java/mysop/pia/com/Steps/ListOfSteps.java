@@ -3,13 +3,16 @@ package mysop.pia.com.Steps;
 import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -42,22 +45,24 @@ public class ListOfSteps extends AppCompatActivity {
         setupRecyclerviewAndAdapter(sopTitle);
         fabAddStep();
 
-//        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.UP | ItemTouchHelper.DOWN) {
-//            @Override
-//            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder dragged, @NonNull RecyclerView.ViewHolder target) {
-//                int position_dragged = dragged.getAdapterPosition();
-//                int position_target = target.getAdapterPosition();
-//
-//                Collections.swap(listOfSteps, position_dragged, position_target);
-//                StepsRecyclerAdapter.notifyItemMoved(position_dragged, position_target);
-//                return false;
-//            }
-//
-//            @Override
-//            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-//
-//            }
-//        }).attachToRecyclerView(recyclerviewListOfSteps);
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN,0) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder dragged, @NonNull RecyclerView.ViewHolder target) {
+                int position_dragged = dragged.getAdapterPosition();
+                int position_target = target.getAdapterPosition();
+
+                Collections.swap(listOfSteps, position_dragged, position_target);
+//                listOfSteps.get(position_dragged).getId();
+//                stepsRoomDatabase().listOfSteps().updateStep();
+                StepsRecyclerAdapter.notifyItemMoved(position_dragged, position_target);
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+
+            }
+        }).attachToRecyclerView(recyclerviewListOfSteps);
     }
 
     private void setupRecyclerviewAndAdapter(String sopTitle) {
