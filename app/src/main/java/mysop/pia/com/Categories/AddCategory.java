@@ -4,8 +4,12 @@ import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -14,13 +18,17 @@ import mysop.pia.com.R;
 import mysop.pia.com.Categories.CatergoryRoom.AppDatabase;
 import mysop.pia.com.Categories.CatergoryRoom.MySOPs;
 
+import static android.support.constraint.Constraints.TAG;
+
 public class AddCategory extends Activity {
 
     @BindView(R.id.editText_category_name)
     EditText editTextCategoryName;
     @BindView(R.id.button_save)
     Button buttonSave;
-    MainActivity main;
+    String categoryTitle;
+    String catTitlesCheck;
+    boolean check = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,16 +37,18 @@ public class AddCategory extends Activity {
         ButterKnife.bind(this);
 
         buttonSave.setOnClickListener(v -> {
-            String categoryTitle = editTextCategoryName.getText().toString();
-
-
 //                THIS WILL SAVE THE CATEGORY INFO
-            MySOPs category = new MySOPs(categoryTitle);
-            roomDatabase().mysopDao().insertAll(category);
+            categoryTitle = editTextCategoryName.getText().toString();
 
-            Intent returnHome = new Intent(AddCategory.this, MainActivity.class);
-            startActivity(returnHome);
-            finish();
+                if (checkDuplicateCategory()) {
+//               DO THIS IS CATEGORY DOES NOT EXISTS
+                    MySOPs category = new MySOPs(categoryTitle);
+                    roomDatabase().mysopDao().insertAll(category);
+
+                    Intent returnHome = new Intent(AddCategory.this, MainActivity.class);
+                    startActivity(returnHome);
+                    finish();
+                }
         });
     }
 
@@ -49,4 +59,20 @@ public class AddCategory extends Activity {
                 .build();
     }
 
+    private boolean checkDuplicateCategory(){
+        List<MySOPs> categories = roomDatabase().mysopDao().getAllSOPs();
+
+        for (int i = 0; i < categories.size(); i++) {
+            catTitlesCheck = String.valueOf(categories.get(i).getCategoryTitle().toUpperCase());
+
+            if (catTitlesCheck.equals(categoryTitle.toUpperCase())) {
+                Toast.makeText(this, "This category already exists", Toast.LENGTH_LONG).show();
+                return false;
+            } else if (categoryTitle.equals("")){
+                Toast.makeText(this, "Please enter a category name", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        }
+        return true;
+    }
 }
