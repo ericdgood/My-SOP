@@ -18,9 +18,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import mysop.pia.com.Categories.CategoryRecyclerAdapter;
-import mysop.pia.com.R;
 import mysop.pia.com.ListofSOPs.SopRoom.SOPRoomData;
 import mysop.pia.com.ListofSOPs.SopRoom.SopAppDatabase;
+import mysop.pia.com.R;
 
 public class ListofSOPs extends AppCompatActivity {
 
@@ -33,6 +33,7 @@ public class ListofSOPs extends AppCompatActivity {
 
     List<SOPRoomData> listOfSOPs = new ArrayList<>();
     String sopTitleDelete;
+    ListofSOPsAdapter SOPsRecyclerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,20 +49,23 @@ public class ListofSOPs extends AppCompatActivity {
             Intent addNewSOP = new Intent(this, AddSOP.class);
             startActivity(addNewSOP);
         });
-////        SWIPE TO DELETE
-//        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
-//                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-//            @Override
-//            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
-//                return false;
-//            }
-//
-//            @Override
-//            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
-//                sopRoomDatabase().listOfSOPs().deleteSOP(setupRecyclerviewAndAdapter());
-//                Toast.makeText(ListofSOPs.this, sopTitleDelete +" has been deleted", Toast.LENGTH_SHORT).show();
-//            }
-//        }).attachToRecyclerView(recyclerviewListofSOPs);
+//        SWIPE TO DELETE
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
+                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int swipped) {
+                int position = viewHolder.getAdapterPosition();
+                sopTitleDelete = listOfSOPs.get(swipped).getSopTitle();
+                sopRoomDatabase().listOfSOPs().deleteSOP(sopTitleDelete);
+                SOPsRecyclerAdapter.notifyItemRemoved(position);
+                Toast.makeText(ListofSOPs.this, sopTitleDelete +" has been deleted", Toast.LENGTH_SHORT).show();
+            }
+        }).attachToRecyclerView(recyclerviewListofSOPs);
 
     }
 
@@ -72,7 +76,7 @@ public class ListofSOPs extends AppCompatActivity {
 
     private void setupRecyclerviewAndAdapter(){
         listOfSOPs = sopRoomDatabase().listOfSOPs().getAllSOPsPerCat(CategoryRecyclerAdapter.categoryName);
-        ListofSOPsAdapter SOPsRecyclerAdapter = new ListofSOPsAdapter(this, listOfSOPs);
+        SOPsRecyclerAdapter = new ListofSOPsAdapter(this, listOfSOPs);
         recyclerviewListofSOPs.setLayoutManager(new LinearLayoutManager(this));
         recyclerviewListofSOPs.setAdapter(SOPsRecyclerAdapter);
     }

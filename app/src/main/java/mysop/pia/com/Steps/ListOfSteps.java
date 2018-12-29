@@ -23,6 +23,7 @@ import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
 
 public class ListOfSteps extends AppCompatActivity {
 
+    private static final String TAG = "List of Steps";
     @BindView(R.id.textview_list_steps_title)
     TextView textviewTitle;
     @BindView(R.id.recyclerview_list_of_steps)
@@ -48,14 +49,19 @@ public class ListOfSteps extends AppCompatActivity {
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN,0) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder dragged, @NonNull RecyclerView.ViewHolder target) {
+
                 int position_dragged = dragged.getAdapterPosition();
                 int position_target = target.getAdapterPosition();
 
                 Collections.swap(listOfSteps, position_dragged, position_target);
-//                listOfSteps.get(position_dragged).getId();
-//                stepsRoomDatabase().listOfSteps().updateStep();
                 StepsRecyclerAdapter.notifyItemMoved(position_dragged, position_target);
-                return false;
+
+//                int targetNumber = listOfSteps.get(position_target).getStepNumber();
+//                int draggedNumber = listOfSteps.get(position_dragged).getStepNumber();
+//                Collections.swap(listOfSteps, draggedNumber, targetNumber);
+//                StepsRecyclerAdapter.notifyItemMoved(draggedNumber, targetNumber);
+
+                return true;
             }
 
             @Override
