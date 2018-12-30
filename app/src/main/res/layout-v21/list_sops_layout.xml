@@ -3,7 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/category_border"
     android:layout_margin="8dp"
     xmlns:tools="http://schemas.android.com/tools"
     android:padding="6dp"
@@ -16,17 +15,25 @@
         android:layout_height="wrap_content" 
         tools:text="3"
         android:textSize="28sp"
-        style="@style/ConstraintCenterVertical"/>
+        style="@style/ConstraintCenterVertical"
+        android:visibility="gone"/>
     
     <TextView
         android:id="@+id/textview_list_sops_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" 
         tools:text="This is a sample of a sop title"
-        android:textSize="18sp"
+        android:padding="6dp"
+        android:textSize="21sp"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toRightOf="@id/textview_list_sops_number_of_steps"
         style="@style/ConstraintCenterVertical"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintBottom_toBottomOf="@id/constrain_layout_list_of_sop_layout"/>
     
 
 </android.support.constraint.ConstraintLayout>
