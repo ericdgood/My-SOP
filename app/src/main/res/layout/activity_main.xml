@@ -39,4 +39,22 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 
+    <ImageView
+        android:id="@+id/imageview_sop_logo_no_categories"
+        style="@style/ConstraintCenter"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/mysop_logo"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/textview_no_categories"
+        style="@style/ConstraintCenterHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create a Category File"
+        android:textSize="21sp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/imageview_sop_logo_no_categories"/>
+
 </android.support.constraint.ConstraintLayout>

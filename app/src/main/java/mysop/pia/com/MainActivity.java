@@ -10,6 +10,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,21 +26,26 @@ import mysop.pia.com.Categories.CatergoryRoom.MySOPs;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "MainActvity";
     private List<MySOPs> sopList = new ArrayList<>();
     @BindView(R.id.recyclerview_categories)
     RecyclerView recyclerViewCategories;
     @BindView(R.id.fab)
     FloatingActionButton fab;
+    @BindView(R.id.imageview_sop_logo_no_categories)
+    ImageView imageviewNoCategory;
+    @BindView(R.id.textview_no_categories)
+    TextView textviewNoCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ButterKnife.bind(this);
 
-        setupRecylerviewDBAndAdapter();
+        checkForCategories();
 
         fab.setOnClickListener(view -> {
             Intent addCategory = new Intent(MainActivity.this, AddCategory.class);
@@ -64,10 +72,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupRecylerviewDBAndAdapter() {
-
-
 //      SETUP RECYCLERVIEW AND ADAPTER
-        sopList = roomDatabase().mysopDao().getAllSOPs();
         CategoryRecyclerAdapter categoriesRecyclerAdapter = new CategoryRecyclerAdapter(sopList, this, roomDatabase());
         recyclerViewCategories.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerViewCategories.setAdapter(categoriesRecyclerAdapter);
@@ -78,5 +83,15 @@ public class MainActivity extends AppCompatActivity {
                 .fallbackToDestructiveMigration()
                 .allowMainThreadQueries()
                 .build();
+    }
+
+    public void checkForCategories(){
+        sopList = roomDatabase().mysopDao().getAllSOPs();
+        if (sopList.size() > 0){
+            setupRecylerviewDBAndAdapter();
+        } else {
+            imageviewNoCategory.setVisibility(View.VISIBLE);
+            textviewNoCategory.setVisibility(View.VISIBLE);
+        }
     }
 }

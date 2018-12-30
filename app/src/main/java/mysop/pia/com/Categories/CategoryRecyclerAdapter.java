@@ -37,17 +37,32 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
         this.db = appDatabase;
     }
 
-    class Viewholder extends RecyclerView.ViewHolder {
-        @BindView(R.id.textview_category_title) TextView categoryTitle;
-        @BindView(R.id.constrantlayout_category)
-        ConstraintLayout categoryLayout;
-        @BindView(R.id.imageview_category)
-        ImageView imageviewCategory;
-
-        Viewholder(@NonNull View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
+    private void alertToDelete(String categoryName, int position) {
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(context, android.R.style.Theme_DeviceDefault_Dialog_Alert);
+        } else {
+            builder = new AlertDialog.Builder(context);
         }
+        builder.setTitle("Delete entry")
+                .setMessage("Are you sure you want to delete " + categoryName + "?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // continue with delete
+                        db.mysopDao().deleteCategory(categoryName);
+                        Toast.makeText(context, categoryName + " is Deleted", Toast.LENGTH_SHORT).show();
+                        categoryList.remove(position);
+                        notifyDataSetChanged();
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+//        return position;
     }
 
 
@@ -80,31 +95,17 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
         return categoryList.size();
     }
 
-    private void alertToDelete(String categoryName, int position){
-        AlertDialog.Builder builder;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            builder = new AlertDialog.Builder(context, android.R.style.Theme_DeviceDefault_Dialog_Alert);
-        } else {
-            builder = new AlertDialog.Builder(context);
+    class Viewholder extends RecyclerView.ViewHolder {
+        @BindView(R.id.textview_category_title)
+        TextView categoryTitle;
+        @BindView(R.id.constrantlayout_category)
+        ConstraintLayout categoryLayout;
+        @BindView(R.id.imageview_category)
+        ImageView imageviewCategory;
+
+        Viewholder(@NonNull View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
         }
-        builder.setTitle("Delete entry")
-                .setMessage("Are you sure you want to delete " + categoryName + "?")
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // continue with delete
-                        db.mysopDao().deleteCategory(categoryName);
-                        Toast.makeText(context, categoryName + " is Deleted", Toast.LENGTH_SHORT).show();
-                        categoryList.remove(position);
-                        notifyDataSetChanged();
-                    }
-                })
-                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // do nothing
-                    }
-                })
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
-//        return position;
     }
 }
