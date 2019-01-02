@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -21,6 +22,8 @@ import mysop.pia.com.ListofSOPs.SopRoom.SOPRoomData;
 import mysop.pia.com.ListofSOPs.SopRoom.SopAppDatabase;
 import mysop.pia.com.R;
 import mysop.pia.com.Steps.ListOfSteps;
+
+//import mysop.pia.com.Firebase.Firebase;
 
 public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Viewholder> {
 
@@ -89,7 +92,12 @@ public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Vi
                 .setMessage("Are you sure you want to share " + sopTitle + "?")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(context, "Long press to share", Toast.LENGTH_SHORT).show();
                         // SHARE WITH FIREBASE
+//                        Intent shareFirebase = new Intent(context, Firebase.class);
+//                        shareFirebase.putExtra("sopTitle", sopTitle);
+//                        context.startActivity(shareFirebase);
+
 
                     }
                 })
@@ -102,5 +110,4 @@ public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Vi
                 .show();
 //        return position;
     }
-
 }

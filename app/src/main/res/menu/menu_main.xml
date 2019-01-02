@@ -8,5 +8,4 @@
         android:title="Edit Cat"
         app:showAsAction="never" />
 
-    <!--todo: making category editable-->
 </menu>
