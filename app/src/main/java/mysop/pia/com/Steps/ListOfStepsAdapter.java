@@ -23,6 +23,7 @@ public class ListOfStepsAdapter extends RecyclerView.Adapter<ListOfStepsAdapter.
     private List<StepsRoomData> listOfSteps;
     Context context;
     public static int stepId;
+    int stepNumber = 0;
 
     ListOfStepsAdapter(Context context, List<StepsRoomData> listOfSteps) {
         this.context = context;
@@ -32,7 +33,8 @@ public class ListOfStepsAdapter extends RecyclerView.Adapter<ListOfStepsAdapter.
     @Override
     public void onBindViewHolder(@NonNull ListOfStepsAdapter.Viewholder viewholder, int position) {
 //        SHOWS STEP NUMBERS
-        viewholder.textviewStepNumber.setText(String.valueOf(listOfSteps.get(position).getStepNumber()));
+        stepNumber++;
+        viewholder.textviewStepNumber.setText(String.valueOf(stepNumber));
 //        SHOWS STEP TITLE
         viewholder.textviewStepTitle.setText(listOfSteps.get(position).getStepTitle());
         attachments(position, viewholder);

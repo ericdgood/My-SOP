@@ -9,10 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -53,14 +53,13 @@ public class ListOfSteps extends AppCompatActivity {
                 int position_dragged = dragged.getAdapterPosition();
                 int position_target = target.getAdapterPosition();
 
-                Collections.swap(listOfSteps, position_dragged, position_target);
+                int draggedStepNum = listOfSteps.get(position_dragged).getStepNumber();
+                int targetStepNum = listOfSteps.get(position_target).getStepNumber();
+
+                Log.i(TAG, "dragged: " + draggedStepNum + "target" + targetStepNum);
+
+//                Collections.swap(listOfSteps, draggedStepNum, targetStepNum);
                 StepsRecyclerAdapter.notifyItemMoved(position_dragged, position_target);
-
-//                int targetNumber = listOfSteps.get(position_target).getStepNumber();
-//                int draggedNumber = listOfSteps.get(position_dragged).getStepNumber();
-//                Collections.swap(listOfSteps, draggedNumber, targetNumber);
-//                StepsRecyclerAdapter.notifyItemMoved(draggedNumber, targetNumber);
-
                 return true;
             }
 
