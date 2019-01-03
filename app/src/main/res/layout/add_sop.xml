@@ -17,14 +17,18 @@
         android:id="@+id/edittext_add_sop_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="text"
+        android:inputType="textCapSentences"
         android:hint="SOP Title"
         app:layout_constraintTop_toBottomOf="@id/textview_new_sop_label"/>
 
     <EditText
         android:id="@+id/edittext_sop_description"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/description_border"
+        android:hint="SOP Description"
+        android:padding="16dp"
         app:layout_constraintTop_toBottomOf="@id/edittext_add_sop_title"/>
 
     <Button
@@ -33,6 +37,7 @@
         android:layout_height="wrap_content"
         android:text="add step"
         android:background="@drawable/description_border"
+        android:layout_margin="4dp"
         app:layout_constraintTop_toBottomOf="@id/edittext_sop_description" />
 
 
