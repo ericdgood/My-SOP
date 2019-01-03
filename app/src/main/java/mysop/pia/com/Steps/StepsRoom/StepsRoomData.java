@@ -19,16 +19,20 @@ public class StepsRoomData {
     @ColumnInfo(name = "stepTitle")
     private String stepTitle;
 
+    @ColumnInfo(name = "stepNumber")
+    private int stepNumber;
+
     @ColumnInfo(name = "stepDescrition")
     private String stepDescription;
 
     @ColumnInfo(name = "imageURI")
     private String imageURI;
 
-    public StepsRoomData(String category, String sopTitle, String stepTitle, String stepDescription, String imageURI) {
+    public StepsRoomData(String category, String sopTitle, String stepTitle, int stepNumber, String stepDescription, String imageURI) {
         this.category = category;
         this.sopTitle = sopTitle;
         this.stepTitle = stepTitle;
+        this.stepNumber = stepNumber;
         this.stepDescription = stepDescription;
         this.imageURI = imageURI;
     }
@@ -51,6 +55,10 @@ public class StepsRoomData {
 
     public String getSopTitle() {
         return sopTitle;
+    }
+
+    public int getStepNumber() {
+        return stepNumber;
     }
 
     public String getStepDescription() {

@@ -60,6 +60,7 @@ public class AddStep extends AppCompatActivity {
     String stepTitle;
     String sopTitle;
     String categoryName;
+    int stepNumber;
     String stepDescription;
     boolean editStep;
     int PERMISSION_GALLERY = 1;
@@ -82,6 +83,8 @@ public class AddStep extends AppCompatActivity {
 //      GETS SOPTITLE FROM ADD SOP INTENT
         sopTitle = getIntent().getStringExtra("sopTitle");
         categoryName = getIntent().getStringExtra("sopCategory");
+        stepNumber = getIntent().getIntExtra("stepNumber", 1);
+        setStepText();
         pickImageFromGallery();
         editStep();
         setStepTitle();
@@ -90,6 +93,7 @@ public class AddStep extends AppCompatActivity {
         buttonCompleteSOP.setOnClickListener(v -> {
             if (AddStepToRoomDatabase()) {
                 Intent goToNewSOP = new Intent(this, ListofSOPs.class);
+                goToNewSOP.putExtra("sopTitle", sopTitle);
                 startActivity(goToNewSOP);
                 finish();
             }
@@ -98,6 +102,8 @@ public class AddStep extends AppCompatActivity {
         buttonAddAnotherStep.setOnClickListener((View v) -> {
             if (AddStepToRoomDatabase()) {
                 Intent nextStep = new Intent(this, AddStep.class);
+                int nextStepNum = stepNumber + 1;
+                nextStep.putExtra("stepNumber", nextStepNum);
                 nextStep.putExtra("sopTitle", sopTitle);
                 startActivity(nextStep);
                 finish();
@@ -125,7 +131,7 @@ public class AddStep extends AppCompatActivity {
             }
 
 //            SAVE STEPS FOR SOP
-            StepsRoomData newStep = new StepsRoomData(categoryName ,sopTitle, stepTitle, stepDescription, image);
+            StepsRoomData newStep = new StepsRoomData(categoryName ,sopTitle, stepTitle, stepNumber, stepDescription, image);
             if (!editStep) {
                 stepsRoomDatabase().listOfSteps().insertSteps(newStep);
                 return true;
@@ -146,6 +152,11 @@ public class AddStep extends AppCompatActivity {
                 .fallbackToDestructiveMigration()
                 .allowMainThreadQueries()
                 .build();
+    }
+
+    public void setStepText() {
+        String stepConcat = "Step" + stepNumber;
+        textviewStepCount.setText(stepConcat);
     }
 
     private void editStep() {

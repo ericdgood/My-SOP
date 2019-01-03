@@ -23,4 +23,7 @@ public interface Stepsinterface {
 
     @Update (onConflict = REPLACE)
     void updateStep(StepsRoomData... steps);
+
+    @Query("UPDATE steps SET stepTitle = :newT WHERE :dragged = id")
+    void updateOnMove(String newT ,int dragged);
 }

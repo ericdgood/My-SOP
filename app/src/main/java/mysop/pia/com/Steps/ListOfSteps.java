@@ -51,14 +51,14 @@ public class ListOfSteps extends AppCompatActivity {
 
                 int position_dragged = dragged.getAdapterPosition();
                 int position_target = target.getAdapterPosition();
-//
-//                int draggedStepNum = listOfSteps.get(position_dragged).getStepNumber();
-//                int targetStepNum = listOfSteps.get(position_target).getStepNumber();
-//
-//                Log.i(TAG, "dragged: " + draggedStepNum + "target" + targetStepNum);
 
-//                Collections.swap(listOfSteps, draggedStepNum, targetStepNum);
+                int draggedId = stepsRoomDatabase().listOfSteps().getAllSteps(sopTitle).get(position_dragged).getId();
+                int targetId = stepsRoomDatabase().listOfSteps().getAllSteps(sopTitle).get(position_target).getId();
+
+                stepsRoomDatabase().listOfSteps().updateOnMove("new Title", draggedId);
+
                 StepsRecyclerAdapter.notifyItemMoved(position_dragged, position_target);
+                StepsRecyclerAdapter.notifyDataSetChanged();
                 return true;
             }
 
