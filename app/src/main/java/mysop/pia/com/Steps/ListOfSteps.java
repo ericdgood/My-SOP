@@ -53,13 +53,19 @@ public class ListOfSteps extends AppCompatActivity {
                 int position_target = target.getAdapterPosition();
 
                 int draggedId = stepsRoomDatabase().listOfSteps().getAllSteps(sopTitle).get(position_dragged).getId();
-                int targetId = stepsRoomDatabase().listOfSteps().getAllSteps(sopTitle).get(position_target).getId();
+                int draggedStepNum = stepsRoomDatabase().listOfSteps().getAllSteps(sopTitle).get(position_dragged).getStepNumber();
 
-                stepsRoomDatabase().listOfSteps().updateOnMove(1, draggedId);
+                int targetId = stepsRoomDatabase().listOfSteps().getAllSteps(sopTitle).get(position_target).getId();
+                int targetStepNum = stepsRoomDatabase().listOfSteps().getAllSteps(sopTitle).get(position_target).getStepNumber();
+
+                stepsRoomDatabase().listOfSteps().updateOnMove(targetStepNum, draggedId);
+                stepsRoomDatabase().listOfSteps().updateTarget(draggedStepNum, targetId);
 
                 StepsRecyclerAdapter.notifyItemMoved(position_dragged, position_target);
-                StepsRecyclerAdapter.notifyDataSetChanged();
-                return true;
+                StepsRecyclerAdapter.notifyItemChanged(position_dragged);
+                StepsRecyclerAdapter.notifyItemChanged(position_target);
+//                StepsRecyclerAdapter.notifyDataSetChanged();
+                return false;
             }
 
             @Override
