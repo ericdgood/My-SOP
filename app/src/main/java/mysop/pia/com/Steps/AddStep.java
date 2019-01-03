@@ -27,6 +27,7 @@ import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import mysop.pia.com.ListofSOPs.ListofSOPs;
 import mysop.pia.com.R;
 import mysop.pia.com.Steps.StepsRoom.StepsAppDatabase;
 import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
@@ -58,9 +59,9 @@ public class AddStep extends AppCompatActivity {
     String image;
     String stepTitle;
     String sopTitle;
+    String categoryName;
     String stepDescription;
     boolean editStep;
-    int stepNumber;
     int PERMISSION_GALLERY = 1;
     int PERMISSION_CAMERA = 2;
     String mCameraFileName;
@@ -80,8 +81,7 @@ public class AddStep extends AppCompatActivity {
         ButterKnife.bind(this);
 //      GETS SOPTITLE FROM ADD SOP INTENT
         sopTitle = getIntent().getStringExtra("sopTitle");
-        stepNumber = getIntent().getIntExtra("stepNumber", 1);
-        setStepText();
+        categoryName = getIntent().getStringExtra("sopCategory");
         pickImageFromGallery();
         editStep();
         setStepTitle();
@@ -89,8 +89,7 @@ public class AddStep extends AppCompatActivity {
 //      DO THIS IF SOP IS COMPLETED
         buttonCompleteSOP.setOnClickListener(v -> {
             if (AddStepToRoomDatabase()) {
-                Intent goToNewSOP = new Intent(this, ListOfSteps.class);
-                goToNewSOP.putExtra("sopTitle", sopTitle);
+                Intent goToNewSOP = new Intent(this, ListofSOPs.class);
                 startActivity(goToNewSOP);
                 finish();
             }
@@ -99,8 +98,6 @@ public class AddStep extends AppCompatActivity {
         buttonAddAnotherStep.setOnClickListener((View v) -> {
             if (AddStepToRoomDatabase()) {
                 Intent nextStep = new Intent(this, AddStep.class);
-                int nextStepNum = stepNumber + 1;
-                nextStep.putExtra("stepNumber", nextStepNum);
                 nextStep.putExtra("sopTitle", sopTitle);
                 startActivity(nextStep);
                 finish();
@@ -128,7 +125,7 @@ public class AddStep extends AppCompatActivity {
             }
 
 //            SAVE STEPS FOR SOP
-            StepsRoomData newStep = new StepsRoomData(sopTitle, stepTitle, stepNumber, stepDescription, image);
+            StepsRoomData newStep = new StepsRoomData(categoryName ,sopTitle, stepTitle, stepDescription, image);
             if (!editStep) {
                 stepsRoomDatabase().listOfSteps().insertSteps(newStep);
                 return true;
@@ -149,11 +146,6 @@ public class AddStep extends AppCompatActivity {
                 .fallbackToDestructiveMigration()
                 .allowMainThreadQueries()
                 .build();
-    }
-
-    public void setStepText() {
-        String stepConcat = "Step" + stepNumber;
-        textviewStepCount.setText(stepConcat);
     }
 
     private void editStep() {

@@ -15,6 +15,9 @@ public interface Stepsinterface {
     @Query("SELECT * FROM steps WHERE :sopTitle = sopTitle")
     List<StepsRoomData> getAllSteps(String sopTitle);
 
+    @Query("SELECT * FROM steps WHERE :category = category")
+    List<StepsRoomData> getAllSOPs(String category);
+
     @Insert
     void insertSteps(StepsRoomData... steps);
 

@@ -15,12 +15,13 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import mysop.pia.com.Categories.CategoryRecyclerAdapter;
-import mysop.pia.com.ListofSOPs.SopRoom.SOPRoomData;
-import mysop.pia.com.ListofSOPs.SopRoom.SopAppDatabase;
 import mysop.pia.com.R;
+import mysop.pia.com.Steps.StepsRoom.StepsAppDatabase;
+import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
 
 public class ListofSOPs extends AppCompatActivity {
 
+    private static final String TAG = "Hello";
     @BindView(R.id.recyclerview_list_of_sops)
     RecyclerView recyclerviewListofSOPs;
     @BindView(R.id.listsop_categorytitle)
@@ -28,8 +29,7 @@ public class ListofSOPs extends AppCompatActivity {
     @BindView(R.id.fab_addsop)
     FloatingActionButton fabAddSOP;
 
-    List<SOPRoomData> listOfSOPs = new ArrayList<>();
-    String sopTitleDelete;
+    List<StepsRoomData> listOfSOPs = new ArrayList<>();
     ListofSOPsAdapter SOPsRecyclerAdapter;
 
     @Override
@@ -72,16 +72,17 @@ public class ListofSOPs extends AppCompatActivity {
     }
 
     private void setupRecyclerviewAndAdapter(){
-        listOfSOPs = sopRoomDatabase().listOfSOPs().getAllSOPsPerCat(CategoryRecyclerAdapter.categoryName);
-        SOPsRecyclerAdapter = new ListofSOPsAdapter(this, listOfSOPs, sopRoomDatabase());
+        listOfSOPs = stepsRoomDatabase().listOfSteps().getAllSOPs(CategoryRecyclerAdapter.categoryName);
+        SOPsRecyclerAdapter = new ListofSOPsAdapter(this, listOfSOPs);
         recyclerviewListofSOPs.setLayoutManager(new LinearLayoutManager(this));
         recyclerviewListofSOPs.setAdapter(SOPsRecyclerAdapter);
     }
 
-    public SopAppDatabase sopRoomDatabase() {
-        return Room.databaseBuilder(getApplicationContext(), SopAppDatabase.class, "sopinfo")
+    public StepsAppDatabase stepsRoomDatabase() {
+        return Room.databaseBuilder(getApplicationContext(), StepsAppDatabase.class, "steps")
                 .fallbackToDestructiveMigration()
                 .allowMainThreadQueries()
                 .build();
     }
+
 }

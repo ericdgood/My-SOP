@@ -18,23 +18,20 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import mysop.pia.com.ListofSOPs.SopRoom.SOPRoomData;
-import mysop.pia.com.ListofSOPs.SopRoom.SopAppDatabase;
 import mysop.pia.com.R;
 import mysop.pia.com.Steps.ListOfSteps;
+import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
 
 //import mysop.pia.com.Firebase.Firebase;
 
 public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Viewholder> {
 
-    private List<SOPRoomData> listOfSOPS;
+    private List<StepsRoomData> listOfSOPS;
     private Context context;
-    private SopAppDatabase db;
 
-    ListofSOPsAdapter(Context context, List<SOPRoomData> listOfSOPs, SopAppDatabase sopAppDatabase) {
+    ListofSOPsAdapter(Context context, List<StepsRoomData> listOfSOPs) {
         this.context = context;
         this.listOfSOPS = listOfSOPs;
-        this.db = sopAppDatabase;
     }
 
     public class Viewholder extends RecyclerView.ViewHolder {

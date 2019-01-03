@@ -46,7 +46,6 @@ public class ListOfStepsAdapter extends RecyclerView.Adapter<ListOfStepsAdapter.
             goToStep.putExtra("stepImage", listOfSteps.get(position).getImageURI());
             goToStep.putExtra("stepTitle", listOfSteps.get(position).getStepTitle());
             goToStep.putExtra("stepDescription", listOfSteps.get(position).getStepDescription());
-            goToStep.putExtra("stepNumber",String.valueOf(listOfSteps.get(position).getStepNumber()));
             context.startActivity(goToStep);
         });
     }
