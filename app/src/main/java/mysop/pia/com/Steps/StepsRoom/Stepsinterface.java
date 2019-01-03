@@ -12,7 +12,7 @@ import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 @Dao
 public interface Stepsinterface {
 
-    @Query("SELECT * FROM steps WHERE :sopTitle = sopTitle")
+    @Query("SELECT * FROM steps WHERE :sopTitle = sopTitle ORDER BY stepNumber ASC")
     List<StepsRoomData> getAllSteps(String sopTitle);
 
     @Query("SELECT * FROM steps WHERE :category = category")
@@ -24,6 +24,6 @@ public interface Stepsinterface {
     @Update (onConflict = REPLACE)
     void updateStep(StepsRoomData... steps);
 
-    @Query("UPDATE steps SET stepTitle = :newT WHERE :dragged = id")
-    void updateOnMove(String newT ,int dragged);
+    @Query("UPDATE steps SET stepNumber = :newT WHERE :dragged = id")
+    void updateOnMove(int newT ,int dragged);
 }

@@ -55,7 +55,7 @@ public class ListOfSteps extends AppCompatActivity {
                 int draggedId = stepsRoomDatabase().listOfSteps().getAllSteps(sopTitle).get(position_dragged).getId();
                 int targetId = stepsRoomDatabase().listOfSteps().getAllSteps(sopTitle).get(position_target).getId();
 
-                stepsRoomDatabase().listOfSteps().updateOnMove("new Title", draggedId);
+                stepsRoomDatabase().listOfSteps().updateOnMove(1, draggedId);
 
                 StepsRecyclerAdapter.notifyItemMoved(position_dragged, position_target);
                 StepsRecyclerAdapter.notifyDataSetChanged();
