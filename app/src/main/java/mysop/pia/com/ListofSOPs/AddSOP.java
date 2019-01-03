@@ -50,6 +50,7 @@ public class AddSOP extends AppCompatActivity{
                 addStep.putExtra("sopTitle", addSopTitle);
                 addStep.putExtra("sopCategory", categoryName);
                 startActivity(addStep);
+                finish();
             }
         });
     }

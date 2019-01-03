@@ -34,21 +34,6 @@ public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Vi
         this.listOfSOPS = listOfSOPs;
     }
 
-    public class Viewholder extends RecyclerView.ViewHolder {
-//        BINDVIEWS HERE
-        @BindView(R.id.textview_list_sops_title)
-        TextView textViewListOfSopsTitle;
-        @BindView(R.id.textview_list_sops_number_of_steps)
-        TextView textviewNumberOfSteps;
-        @BindView(R.id.constrain_layout_list_of_sop_layout)
-        ConstraintLayout constrainListOfSOPs;
-
-        Viewholder(@NonNull View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-        }
-    }
-
     @Override
     public void onBindViewHolder(@NonNull ListofSOPsAdapter.Viewholder viewholder, int position) {
         viewholder.textViewListOfSopsTitle.setText(listOfSOPS.get(position).getSopTitle());
@@ -64,6 +49,22 @@ public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Vi
             alertToDelete(sopTitle, position);
             return true;
         });
+
+    }
+
+    public class Viewholder extends RecyclerView.ViewHolder {
+        //        BINDVIEWS HERE
+        @BindView(R.id.textview_list_sops_title)
+        TextView textViewListOfSopsTitle;
+        @BindView(R.id.textview_list_sops_number_of_steps)
+        TextView textviewNumberOfSteps;
+        @BindView(R.id.constrain_layout_list_of_sop_layout)
+        ConstraintLayout constrainListOfSOPs;
+
+        Viewholder(@NonNull View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
     }
 
     @NonNull

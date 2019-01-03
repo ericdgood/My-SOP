@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,25 +46,39 @@ public class ListofSOPs extends AppCompatActivity {
         fabAddSOP.setOnClickListener(v -> {
             Intent addNewSOP = new Intent(this, AddSOP.class);
             startActivity(addNewSOP);
+            finish();
         });
-////        SWIPE TO DELETE
-//        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
-//                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-//            @Override
-//            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
-//                return false;
-//            }
-//
-//            @Override
-//            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int swipped) {
-//                int position = viewHolder.getAdapterPosition();
-//                sopTitleDelete = listOfSOPs.get(swipped).getSopTitle();
-//                sopRoomDatabase().listOfSOPs().deleteSOP(sopTitleDelete);
-//                SOPsRecyclerAdapter.notifyItemRemoved(position);
-//                Toast.makeText(ListofSOPs.this, sopTitleDelete +" has been deleted", Toast.LENGTH_SHORT).show();
-//            }
-//        }).attachToRecyclerView(recyclerviewListofSOPs);
 
+        new SwipeHelper(this, recyclerviewListofSOPs) {
+            @Override
+            public void instantiateUnderlayButton(RecyclerView.ViewHolder viewHolder, List<UnderlayButton> underlayButtons) {
+                underlayButtons.add(new SwipeHelper.UnderlayButton(
+                        "Delete",
+                        getColor(R.color.logoRedBookColor),
+                        pos -> {
+                            // TODO: onDelete
+                            Toast.makeText(ListofSOPs.this, " Item Deleted", Toast.LENGTH_SHORT).show();
+                        }
+                ));
+
+                underlayButtons.add(new SwipeHelper.UnderlayButton(
+                        "Edit",
+                        getColor(R.color.logoBlueBookColor),
+                        pos -> {
+                            // TODO: Edit
+                            Toast.makeText(ListofSOPs.this, " Item Edit", Toast.LENGTH_SHORT).show();
+                        }
+                ));
+                underlayButtons.add(new SwipeHelper.UnderlayButton(
+                        "Share",
+                        getColor(R.color.logoYellowBookColor),
+                        pos -> {
+                            // TODO: Shared
+                            Toast.makeText(ListofSOPs.this, " Item Shared", Toast.LENGTH_SHORT).show();
+                        }
+                ));
+            }
+        };
     }
 
     private void setUpPage() {
@@ -71,7 +86,7 @@ public class ListofSOPs extends AppCompatActivity {
         textviewCategoryListTitle.setText(titleConcat);
     }
 
-    private void setupRecyclerviewAndAdapter(){
+    private void setupRecyclerviewAndAdapter() {
         listOfSOPs = stepsRoomDatabase().listOfSteps().getAllSOPs(CategoryRecyclerAdapter.categoryName);
         SOPsRecyclerAdapter = new ListofSOPsAdapter(this, listOfSOPs);
         recyclerviewListofSOPs.setLayoutManager(new LinearLayoutManager(this));
