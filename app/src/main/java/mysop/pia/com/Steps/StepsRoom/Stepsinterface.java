@@ -28,8 +28,8 @@ public interface Stepsinterface {
     void updateStep(StepsRoomData... steps);
 
     //    UPDATE SOP TITLE
-    @Query("UPDATE steps SET sopTitle = :newTitle WHERE :id = id")
-    void updateSop(String newTitle ,int id);
+    @Query("UPDATE steps SET sopTitle = :newTitle WHERE :oldTitle = sopTitle")
+    void updateSop(String newTitle ,String oldTitle);
 
 //    UPDATE STEP NUMBERS WHEN MOVE IN RECYCLERVIEW
     @Query("UPDATE steps SET stepNumber = :newN WHERE :dragged = id")

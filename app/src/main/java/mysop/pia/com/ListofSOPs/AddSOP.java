@@ -71,7 +71,7 @@ public class AddSOP extends AppCompatActivity{
         buttonEditSOP.setOnClickListener(v -> {
             addSopTitle = editTextAddSopTitle.getText().toString();
             if (checkDuplicateSOP()) {
-                stepsRoomDatabase().listOfSteps().updateSop(addSopTitle,getIntent().getIntExtra("editId", 0));
+                stepsRoomDatabase().listOfSteps().updateSop(addSopTitle,getIntent().getStringExtra("editSopTitle"));
                 Intent returnToSOP = new Intent(this, ListofSOPs.class);
                 startActivity(returnToSOP);
                 finish();

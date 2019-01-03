@@ -106,8 +106,6 @@ public class ListofSOPs extends AppCompatActivity {
                         Toast.makeText(this, sopTitle + " is deleted from book", Toast.LENGTH_SHORT).show();
                     } else if (alertBoxTitle.equals("Edit SOP")) {
                         editSOP();
-                        Toast.makeText(this, "Edit SOP", Toast.LENGTH_SHORT).show();
-
                     } else {
 
                         Toast.makeText(this, "Share SOP", Toast.LENGTH_SHORT).show();
@@ -128,6 +126,7 @@ public class ListofSOPs extends AppCompatActivity {
         editSOP.putExtra("editSopTitle", sopTitle);
         editSOP.putExtra("editId", editID);
         startActivity(editSOP);
+        finish();
     }
 
     private void setUpPage() {
