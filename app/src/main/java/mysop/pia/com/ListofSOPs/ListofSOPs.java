@@ -32,6 +32,7 @@ public class ListofSOPs extends AppCompatActivity {
     FloatingActionButton fabAddSOP;
     private String alertBoxTitle;
     private String alertBoxMessage;
+    String sopTitle;
 
     List<StepsRoomData> listOfSOPs = new ArrayList<>();
     ListofSOPsAdapter SOPsRecyclerAdapter;
@@ -60,9 +61,10 @@ public class ListofSOPs extends AppCompatActivity {
                         getColor(R.color.logoRedBookColor),
                         pos -> {
                             // TODO: onDelete
+                            sopTitle = listOfSOPs.get(viewHolder.getAdapterPosition()).getSopTitle();
                             alertBoxTitle = "Delete SOP";
-                            alertBoxMessage = "Are you sure you want to delete " + listOfSOPs.get(viewHolder.getAdapterPosition()).getSopTitle();
-                            alertToDelete(alertBoxTitle, alertBoxMessage);
+                            alertBoxMessage = "Are you sure you want to delete " + sopTitle + " SOP?";
+                            alertToDelete(alertBoxTitle, alertBoxMessage, viewHolder);
                         }
                 ));
 
@@ -71,7 +73,8 @@ public class ListofSOPs extends AppCompatActivity {
                         getColor(R.color.logoBlueBookColor),
                         pos -> {
                             // TODO: Edit
-                            Toast.makeText(ListofSOPs.this, " Item Edit", Toast.LENGTH_SHORT).show();
+                            alertBoxTitle = "Edit SOP";
+                            alertToDelete(alertBoxTitle, alertBoxMessage, viewHolder);
                         }
                 ));
                 underlayButtons.add(new SwipeHelper.UnderlayButton(
@@ -79,20 +82,34 @@ public class ListofSOPs extends AppCompatActivity {
                         getColor(R.color.logoYellowBookColor),
                         pos -> {
                             // TODO: Shared
-                            Toast.makeText(ListofSOPs.this, " Item Shared", Toast.LENGTH_SHORT).show();
+                            alertBoxTitle = "Share SOP";
+                            alertToDelete(alertBoxTitle, alertBoxMessage, viewHolder);
                         }
                 ));
             }
         };
     }
 
-    private void alertToDelete(String alertBoxTitle, String alertBoxMessage) {
+    private void alertToDelete(String alertBoxTitle, String alertBoxMessage, RecyclerView.ViewHolder viewHolder) {
         AlertDialog.Builder builder;
         builder = new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Dialog_Alert);
         builder.setTitle(alertBoxTitle)
                 .setMessage(alertBoxMessage)
                 .setPositiveButton(android.R.string.yes, (dialog, which) -> {
 //                        DO STEP HERE
+                    if (alertBoxTitle.equals("Delete SOP")) {
+                        stepsRoomDatabase().listOfSteps().DeleteSOP(sopTitle);
+                        listOfSOPs.remove(listOfSOPs.get(viewHolder.getAdapterPosition()));
+                        SOPsRecyclerAdapter.notifyDataSetChanged();
+                        Toast.makeText(this, sopTitle + " is deleted", Toast.LENGTH_SHORT).show();
+                    } else if (alertBoxTitle.equals("Edit SOP")) {
+
+                        Toast.makeText(this, "Edit SOP", Toast.LENGTH_SHORT).show();
+
+                    } else {
+
+                        Toast.makeText(this, "Share SOP", Toast.LENGTH_SHORT).show();
+                    }
 
                 })
                 .setNegativeButton(android.R.string.no, (dialog, which) -> {
@@ -110,7 +127,7 @@ public class ListofSOPs extends AppCompatActivity {
 
     private void setupRecyclerviewAndAdapter() {
         listOfSOPs = stepsRoomDatabase().listOfSteps().getAllSOPs(CategoryRecyclerAdapter.categoryName);
-        SOPsRecyclerAdapter = new ListofSOPsAdapter(this, listOfSOPs);
+        SOPsRecyclerAdapter = new ListofSOPsAdapter(this, listOfSOPs, stepsRoomDatabase(), recyclerviewListofSOPs);
         recyclerviewListofSOPs.setLayoutManager(new LinearLayoutManager(this));
         recyclerviewListofSOPs.setAdapter(SOPsRecyclerAdapter);
     }

@@ -12,21 +12,29 @@ import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 @Dao
 public interface Stepsinterface {
 
+//    GET ALL STEPS FOR SOP IN ORDER OF STEP NUMBER
     @Query("SELECT * FROM steps WHERE :sopTitle = sopTitle ORDER BY stepNumber ASC")
     List<StepsRoomData> getAllSteps(String sopTitle);
 
+//    GET ALL SOPS FOR CATEGORY
     @Query("SELECT * FROM steps WHERE :category = category")
     List<StepsRoomData> getAllSOPs(String category);
 
+//  INSERT NEW SOP
     @Insert
     void insertSteps(StepsRoomData... steps);
 
     @Update (onConflict = REPLACE)
     void updateStep(StepsRoomData... steps);
 
+//    UPDATE STEP NUMBERS WHEN MOVE IN RECYCLERVIEW
     @Query("UPDATE steps SET stepNumber = :newN WHERE :dragged = id")
     void updateOnMove(int newN ,int dragged);
 
     @Query("UPDATE steps SET stepNumber = :newN WHERE :dragged = id")
     void updateTarget(int newN ,int dragged);
+
+//    DELETE SOP
+    @Query("DELETE FROM steps WHERE :sopTitle = sopTitle")
+    void DeleteSOP(String sopTitle);
 }

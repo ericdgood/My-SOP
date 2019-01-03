@@ -17,7 +17,4 @@ public interface MySopDao {
 
     @Query("DELETE FROM MYSOP WHERE :categoryName = categoryTitle")
     void deleteCategory(String categoryName);
-//
-//    @Query("SELECT starStatus FROM favorite_movies WHERE movieId = :movieId")
-//    int getStarStatus(String movieId);
 }
