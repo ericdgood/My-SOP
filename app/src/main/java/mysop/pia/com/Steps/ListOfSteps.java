@@ -51,6 +51,9 @@ public class ListOfSteps extends AppCompatActivity {
 
                 int position_dragged = dragged.getAdapterPosition();
                 int position_target = target.getAdapterPosition();
+//              TODO: MAKE NUMBERS SHOW SWAP
+                StepsRecyclerAdapter.notifyItemMoved(position_dragged, position_target);
+                StepsRecyclerAdapter.notifyItemChanged(position_dragged, 1);
 
                 int draggedId = stepsRoomDatabase().listOfSteps().getAllSteps(sopTitle).get(position_dragged).getId();
                 int draggedStepNum = stepsRoomDatabase().listOfSteps().getAllSteps(sopTitle).get(position_dragged).getStepNumber();
@@ -61,10 +64,6 @@ public class ListOfSteps extends AppCompatActivity {
                 stepsRoomDatabase().listOfSteps().updateOnMove(targetStepNum, draggedId);
                 stepsRoomDatabase().listOfSteps().updateTarget(draggedStepNum, targetId);
 
-                StepsRecyclerAdapter.notifyItemMoved(position_dragged, position_target);
-                StepsRecyclerAdapter.notifyItemChanged(position_dragged);
-                StepsRecyclerAdapter.notifyItemChanged(position_target);
-//                StepsRecyclerAdapter.notifyDataSetChanged();
                 return false;
             }
 

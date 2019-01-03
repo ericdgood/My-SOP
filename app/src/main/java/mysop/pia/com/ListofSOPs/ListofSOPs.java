@@ -1,5 +1,6 @@
 package mysop.pia.com.ListofSOPs;
 
+import android.app.AlertDialog;
 import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,6 +30,8 @@ public class ListofSOPs extends AppCompatActivity {
     TextView textviewCategoryListTitle;
     @BindView(R.id.fab_addsop)
     FloatingActionButton fabAddSOP;
+    private String alertBoxTitle;
+    private String alertBoxMessage;
 
     List<StepsRoomData> listOfSOPs = new ArrayList<>();
     ListofSOPsAdapter SOPsRecyclerAdapter;
@@ -57,7 +60,9 @@ public class ListofSOPs extends AppCompatActivity {
                         getColor(R.color.logoRedBookColor),
                         pos -> {
                             // TODO: onDelete
-                            Toast.makeText(ListofSOPs.this, " Item Deleted", Toast.LENGTH_SHORT).show();
+                            alertBoxTitle = "Delete SOP";
+                            alertBoxMessage = "Are you sure you want to delete " + listOfSOPs.get(viewHolder.getAdapterPosition()).getSopTitle();
+                            alertToDelete(alertBoxTitle, alertBoxMessage);
                         }
                 ));
 
@@ -79,6 +84,23 @@ public class ListofSOPs extends AppCompatActivity {
                 ));
             }
         };
+    }
+
+    private void alertToDelete(String alertBoxTitle, String alertBoxMessage) {
+        AlertDialog.Builder builder;
+        builder = new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Dialog_Alert);
+        builder.setTitle(alertBoxTitle)
+                .setMessage(alertBoxMessage)
+                .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+//                        DO STEP HERE
+
+                })
+                .setNegativeButton(android.R.string.no, (dialog, which) -> {
+                    // do nothing
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+//        return position;
     }
 
     private void setUpPage() {

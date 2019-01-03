@@ -33,6 +33,7 @@ public class ListOfStepsAdapter extends RecyclerView.Adapter<ListOfStepsAdapter.
     public void onBindViewHolder(@NonNull ListOfStepsAdapter.Viewholder viewholder, int position) {
 //        SHOWS STEP NUMBERS
         viewholder.textviewStepNumber.setText(String.valueOf(listOfSteps.get(position).getStepNumber()));
+
 //        SHOWS STEP TITLE
         viewholder.textviewStepTitle.setText(listOfSteps.get(position).getStepTitle());
         attachments(position, viewholder);

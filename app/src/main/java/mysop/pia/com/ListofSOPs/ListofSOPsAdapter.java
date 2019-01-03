@@ -1,10 +1,7 @@
 package mysop.pia.com.ListofSOPs;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
@@ -12,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -44,12 +40,6 @@ public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Vi
             context.startActivity(listOfSteps);
         });
 
-        viewholder.constrainListOfSOPs.setOnLongClickListener(v -> {
-            String sopTitle = listOfSOPS.get(position).getSopTitle();
-            alertToDelete(sopTitle, position);
-            return true;
-        });
-
     }
 
     public class Viewholder extends RecyclerView.ViewHolder {
@@ -79,33 +69,4 @@ public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Vi
         return listOfSOPS.size();
     }
 
-    private void alertToDelete(String sopTitle, int position) {
-        AlertDialog.Builder builder;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            builder = new AlertDialog.Builder(context, android.R.style.Theme_DeviceDefault_Dialog_Alert);
-        } else {
-            builder = new AlertDialog.Builder(context);
-        }
-        builder.setTitle("Share with Firebase")
-                .setMessage("Are you sure you want to share " + sopTitle + "?")
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(context, "Long press to share", Toast.LENGTH_SHORT).show();
-                        // SHARE WITH FIREBASE
-//                        Intent shareFirebase = new Intent(context, Firebase.class);
-//                        shareFirebase.putExtra("sopTitle", sopTitle);
-//                        context.startActivity(shareFirebase);
-
-
-                    }
-                })
-                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // do nothing
-                    }
-                })
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
-//        return position;
-    }
 }
