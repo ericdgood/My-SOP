@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -15,7 +16,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import mysop.pia.com.R;
 import mysop.pia.com.Steps.AddStep;
-import mysop.pia.com.Steps.ListOfSteps;
 import mysop.pia.com.Steps.StepsRoom.StepsAppDatabase;
 import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
 
@@ -23,14 +23,17 @@ import static mysop.pia.com.Categories.CategoryRecyclerAdapter.categoryName;
 
 public class AddSOP extends AppCompatActivity{
 
+    private static final String TAG = "hello";
     @BindView(R.id.edittext_add_sop_title)
     EditText editTextAddSopTitle;
+    @BindView(R.id.button_edit_sop)
+    Button buttonEditSOP;
     @BindView(R.id.button_add_sop_add_step)
     Button buttonAddStep;
     String SOPTitlesCheck;
     String addSopTitle;
-
-    ListOfSteps db;
+    int EDITSOP;
+    ListofSOPs editID;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,18 +41,39 @@ public class AddSOP extends AppCompatActivity{
         setContentView(R.layout.add_sop);
         ButterKnife.bind(this);
 
+        EDITSOP = getIntent().getIntExtra("editSop", 0);
 
-
-        buttonAddStep.setOnClickListener(v -> {
+        if (EDITSOP == 1){
+            editSop();
+        }else {
+            buttonAddStep.setOnClickListener(v -> {
 //          SAVE SOP INFO
+                addSopTitle = editTextAddSopTitle.getText().toString();
+
+                if (checkDuplicateSOP()) {
+
+                    Intent addStep = new Intent(AddSOP.this, AddStep.class);
+                    addStep.putExtra("sopTitle", addSopTitle);
+                    addStep.putExtra("sopCategory", categoryName);
+                    startActivity(addStep);
+                    finish();
+                }
+            });
+        }
+    }
+
+    private void editSop() {
+
+        buttonAddStep.setVisibility(View.GONE);
+        buttonEditSOP.setVisibility(View.VISIBLE);
+        editTextAddSopTitle.setText(getIntent().getStringExtra("editSopTitle"));
+
+        buttonEditSOP.setOnClickListener(v -> {
             addSopTitle = editTextAddSopTitle.getText().toString();
-
             if (checkDuplicateSOP()) {
-
-                Intent addStep = new Intent(AddSOP.this, AddStep.class);
-                addStep.putExtra("sopTitle", addSopTitle);
-                addStep.putExtra("sopCategory", categoryName);
-                startActivity(addStep);
+                stepsRoomDatabase().listOfSteps().updateSop(addSopTitle,getIntent().getIntExtra("editId", 0));
+                Intent returnToSOP = new Intent(this, ListofSOPs.class);
+                startActivity(returnToSOP);
                 finish();
             }
         });

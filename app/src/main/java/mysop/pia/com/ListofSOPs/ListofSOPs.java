@@ -33,6 +33,7 @@ public class ListofSOPs extends AppCompatActivity {
     private String alertBoxTitle;
     private String alertBoxMessage;
     String sopTitle;
+    int editID;
 
     List<StepsRoomData> listOfSOPs = new ArrayList<>();
     ListofSOPsAdapter SOPsRecyclerAdapter;
@@ -60,7 +61,6 @@ public class ListofSOPs extends AppCompatActivity {
                         "Delete",
                         getColor(R.color.logoRedBookColor),
                         pos -> {
-                            // TODO: onDelete
                             sopTitle = listOfSOPs.get(viewHolder.getAdapterPosition()).getSopTitle();
                             alertBoxTitle = "Delete SOP";
                             alertBoxMessage = "Are you sure you want to delete " + sopTitle + " SOP?";
@@ -72,8 +72,10 @@ public class ListofSOPs extends AppCompatActivity {
                         "Edit",
                         getColor(R.color.logoBlueBookColor),
                         pos -> {
-                            // TODO: Edit
+                            editID = listOfSOPs.get(viewHolder.getAdapterPosition()).getId();
+                            sopTitle = listOfSOPs.get(viewHolder.getAdapterPosition()).getSopTitle();
                             alertBoxTitle = "Edit SOP";
+                            alertBoxMessage = "Are you sure you would like to edit " + sopTitle;
                             alertToDelete(alertBoxTitle, alertBoxMessage, viewHolder);
                         }
                 ));
@@ -101,9 +103,9 @@ public class ListofSOPs extends AppCompatActivity {
                         stepsRoomDatabase().listOfSteps().DeleteSOP(sopTitle);
                         listOfSOPs.remove(listOfSOPs.get(viewHolder.getAdapterPosition()));
                         SOPsRecyclerAdapter.notifyDataSetChanged();
-                        Toast.makeText(this, sopTitle + " is deleted", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, sopTitle + " is deleted from book", Toast.LENGTH_SHORT).show();
                     } else if (alertBoxTitle.equals("Edit SOP")) {
-
+                        editSOP();
                         Toast.makeText(this, "Edit SOP", Toast.LENGTH_SHORT).show();
 
                     } else {
@@ -118,6 +120,14 @@ public class ListofSOPs extends AppCompatActivity {
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
 //        return position;
+    }
+
+    private void editSOP(){
+        Intent editSOP = new Intent(this, AddSOP.class);
+        editSOP.putExtra("editSop",1);
+        editSOP.putExtra("editSopTitle", sopTitle);
+        editSOP.putExtra("editId", editID);
+        startActivity(editSOP);
     }
 
     private void setUpPage() {

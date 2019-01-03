@@ -27,6 +27,10 @@ public interface Stepsinterface {
     @Update (onConflict = REPLACE)
     void updateStep(StepsRoomData... steps);
 
+    //    UPDATE SOP TITLE
+    @Query("UPDATE steps SET sopTitle = :newTitle WHERE :id = id")
+    void updateSop(String newTitle ,int id);
+
 //    UPDATE STEP NUMBERS WHEN MOVE IN RECYCLERVIEW
     @Query("UPDATE steps SET stepNumber = :newN WHERE :dragged = id")
     void updateOnMove(int newN ,int dragged);
