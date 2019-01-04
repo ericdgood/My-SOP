@@ -87,7 +87,7 @@ public class ListofSOPs extends AppCompatActivity {
                             // TODO: Shared
                             sopTitle = listOfSOPs.get(viewHolder.getAdapterPosition()).getSopTitle();
                             alertBoxTitle = "Share SOP";
-                            alertBoxMessage = "Would you like to share" + sopTitle;
+                            alertBoxMessage = "Would you like to share " + sopTitle;
                             alertToDelete(alertBoxTitle, alertBoxMessage, viewHolder);
                         }
                 ));

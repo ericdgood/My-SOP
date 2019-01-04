@@ -74,7 +74,6 @@ public class AddSOP extends AppCompatActivity{
                 stepsRoomDatabase().listOfSteps().updateSop(addSopTitle,getIntent().getStringExtra("editSopTitle"));
                 Intent returnToSOP = new Intent(this, ListofSOPs.class);
                 startActivity(returnToSOP);
-                Toast.makeText(editID, "SOP edit saved", Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
