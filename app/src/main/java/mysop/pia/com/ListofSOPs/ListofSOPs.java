@@ -17,6 +17,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import mysop.pia.com.Categories.CategoryRecyclerAdapter;
+import mysop.pia.com.Firebase.Firebase;
 import mysop.pia.com.R;
 import mysop.pia.com.Steps.StepsRoom.StepsAppDatabase;
 import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
@@ -84,7 +85,9 @@ public class ListofSOPs extends AppCompatActivity {
                         getColor(R.color.logoYellowBookColor),
                         pos -> {
                             // TODO: Shared
+                            sopTitle = listOfSOPs.get(viewHolder.getAdapterPosition()).getSopTitle();
                             alertBoxTitle = "Share SOP";
+                            alertBoxMessage = "Would you like to share" + sopTitle;
                             alertToDelete(alertBoxTitle, alertBoxMessage, viewHolder);
                         }
                 ));
@@ -107,8 +110,11 @@ public class ListofSOPs extends AppCompatActivity {
                     } else if (alertBoxTitle.equals("Edit SOP")) {
                         editSOP();
                     } else {
-
-                        Toast.makeText(this, "Share SOP", Toast.LENGTH_SHORT).show();
+//                        TODO: SHARE SOP
+//                          SHARE WITH FIREBASE
+                        Intent shareFirebase = new Intent(this, Firebase.class);
+                        shareFirebase.putExtra("sopTitle", sopTitle);
+                        startActivity(shareFirebase);
                     }
 
                 })
@@ -120,9 +126,9 @@ public class ListofSOPs extends AppCompatActivity {
 //        return position;
     }
 
-    private void editSOP(){
+    private void editSOP() {
         Intent editSOP = new Intent(this, AddSOP.class);
-        editSOP.putExtra("editSop",1);
+        editSOP.putExtra("editSop", 1);
         editSOP.putExtra("editSopTitle", sopTitle);
         editSOP.putExtra("editId", editID);
         startActivity(editSOP);
@@ -136,7 +142,7 @@ public class ListofSOPs extends AppCompatActivity {
 
     private void setupRecyclerviewAndAdapter() {
         listOfSOPs = stepsRoomDatabase().listOfSteps().getAllSOPs(CategoryRecyclerAdapter.categoryName);
-        SOPsRecyclerAdapter = new ListofSOPsAdapter(this, listOfSOPs, stepsRoomDatabase(), recyclerviewListofSOPs);
+        SOPsRecyclerAdapter = new ListofSOPsAdapter(this, listOfSOPs);
         recyclerviewListofSOPs.setLayoutManager(new LinearLayoutManager(this));
         recyclerviewListofSOPs.setAdapter(SOPsRecyclerAdapter);
     }
