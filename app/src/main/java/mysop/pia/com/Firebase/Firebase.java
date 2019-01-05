@@ -6,10 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
-import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -17,10 +18,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,19 +34,29 @@ import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
 public class Firebase extends Activity {
 
 
+    private static final String TAG = "firebase";
+    @BindView(R.id.button_share)
+    Button buttonShare;
+    @BindView(R.id.edittext_firebase_username)
+    EditText etUsername;
+    @BindView(R.id.edittext_firebase_email)
+    EditText etEmail;
+
     public static final String ANONYMOUS = "anonymous";
     public static final int RC_SIGN_IN = 1;
+    @BindView(R.id.edittext_firebase_password)
+    EditText etPassword;
     public static String mUsername;
     List<StepsRoomData> sopSteps = new ArrayList<>();
     private String sopTitle;
     // Firebase instance variables
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mSopStepsDatabaseReference;
+    private DatabaseReference mUsersDatabaseReference;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
-    @BindView(R.id.button_share)
-    Button buttonShare;
     private ChildEventListener mChildEventListener;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,34 +69,71 @@ public class Firebase extends Activity {
 
         // Initialize Firebase components
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mFirebaseAuth = FirebaseAuth.getInstance();
         mSopStepsDatabaseReference = mFirebaseDatabase.getReference().child("sop");
+        mUsersDatabaseReference = mFirebaseDatabase.getReference().child("Users");
+        mFirebaseAuth = FirebaseAuth.getInstance();
 
         mAuthStateListener = firebaseAuth -> {
             FirebaseUser user = firebaseAuth.getCurrentUser();
             if (user != null) {
 //                    USER IS SIGNED IN
                 onSignedInInitialize(user.getDisplayName());
-            } else {
-//                    USER IS SIGNED OUT
-                onSignedOutCleanup();
-                startActivityForResult(
-                        AuthUI.getInstance()
-                                .createSignInIntentBuilder()
-                                .setIsSmartLockEnabled(false)
-                                .setAvailableProviders(Arrays.asList(
-                                        new AuthUI.IdpConfig.GoogleBuilder().build(),
-                                        new AuthUI.IdpConfig.EmailBuilder().build()))
-                                .build(),
-                        RC_SIGN_IN);
+//                mSopStepsDatabaseReference = mFirebaseDatabase.getReference().child("users");
+//
+//                mSopStepsDatabaseReference.push().setValue(mUsername);
             }
+            return;
+//            else {
+////                    USER IS SIGNED OUT
+//                onSignedOutCleanup();
+//                startActivityForResult(
+//                        AuthUI.getInstance()
+//                                .createSignInIntentBuilder()
+//                                .setIsSmartLockEnabled(false)
+//                                .setAvailableProviders(Arrays.asList(
+//                                        new AuthUI.IdpConfig.GoogleBuilder().build(),
+//                                        new AuthUI.IdpConfig.EmailBuilder().build()))
+//                                .build(),
+//                        RC_SIGN_IN);
+//            }
         };
 
         buttonShare.setOnClickListener(v -> {
-            sopSteps = stepsDB().listOfSteps().getAllSteps(sopTitle);
-            String sopTitleTest = sopSteps.get(0).getSopTitle();
-            mSopStepsDatabaseReference.child(mUsername).push().setValue(sopTitleTest);
-//            mSopStepsDatabaseReference.push().setValue(sopTitleTest);
+            String email = etEmail.getText().toString();
+            String password = etPassword.getText().toString();
+            String username = etUsername.getText().toString();
+
+            com.google.firebase.database.Query userNameQuery = mUsersDatabaseReference.orderByChild("userName").equalTo(username);
+
+            userNameQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.getChildrenCount() > 0) {
+                        Toast.makeText(Firebase.this, "Choose a different user name", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Log.i(TAG, "email: " + email + " pass " + password);
+                        mFirebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(Firebase.this, (task) -> {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(Firebase.this, "Sign up Error", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Map neuUser = new HashMap();
+                                neuUser.put("userName", username);
+
+                                mUsersDatabaseReference.push().setValue(neuUser);
+                            }
+                        });
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+//            sopSteps = stepsDB().listOfSteps().getAllSteps(sopTitle);
+//            String sopTitleTest = sopSteps.get(0).getSopTitle();
+//            mSopStepsDatabaseReference.child(mUsername).push().setValue(sopTitleTest);
         });
 
         mChildEventListener = new ChildEventListener() {
@@ -168,4 +218,5 @@ public class Firebase extends Activity {
             mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
         }
     }
+
 }
