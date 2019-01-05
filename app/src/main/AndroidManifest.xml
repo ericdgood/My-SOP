@@ -36,6 +36,7 @@
             android:label="@string/title_list_of_steps" />
         <activity android:name=".Steps.StepActivity"></activity>
         <activity android:name=".Firebase.Firebase" />
+        <activity android:name=".Firebase.Firebase$FirebaseData" />
     </application>
 
 </manifest>
