@@ -48,6 +48,7 @@ public class ShareWithUser extends AppCompatActivity {
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mSopStepsDatabaseReference;
     private ChildEventListener mChildEventListener;
+    FirebaseUser user;
     private String TAG;
 
     @Override
@@ -63,6 +64,7 @@ public class ShareWithUser extends AppCompatActivity {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mUsersDatabaseReference = mFirebaseDatabase.getReference().child("Users");
         mSopStepsDatabaseReference = mFirebaseDatabase.getReference().child("sop");
+        user = FirebaseAuth.getInstance().getCurrentUser();
 
         btnSearch.setOnClickListener(v -> {
             searchUserName = etSearchUsers.getText().toString().toLowerCase();
@@ -73,16 +75,15 @@ public class ShareWithUser extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (dataSnapshot.getChildrenCount() > 0) {
-                         sopSteps = stepsDB().listOfSteps().getAllSteps("sop");
-                        String sopTitleTest = sopSteps.get(0).getSopTitle();
-                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        sopSteps = stepsDB().listOfSteps().getAllSteps("Sop");
+                        String sopTitleTest = "TEST SOP TITLE";
 //
 //                        Map sopShare = new HashMap();
 //                        sopShare.put("sopTitle", sopTitleTest);
 //                        sopShare.put("sharedUser", searchUserName);
 //                        sopShare.put("Author", user.getDisplayName());
 
-                        SharedInfo sendSharedInfo = new SharedInfo(user.getDisplayName(),searchUserName,sopTitleTest);
+                        SharedInfo sendSharedInfo = new SharedInfo(user.getDisplayName(), searchUserName, sopTitleTest);
 
                         mSopStepsDatabaseReference.push().setValue(sendSharedInfo);
                         Toast.makeText(ShareWithUser.this, "Found User", Toast.LENGTH_SHORT).show();
@@ -101,9 +102,20 @@ public class ShareWithUser extends AppCompatActivity {
 
         mChildEventListener = new ChildEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                SharedInfo sharedInfo = dataSnapshot.getValue(SharedInfo.class);
-                addItem(sharedInfo);
+            public void onChildAdded(@NonNull DataSnapshot sopReturn, @Nullable String s) {
+//                com.google.firebase.database.Query userNameQuery = mSopStepsDatabaseReference.orderByChild("sharedUser").equalTo(user.getDisplayName());
+//
+//                userNameQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                        if (dataSnapshot.getChildrenCount() > 0) {
+                SharedInfo sharedInfo = sopReturn.getValue(SharedInfo.class);
+                if (sharedInfo.getSharedUser().equals(user.getDisplayName())) {
+                    addItem(sharedInfo);
+                }
+                else {
+                    Toast.makeText(ShareWithUser.this, "No shared info", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -135,6 +147,7 @@ public class ShareWithUser extends AppCompatActivity {
                 .allowMainThreadQueries()
                 .build();
     }
+
     private void addItem(SharedInfo recInfo) {
         sharedInfo.add(recInfo);
         recyclerAdapter.notifyDataSetChanged();
