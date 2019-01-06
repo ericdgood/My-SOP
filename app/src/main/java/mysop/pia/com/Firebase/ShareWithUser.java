@@ -81,7 +81,7 @@ public class ShareWithUser extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (dataSnapshot.getChildrenCount() > 0) {
                         sopSteps = stepsDB().listOfSteps().getAllSteps("Sop");
-                        String sopTitleTest = "CAT TEST";
+                        String sopTitleTest = searchUserName + " TEST";
 //
 //                        Map sopShare = new HashMap();
 //                        sopShare.put("sopTitle", sopTitleTest);
@@ -89,7 +89,7 @@ public class ShareWithUser extends AppCompatActivity {
 //                        SharedInfo sendSharedInfo = new SharedInfo(user.getDisplayName(), searchUserName, sopTitleTest);
                         MySOPs sharedCat = new MySOPs(sopTitleTest);
 
-                        mSopStepsDatabaseReference.push().setValue(sharedCat);
+                        mSopStepsDatabaseReference.child(searchUserName).setValue(sharedCat);
 
                         Intent goToBooks = new Intent(ShareWithUser.this, MainActivity.class);
                         startActivity(goToBooks);
@@ -110,12 +110,15 @@ public class ShareWithUser extends AppCompatActivity {
         mChildEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot sopReturn, @Nullable String s) {
-                MySOPs sharedInfo = sopReturn.getValue(MySOPs.class);
-//                if (sharedInfo.getSharedUser().equals(user.getDisplayName())) {
-                    addItem(sharedInfo);
-//                }
-//                else {
-//                    Toast.makeText(ShareWithUser.this, "No shared info", Toast.LENGTH_SHORT).show();
+//                if (!searchUserName.equals(user.getDisplayName()) || searchUserName.equals("")) {
+//                    Toast.makeText(ShareWithUser.this, "Does not match", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    MySOPs sharedInfo = sopReturn.getValue(MySOPs.class);
+////                if (sharedInfo.getSharedUser().equals(user.getDisplayName())) {
+//                    addItem(sharedInfo);
+////                else {
+////                    Toast.makeText(ShareWithUser.this, "No shared info", Toast.LENGTH_SHORT).show();
+////                }
 //                }
             }
 
