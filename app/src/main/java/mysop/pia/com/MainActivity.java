@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -46,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
     ImageView imageviewNoCategory;
     @BindView(R.id.textview_no_categories)
     TextView textviewNoCategory;
+    @BindView(R.id.framelayout_category_options_frag)
+    FrameLayout mCatOptionsFrag;
 
     CategoryRecyclerAdapter categoriesRecyclerAdapter;
     FirebaseUser user;
@@ -93,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupRecylerviewDBAndAdapter() {
 //      SETUP RECYCLERVIEW AND ADAPTER
-        categoriesRecyclerAdapter = new CategoryRecyclerAdapter(sopList, this, roomDatabase());
+        categoriesRecyclerAdapter = new CategoryRecyclerAdapter(sopList, this, roomDatabase(), mCatOptionsFrag);
         recyclerViewCategories.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerViewCategories.setAdapter(categoriesRecyclerAdapter);
     }
@@ -116,21 +119,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getFirebaseBooks() {
-//        mSopStepsDatabaseReference.child(user.getDisplayName()).addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                MySOPs sharedInfo = dataSnapshot.getValue(MySOPs.class);
-//                if (sharedInfo != null) {
-//                    sopList.add(sharedInfo);
-//                    categoriesRecyclerAdapter.notifyDataSetChanged();
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
         mSopStepsDatabaseReference.child(user.getDisplayName()).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {

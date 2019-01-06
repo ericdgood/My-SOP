@@ -56,5 +56,20 @@
         android:textSize="21sp"
         android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/imageview_sop_logo_no_categories"/>
+    
+    <FrameLayout
+        android:id="@+id/framelayout_category_options_frag"
+        style="@style/ConstraintCenterHorizontal"
+        android:layout_width="300dp"
+        android:layout_height="400dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/guideline"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.8"/>
 
 </android.support.constraint.ConstraintLayout>

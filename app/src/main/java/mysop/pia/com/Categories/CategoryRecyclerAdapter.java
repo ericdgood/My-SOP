@@ -6,10 +6,12 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,21 +22,22 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import mysop.pia.com.Categories.CatergoryRoom.AppDatabase;
 import mysop.pia.com.Categories.CatergoryRoom.MySOPs;
-import mysop.pia.com.Firebase.Firebase;
 import mysop.pia.com.ListofSOPs.ListofSOPs;
 import mysop.pia.com.R;
 
 public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecyclerAdapter.Viewholder> {
 
+    private final FrameLayout mCatOptionsFrag;
     private List<MySOPs> categoryList;
     private Context context;
     private AppDatabase db;
     public static String categoryName;
 
-    public CategoryRecyclerAdapter(List<MySOPs> sopCategories, Context context, AppDatabase appDatabase) {
+    public CategoryRecyclerAdapter(List<MySOPs> sopCategories, Context context, AppDatabase appDatabase, FrameLayout mCatOptionsFrag) {
         this.context = context;
         this.categoryList = sopCategories;
         this.db = appDatabase;
+        this.mCatOptionsFrag = mCatOptionsFrag;
     }
 
     private void alertToDelete(String categoryName, int position) {
@@ -72,16 +75,18 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
             context.startActivity(categorySops);
         });
 
-//        viewholder.categoryLayout.setOnLongClickListener(v -> {
-//            categoryName = categoryList.get(position).getCategoryTitle();
-//            alertToDelete(categoryName, position);
-//            return true;
-//        });
-
         viewholder.categoryLayout.setOnLongClickListener(v -> {
-            Intent shareFirebase = new Intent(context, Firebase.class);
+            mCatOptionsFrag.setVisibility(View.VISIBLE);
             categoryName = categoryList.get(position).getCategoryTitle();
-            context.startActivity(shareFirebase);
+
+            CategoryOptionsFrag categoryOptions = new CategoryOptionsFrag();
+            categoryOptions.getCategoryOptionsFrag(context,categoryName, mCatOptionsFrag);
+            ((FragmentActivity)context).getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.framelayout_category_options_frag, categoryOptions)
+                    .commit();
+//            Intent shareFirebase = new Intent(context, Firebase.class);
+//            categoryName = categoryList.get(position).getCategoryTitle();
+//            context.startActivity(shareFirebase);
             return true;
         });
     }
