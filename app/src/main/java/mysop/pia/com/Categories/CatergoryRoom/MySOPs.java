@@ -2,6 +2,7 @@ package mysop.pia.com.Categories.CatergoryRoom;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
 @Entity(tableName = "mysop")
@@ -12,6 +13,9 @@ public class MySOPs {
 
     @ColumnInfo(name = "categoryTitle")
     private String categoryTitle;
+
+    @Ignore
+    public MySOPs(){}
 
     public MySOPs(String categoryTitle) {
         this.categoryTitle = categoryTitle;
