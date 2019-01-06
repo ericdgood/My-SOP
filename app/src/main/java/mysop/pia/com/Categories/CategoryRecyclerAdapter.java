@@ -20,6 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import mysop.pia.com.Categories.CatergoryRoom.AppDatabase;
 import mysop.pia.com.Categories.CatergoryRoom.MySOPs;
+import mysop.pia.com.Firebase.Firebase;
 import mysop.pia.com.ListofSOPs.ListofSOPs;
 import mysop.pia.com.R;
 
@@ -71,9 +72,16 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
             context.startActivity(categorySops);
         });
 
+//        viewholder.categoryLayout.setOnLongClickListener(v -> {
+//            categoryName = categoryList.get(position).getCategoryTitle();
+//            alertToDelete(categoryName, position);
+//            return true;
+//        });
+
         viewholder.categoryLayout.setOnLongClickListener(v -> {
+            Intent shareFirebase = new Intent(context, Firebase.class);
             categoryName = categoryList.get(position).getCategoryTitle();
-            alertToDelete(categoryName, position);
+            context.startActivity(shareFirebase);
             return true;
         });
     }

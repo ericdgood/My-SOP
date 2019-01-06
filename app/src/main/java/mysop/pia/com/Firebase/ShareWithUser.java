@@ -55,6 +55,7 @@ public class ShareWithUser extends AppCompatActivity {
     private ChildEventListener mChildEventListener;
     FirebaseUser user;
     private String TAG;
+    String catTitle;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -80,14 +81,7 @@ public class ShareWithUser extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (dataSnapshot.getChildrenCount() > 0) {
-                        sopSteps = stepsDB().listOfSteps().getAllSteps("Sop");
-                        String sopTitleTest = searchUserName + " TEST";
-//
-//                        Map sopShare = new HashMap();
-//                        sopShare.put("sopTitle", sopTitleTest);
-
-//                        SharedInfo sendSharedInfo = new SharedInfo(user.getDisplayName(), searchUserName, sopTitleTest);
-                        MySOPs sharedCat = new MySOPs(sopTitleTest);
+                        MySOPs sharedCat = new MySOPs(CategoryRecyclerAdapter.categoryName);
 
                         mSopStepsDatabaseReference.child(searchUserName).setValue(sharedCat);
 

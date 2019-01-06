@@ -80,17 +80,17 @@ public class ListofSOPs extends AppCompatActivity {
                             alertToDelete(alertBoxTitle, alertBoxMessage, viewHolder);
                         }
                 ));
-                underlayButtons.add(new SwipeHelper.UnderlayButton(
-                        "Share",
-                        getColor(R.color.logoYellowBookColor),
-                        pos -> {
-                            // TODO: Shared
-                            sopTitle = listOfSOPs.get(viewHolder.getAdapterPosition()).getSopTitle();
-                            alertBoxTitle = "Share SOP";
-                            alertBoxMessage = "Would you like to share " + sopTitle;
-                            alertToDelete(alertBoxTitle, alertBoxMessage, viewHolder);
-                        }
-                ));
+//                underlayButtons.add(new SwipeHelper.UnderlayButton(
+//                        "Share",
+//                        getColor(R.color.logoYellowBookColor),
+//                        pos -> {
+//                            // TODO: Shared
+//                            sopTitle = listOfSOPs.get(viewHolder.getAdapterPosition()).getSopTitle();
+//                            alertBoxTitle = "Share SOP";
+//                            alertBoxMessage = "Would you like to share " + sopTitle;
+//                            alertToDelete(alertBoxTitle, alertBoxMessage, viewHolder);
+//                        }
+//                ));
             }
         };
     }
