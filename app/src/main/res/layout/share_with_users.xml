@@ -18,4 +18,11 @@
         android:text="search"
         app:layout_constraintTop_toBottomOf="@id/edittext_share_search_users"/>
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview_share"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/logoBlueBookColor"
+        app:layout_constraintTop_toBottomOf="@id/button_share_search"/>
+
 </android.support.constraint.ConstraintLayout>
