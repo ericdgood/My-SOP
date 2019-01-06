@@ -21,15 +21,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import butterknife.ButterKnife;
 import mysop.pia.com.R;
-import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
 
 public class Firebase extends Activity {
 
@@ -39,11 +36,9 @@ public class Firebase extends Activity {
     public static final String ANONYMOUS = "anonymous";
     public static final int RC_SIGN_IN = 1;
     public static String mUsername;
-    List<StepsRoomData> sopSteps = new ArrayList<>();
     private String sopTitle;
     // Firebase instance variables
     private FirebaseDatabase mFirebaseDatabase;
-    private DatabaseReference mSopStepsDatabaseReference;
     private DatabaseReference mUsersDatabaseReference;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
@@ -62,7 +57,6 @@ public class Firebase extends Activity {
 
         // Initialize Firebase components
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mSopStepsDatabaseReference = mFirebaseDatabase.getReference().child("sop");
         mUsersDatabaseReference = mFirebaseDatabase.getReference().child("Users");
         mFirebaseAuth = FirebaseAuth.getInstance();
 
@@ -75,6 +69,7 @@ public class Firebase extends Activity {
                 if (newAccoutn){
                     Intent ShareWithUser = new Intent(Firebase.this, mysop.pia.com.Firebase.ShareWithUser.class);
                     startActivity(ShareWithUser);
+                    finish();
                 }
                 Toast.makeText(this, "Already Signed In as " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
             } else {
