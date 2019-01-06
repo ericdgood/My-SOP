@@ -37,6 +37,7 @@
         <activity android:name=".Steps.StepActivity"></activity>
         <activity android:name=".Firebase.Firebase" />
         <activity android:name=".Firebase.Firebase$FirebaseData" />
+        <activity android:name=".Firebase.ShareWithUser" />
     </application>
 
 </manifest>

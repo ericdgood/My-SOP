@@ -49,6 +49,8 @@ public class Firebase extends Activity {
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private ChildEventListener mChildEventListener;
 
+    boolean newAccoutn = true;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,7 +71,12 @@ public class Firebase extends Activity {
             if (user != null) {
 //                    USER ALREADY HAS ACCOUNT
                 onSignedInInitialize(user.getDisplayName());
-                chooseUserName();
+//                TODO: SELECT USER TO SHARE SOP WITH
+                if (newAccoutn){
+                    Intent ShareWithUser = new Intent(Firebase.this, mysop.pia.com.Firebase.ShareWithUser.class);
+                    startActivity(ShareWithUser);
+                }
+                Toast.makeText(this, "Already Signed In as " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
             } else {
 //                    USER IS SIGNED OUT
                 onSignedOutCleanup();
@@ -129,56 +136,59 @@ public class Firebase extends Activity {
     }
 
     public void chooseUserName() {
-
         setContentView(R.layout.firebase);
+        newAccoutn = false;
 
         Button buttonAddUserName = findViewById(R.id.button_share);
         EditText etUserName = findViewById(R.id.edittext_firebase_username);
 
-        buttonAddUserName.setOnClickListener(v -> {
-            String username = etUserName.getText().toString().toLowerCase();
+            buttonAddUserName.setOnClickListener(v -> {
+                String username = etUserName.getText().toString().toLowerCase();
 
-            if (!username.contains(" ")) {
+                if (!username.contains(" ") || username.equals("")) {
 
-                com.google.firebase.database.Query userNameQuery = mUsersDatabaseReference.orderByChild("userName").equalTo(username);
+                    com.google.firebase.database.Query userNameQuery = mUsersDatabaseReference.orderByChild("userName").equalTo(username);
 
-                userNameQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.getChildrenCount() > 0) {
-                            Toast.makeText(Firebase.this, "Choose a different user name", Toast.LENGTH_SHORT).show();
-                        } else {
+                    userNameQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.getChildrenCount() > 0) {
+                                Toast.makeText(Firebase.this, "Choose a different user name", Toast.LENGTH_SHORT).show();
+                            } else {
 
-                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                                    .setDisplayName(username)
-                                    .build();
+                                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                        .setDisplayName(username)
+                                        .build();
 
-                            user.updateProfile(profileUpdates)
-                                    .addOnCompleteListener(task -> {
-                                        if (task.isSuccessful()) {
-                                            Log.d(TAG, "User nickname is set!");
-                                        }
-                                    });
+                                user.updateProfile(profileUpdates)
+                                        .addOnCompleteListener(task -> {
+                                            if (task.isSuccessful()) {
+                                                Log.d(TAG, "User nickname is set!");
+                                            }
+                                        });
 
-                            Map neuUser = new HashMap();
-                            neuUser.put("userName", username);
-                            mUsersDatabaseReference.push().setValue(neuUser);
+                                Map neuUser = new HashMap();
+                                neuUser.put("userName", username);
+                                mUsersDatabaseReference.push().setValue(neuUser);
 
-                            Toast.makeText(Firebase.this, "User name updated", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Firebase.this, "User name updated", Toast.LENGTH_SHORT).show();
+
+                                Intent ShareWithUser = new Intent(Firebase.this, mysop.pia.com.Firebase.ShareWithUser.class);
+                                startActivity(ShareWithUser);
+                                finish();
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                    }
-                });
-            } else {
-                Toast.makeText(this, "No spaces allowed", Toast.LENGTH_SHORT).show();
-            }
-
-        });
+                        }
+                    });
+                } else {
+                    Toast.makeText(this, "No spaces allowed", Toast.LENGTH_SHORT).show();
+                }
+            });
     }
 }
