@@ -4,6 +4,7 @@ import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -17,11 +18,11 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -115,14 +116,44 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getFirebaseBooks() {
-        mSopStepsDatabaseReference.child(user.getDisplayName()).addValueEventListener(new ValueEventListener() {
+//        mSopStepsDatabaseReference.child(user.getDisplayName()).addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                MySOPs sharedInfo = dataSnapshot.getValue(MySOPs.class);
+//                if (sharedInfo != null) {
+//                    sopList.add(sharedInfo);
+//                    categoriesRecyclerAdapter.notifyDataSetChanged();
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
+        mSopStepsDatabaseReference.child(user.getDisplayName()).addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 MySOPs sharedInfo = dataSnapshot.getValue(MySOPs.class);
                 if (sharedInfo != null) {
                     sopList.add(sharedInfo);
                     categoriesRecyclerAdapter.notifyDataSetChanged();
                 }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
             }
 
             @Override

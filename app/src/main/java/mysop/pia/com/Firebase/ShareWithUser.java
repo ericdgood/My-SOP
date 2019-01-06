@@ -83,7 +83,7 @@ public class ShareWithUser extends AppCompatActivity {
                     if (dataSnapshot.getChildrenCount() > 0) {
                         MySOPs sharedCat = new MySOPs(CategoryRecyclerAdapter.categoryName);
 
-                        mSopStepsDatabaseReference.child(searchUserName).setValue(sharedCat);
+                        mSopStepsDatabaseReference.child(searchUserName).push().setValue(sharedCat);
 
                         Intent goToBooks = new Intent(ShareWithUser.this, MainActivity.class);
                         startActivity(goToBooks);
