@@ -1,5 +1,6 @@
 package mysop.pia.com;
 
+import android.app.AlertDialog;
 import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActvity";
     private List<MySOPs> sopList = new ArrayList<>();
+
     @BindView(R.id.recyclerview_categories)
     RecyclerView recyclerViewCategories;
     @BindView(R.id.fab)
@@ -63,12 +66,11 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ButterKnife.bind(this);
 
-        checkForCategories();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mSopStepsDatabaseReference = mFirebaseDatabase.getReference().child("sop");
         user = FirebaseAuth.getInstance().getCurrentUser();
 
-        getFirebaseBooks();
+        checkForCategories();
 
         fab.setOnClickListener(view -> {
             Intent addCategory = new Intent(MainActivity.this, AddCategory.class);
@@ -110,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void checkForCategories() {
         sopList = roomDatabase().mysopDao().getAllSOPs();
+        getFirebaseBooks();
         if (sopList.size() > 0) {
             setupRecylerviewDBAndAdapter();
         } else {
@@ -123,9 +126,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 MySOPs sharedInfo = dataSnapshot.getValue(MySOPs.class);
-                if (sharedInfo != null) {
-                    sopList.add(sharedInfo);
-                    categoriesRecyclerAdapter.notifyDataSetChanged();
+                if (sharedInfo.getSharedAuthor() != null) {
+                    alertToDelete(sharedInfo.getCategoryTitle(), sharedInfo.getSharedAuthor(), sharedInfo);
                 }
             }
 
@@ -151,5 +153,22 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
+    private void alertToDelete(String categoryTitle, String sharedAuthor, MySOPs sharedInfo) {
+        AlertDialog.Builder builder;
+        builder = new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Dialog_Alert);
+        builder.setTitle("Shared Book")
+                .setMessage(sharedAuthor + " would like to share " + categoryTitle + " handbook with you" )
+                .setPositiveButton("Accept", (dialog, which) -> {
+//                    DO THIS WHEN RECEIVE A SHARED BOOK
+                    sopList.add(sharedInfo);
+                    categoriesRecyclerAdapter.notifyDataSetChanged();
+                    Toast.makeText(MainActivity.this, "Item added to list", Toast.LENGTH_SHORT).show();
+                })
+                .setNegativeButton("Deny", (dialog, which) -> {
+                    // do nothing
+                    Toast.makeText(MainActivity.this, "Item not accepted", Toast.LENGTH_SHORT).show();
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
 }

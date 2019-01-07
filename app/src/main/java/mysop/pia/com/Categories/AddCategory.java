@@ -1,10 +1,9 @@
 package mysop.pia.com.Categories;
 
+import android.app.Activity;
 import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Activity;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -13,12 +12,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import mysop.pia.com.MainActivity;
-import mysop.pia.com.R;
 import mysop.pia.com.Categories.CatergoryRoom.AppDatabase;
 import mysop.pia.com.Categories.CatergoryRoom.MySOPs;
-
-import static android.support.constraint.Constraints.TAG;
+import mysop.pia.com.MainActivity;
+import mysop.pia.com.R;
 
 public class AddCategory extends Activity {
 
@@ -41,7 +38,7 @@ public class AddCategory extends Activity {
 
                 if (checkDuplicateCategory()) {
 //               DO THIS IS CATEGORY DOES NOT EXISTS
-                    MySOPs category = new MySOPs(categoryTitle);
+                    MySOPs category = new MySOPs(categoryTitle, null);
                     roomDatabase().mysopDao().insertAll(category);
 
                     Intent returnHome = new Intent(AddCategory.this, MainActivity.class);

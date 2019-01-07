@@ -43,11 +43,8 @@ public class ShareWithUser extends AppCompatActivity {
     RecyclerView rvShare;
 
     String searchUserName;
-    List<SharedInfo> sharedInfo = new ArrayList<>();
 
     List<StepsRoomData> sopSteps = new ArrayList<>();
-    private ShareFbAdapter recyclerAdapter;
-    CategoryRecyclerAdapter catRecycler;
 
     private DatabaseReference mUsersDatabaseReference;
     private FirebaseDatabase mFirebaseDatabase;
@@ -81,9 +78,9 @@ public class ShareWithUser extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (dataSnapshot.getChildrenCount() > 0) {
-                        MySOPs sharedCat = new MySOPs(CategoryRecyclerAdapter.categoryName);
+                        MySOPs sharedCat = new MySOPs(CategoryRecyclerAdapter.categoryName, user.getDisplayName());
 
-                        mSopStepsDatabaseReference.child(searchUserName).push().setValue(sharedCat);
+                        mSopStepsDatabaseReference.child(searchUserName).child(catTitle).setValue(sharedCat);
 
                         Intent goToBooks = new Intent(ShareWithUser.this, MainActivity.class);
                         startActivity(goToBooks);

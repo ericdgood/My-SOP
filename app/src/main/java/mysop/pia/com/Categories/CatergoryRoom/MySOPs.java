@@ -14,11 +14,15 @@ public class MySOPs {
     @ColumnInfo(name = "categoryTitle")
     private String categoryTitle;
 
+    @ColumnInfo(name = "sharedAuthor")
+    private String sharedAuthor;
+
     @Ignore
     public MySOPs(){}
 
-    public MySOPs(String categoryTitle) {
+    public MySOPs(String categoryTitle, String sharedAuthor) {
         this.categoryTitle = categoryTitle;
+        this.sharedAuthor = sharedAuthor;
     }
 
     public int getId() {
@@ -33,4 +37,7 @@ public class MySOPs {
         return categoryTitle;
     }
 
+    public String getSharedAuthor() {
+        return sharedAuthor;
+    }
 }
