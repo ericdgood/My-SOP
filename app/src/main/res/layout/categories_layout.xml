@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="200dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="6dp"
     android:elevation="8dp"
     android:id="@+id/constrantlayout_category">
@@ -22,5 +23,26 @@
         android:textSize="32sp"
         android:textStyle="bold"
         style="@style/ConstraintCenter"/>
+
+    <ImageView
+        android:id="@+id/imageview_cat_shared"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_action_share"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="@id/textview_category_title"
+        app:layout_constraintTop_toBottomOf="@id/textview_category_title"/>
+
+    <TextView
+        android:id="@+id/textview_cat_shared_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="5dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/imageview_cat_shared"
+        app:layout_constraintLeft_toRightOf="@id/imageview_cat_shared"
+        app:layout_constraintRight_toRightOf="@id/textview_category_title"
+        app:layout_constraintTop_toTopOf="@id/imageview_cat_shared"
+        tools:text="phil"/>
 
 </android.support.constraint.ConstraintLayout>

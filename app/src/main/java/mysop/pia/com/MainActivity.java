@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupRecylerviewDBAndAdapter() {
 //      SETUP RECYCLERVIEW AND ADAPTER
-        categoriesRecyclerAdapter = new CategoryRecyclerAdapter(sopList, this, roomDatabase(), mCatOptionsFrag);
+        categoriesRecyclerAdapter = new CategoryRecyclerAdapter(sopList, this, mCatOptionsFrag);
         recyclerViewCategories.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerViewCategories.setAdapter(categoriesRecyclerAdapter);
     }
@@ -128,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
                 MySOPs sharedInfo = dataSnapshot.getValue(MySOPs.class);
                 if (sharedInfo.getSharedAuthor() != null) {
                     alertToDelete(sharedInfo.getCategoryTitle(), sharedInfo.getSharedAuthor(), sharedInfo);
+
                 }
             }
 

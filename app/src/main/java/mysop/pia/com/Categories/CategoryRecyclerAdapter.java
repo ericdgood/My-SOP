@@ -17,7 +17,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import mysop.pia.com.Categories.CatergoryRoom.AppDatabase;
 import mysop.pia.com.Categories.CatergoryRoom.MySOPs;
 import mysop.pia.com.ListofSOPs.ListofSOPs;
 import mysop.pia.com.R;
@@ -27,19 +26,24 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
     private final FrameLayout mCatOptionsFrag;
     private List<MySOPs> categoryList;
     private Context context;
-    private AppDatabase db;
     public static String categoryName;
+    public static String sharedAuthor;
 
-    public CategoryRecyclerAdapter(List<MySOPs> sopCategories, Context context, AppDatabase appDatabase, FrameLayout mCatOptionsFrag) {
+    public CategoryRecyclerAdapter(List<MySOPs> sopCategories, Context context, FrameLayout mCatOptionsFrag) {
         this.context = context;
         this.categoryList = sopCategories;
-        this.db = appDatabase;
         this.mCatOptionsFrag = mCatOptionsFrag;
     }
 
     @Override
     public void onBindViewHolder(@NonNull CategoryRecyclerAdapter.Viewholder viewholder, int position) {
         viewholder.categoryTitle.setText(categoryList.get(position).getCategoryTitle());
+        sharedAuthor = categoryList.get(position).getSharedAuthor();
+        if (sharedAuthor != null){
+            viewholder.imgCatShared.setVisibility(View.VISIBLE);
+            viewholder.tvSharedName.setVisibility(View.VISIBLE);
+            viewholder.tvSharedName.setText(sharedAuthor);
+        }
 
         viewholder.categoryLayout.setOnClickListener((View view) -> {
             Intent categorySops = new Intent(context, ListofSOPs.class);
@@ -80,6 +84,10 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
         ConstraintLayout categoryLayout;
         @BindView(R.id.imageview_category)
         ImageView imageviewCategory;
+        @BindView(R.id.imageview_cat_shared)
+        ImageView imgCatShared;
+        @BindView(R.id.textview_cat_shared_name)
+        TextView tvSharedName;
 
         Viewholder(@NonNull View itemView) {
             super(itemView);
