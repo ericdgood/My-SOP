@@ -38,19 +38,19 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
     @Override
     public void onBindViewHolder(@NonNull CategoryRecyclerAdapter.Viewholder viewholder, int position) {
         viewholder.categoryTitle.setText(categoryList.get(position).getCategoryTitle());
-        sharedAuthor = categoryList.get(position).getSharedAuthor();
-        if (sharedAuthor != null){
-            viewholder.imgCatShared.setVisibility(View.VISIBLE);
-            viewholder.tvSharedName.setVisibility(View.VISIBLE);
-            viewholder.tvSharedName.setText(sharedAuthor);
-        }
 
+        viewholder.imgCatOptions.setOnClickListener(v -> {
+//            OPEN OPTIONS
+        });
+
+//        DO THIS ON PRESS
         viewholder.categoryLayout.setOnClickListener((View view) -> {
             Intent categorySops = new Intent(context, ListofSOPs.class);
             categoryName = categoryList.get(position).getCategoryTitle();
             context.startActivity(categorySops);
         });
 
+//        OPEN OPTIONS ON LONG PRESS
         viewholder.categoryLayout.setOnLongClickListener(v -> {
             mCatOptionsFrag.setVisibility(View.VISIBLE);
             categoryName = categoryList.get(position).getCategoryTitle();
@@ -84,14 +84,14 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
         ConstraintLayout categoryLayout;
         @BindView(R.id.imageview_category)
         ImageView imageviewCategory;
-        @BindView(R.id.imageview_cat_shared)
-        ImageView imgCatShared;
-        @BindView(R.id.textview_cat_shared_name)
-        TextView tvSharedName;
+        @BindView(R.id.imageview_cat_options)
+        ImageView imgCatOptions;
 
         Viewholder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
     }
+
+
 }
