@@ -11,7 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -41,7 +43,30 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
 
         viewholder.imgCatOptions.setOnClickListener(v -> {
 //            OPEN OPTIONS
+            //creating a popup menu
+            PopupMenu popup = new PopupMenu(context, viewholder.imgCatOptions);
+            //inflating menu from xml resource
+            popup.inflate(R.menu.menu_book_shelf);
+            //adding click listener
+            popup.setOnMenuItemClickListener(item -> {
+                switch (item.getItemId()) {
+                    case R.id.book_shelf_edit:
+                        Toast.makeText(context, "Item Edited", Toast.LENGTH_SHORT).show();
+                        return true;
+                    case R.id.book_shelf_share:
+                        Toast.makeText(context, "Item Shared", Toast.LENGTH_SHORT).show();
+                        return true;
+                    case R.id.book_shelf_delete:
+                        Toast.makeText(context, "Item Deleted", Toast.LENGTH_SHORT).show();
+                        return true;
+                    default:
+                        return false;
+                }
+            });
+            //displaying the popup
+            popup.show();
         });
+
 
 //        DO THIS ON PRESS
         viewholder.categoryLayout.setOnClickListener((View view) -> {
@@ -56,8 +81,8 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
             categoryName = categoryList.get(position).getCategoryTitle();
 
             CategoryOptionsFrag categoryOptions = new CategoryOptionsFrag();
-            categoryOptions.getCategoryOptionsFrag(context,categoryName, mCatOptionsFrag);
-            ((FragmentActivity)context).getSupportFragmentManager().beginTransaction()
+            categoryOptions.getCategoryOptionsFrag(context, categoryName, mCatOptionsFrag);
+            ((FragmentActivity) context).getSupportFragmentManager().beginTransaction()
                     .replace(R.id.framelayout_category_options_frag, categoryOptions)
                     .addToBackStack("tag")
                     .commit();
