@@ -1,5 +1,6 @@
 package mysop.pia.com.Categories;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -19,22 +20,25 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import mysop.pia.com.Categories.CatergoryRoom.AppDatabase;
 import mysop.pia.com.Categories.CatergoryRoom.MySOPs;
+import mysop.pia.com.Firebase.Firebase;
 import mysop.pia.com.ListofSOPs.ListofSOPs;
 import mysop.pia.com.R;
 
 public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecyclerAdapter.Viewholder> {
 
     private final FrameLayout mCatOptionsFrag;
+    private final AppDatabase db;
     private List<MySOPs> categoryList;
     private Context context;
     public static String categoryName;
-    public static String sharedAuthor;
 
-    public CategoryRecyclerAdapter(List<MySOPs> sopCategories, Context context, FrameLayout mCatOptionsFrag) {
+    public CategoryRecyclerAdapter(List<MySOPs> sopCategories, Context context, FrameLayout mCatOptionsFrag, AppDatabase appDatabase) {
         this.context = context;
         this.categoryList = sopCategories;
         this.mCatOptionsFrag = mCatOptionsFrag;
+        this.db = appDatabase;
     }
 
     @Override
@@ -54,10 +58,12 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
                         Toast.makeText(context, "Item Edited", Toast.LENGTH_SHORT).show();
                         return true;
                     case R.id.book_shelf_share:
-                        Toast.makeText(context, "Item Shared", Toast.LENGTH_SHORT).show();
+                        Intent shareFirebase = new Intent(context, Firebase.class);
+                        context.startActivity(shareFirebase);
+                        mCatOptionsFrag.setVisibility(View.GONE);
                         return true;
                     case R.id.book_shelf_delete:
-                        Toast.makeText(context, "Item Deleted", Toast.LENGTH_SHORT).show();
+                        alertToDelete(categoryList.get(position).getCategoryTitle(), position);
                         return true;
                     default:
                         return false;
@@ -118,5 +124,24 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
         }
     }
 
-
+    private void alertToDelete(String categoryName, int position) {
+        AlertDialog.Builder builder;
+        builder = new AlertDialog.Builder(context, android.R.style.Theme_Material_Light_Dialog_Alert);
+        builder.setTitle("Delete entry")
+                .setMessage("Are you sure you want to delete " + categoryName + "?")
+                .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                    // continue with delete
+                    db.mysopDao().deleteCategory(categoryName);
+                    Toast.makeText(context, categoryName + " is Deleted" + position, Toast.LENGTH_SHORT).show();
+                    categoryList.remove(position);
+                    notifyDataSetChanged();
+                    Toast.makeText(context,  categoryName + " Deleted", Toast.LENGTH_SHORT).show();
+                })
+                .setNegativeButton(android.R.string.no, (dialog, which) -> {
+                    // do nothing
+                })
+                .setIcon(R.drawable.ic_delete)
+                .show();
+//        return position;
+    }
 }

@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupRecylerviewDBAndAdapter() {
 //      SETUP RECYCLERVIEW AND ADAPTER
-        categoriesRecyclerAdapter = new CategoryRecyclerAdapter(sopList, this, mCatOptionsFrag);
+        categoriesRecyclerAdapter = new CategoryRecyclerAdapter(sopList, this, mCatOptionsFrag, roomDatabase());
         recyclerViewCategories.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerViewCategories.setAdapter(categoriesRecyclerAdapter);
     }
