@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -80,20 +79,20 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
             categoryName = categoryList.get(position).getCategoryTitle();
             context.startActivity(categorySops);
         });
-
-//        OPEN OPTIONS ON LONG PRESS
-        viewholder.categoryLayout.setOnLongClickListener(v -> {
-            mCatOptionsFrag.setVisibility(View.VISIBLE);
-            categoryName = categoryList.get(position).getCategoryTitle();
-
-            CategoryOptionsFrag categoryOptions = new CategoryOptionsFrag();
-            categoryOptions.getCategoryOptionsFrag(context, categoryName, mCatOptionsFrag);
-            ((FragmentActivity) context).getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.framelayout_category_options_frag, categoryOptions)
-                    .addToBackStack("tag")
-                    .commit();
-            return true;
-        });
+//TODO: USE FRAG FOR EDIT BOOK SHELF
+////        OPEN OPTIONS ON LONG PRESS
+//        viewholder.categoryLayout.setOnLongClickListener(v -> {
+//            mCatOptionsFrag.setVisibility(View.VISIBLE);
+//            categoryName = categoryList.get(position).getCategoryTitle();
+//
+//            CategoryOptionsFrag categoryOptions = new CategoryOptionsFrag();
+//            categoryOptions.getCategoryOptionsFrag(context, categoryName, mCatOptionsFrag);
+//            ((FragmentActivity) context).getSupportFragmentManager().beginTransaction()
+//                    .replace(R.id.framelayout_category_options_frag, categoryOptions)
+//                    .addToBackStack("tag")
+//                    .commit();
+//            return true;
+//        });
     }
 
     @NonNull

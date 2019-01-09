@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ButterKnife.bind(this);
+        setTitle("The Handbook");
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mSopStepsDatabaseReference = mFirebaseDatabase.getReference().child("sop");
@@ -117,41 +118,45 @@ public class MainActivity extends AppCompatActivity {
             setupRecylerviewDBAndAdapter();
         } else {
             imageviewNoCategory.setVisibility(View.VISIBLE);
+            String creatBookShelf = "Creat a book shelf \n to keep your handbooks organized";
+            textviewNoCategory.setText(creatBookShelf);
             textviewNoCategory.setVisibility(View.VISIBLE);
         }
     }
 
     private void getFirebaseBooks() {
-        mSopStepsDatabaseReference.child(user.getDisplayName()).addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                MySOPs sharedInfo = dataSnapshot.getValue(MySOPs.class);
-                if (sharedInfo.getSharedAuthor() != null) {
-                    alertToDelete(sharedInfo.getCategoryTitle(), sharedInfo.getSharedAuthor(), sharedInfo);
+        if (user != null) {
+            mSopStepsDatabaseReference.child(user.getDisplayName()).addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                    MySOPs sharedInfo = dataSnapshot.getValue(MySOPs.class);
+                    if (sharedInfo.getSharedAuthor() != null) {
+                        alertToDelete(sharedInfo.getCategoryTitle(), sharedInfo.getSharedAuthor(), sharedInfo);
+
+                    }
+                }
+
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
                 }
-            }
 
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
 
-            }
+                }
 
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
-            }
+                }
 
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+                }
+            });
+        }
     }
 
     private void alertToDelete(String categoryTitle, String sharedAuthor, MySOPs sharedInfo) {

@@ -53,22 +53,24 @@
 
         <ImageView
             android:id="@+id/imageview_sop_logo_no_categories"
-            style="@style/ConstraintCenter"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/mysop_logo"
-            android:visibility="gone" />
+            style="@style/ConstraintCenterHorizontal"
+            android:src="@drawable/bookshelfedit"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/textview_no_categories"/>
 
         <TextView
             android:id="@+id/textview_no_categories"
             style="@style/ConstraintCenterHorizontal"
-            android:layout_width="wrap_content"
+            android:layout_width="300dp"
+            android:gravity="center"
+            android:lineSpacingExtra="6dp"
             android:layout_height="wrap_content"
-            android:text="Create a Category File"
-            android:textSize="21sp"
             android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/imageview_sop_logo_no_categories" />
-
+            android:textSize="21sp"
+            app:layout_constraintBottom_toBottomOf="@id/guideline"
+            tools:text="Create a book shelf to organize your Handbooks"/>
         <FrameLayout
             android:id="@+id/framelayout_category_options_frag"
             style="@style/ConstraintCenterHorizontal"
