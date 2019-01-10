@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -23,8 +24,12 @@ public class AddCategory extends Activity {
     EditText editTextCategoryName;
     @BindView(R.id.button_save)
     Button buttonSave;
+    @BindView(R.id.textview_new_cat_label)
+    TextView tvShelfLabel;
+
     String categoryTitle;
     String catTitlesCheck;
+    boolean edit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,9 +37,12 @@ public class AddCategory extends Activity {
         setContentView(R.layout.add_shelf);
         ButterKnife.bind(this);
 
-        buttonSave.setOnClickListener(v -> {
+        edit = getIntent().getBooleanExtra("edit", true);
+
+        if (edit) {
+            buttonSave.setOnClickListener(v -> {
 //                THIS WILL SAVE THE CATEGORY INFO
-            categoryTitle = editTextCategoryName.getText().toString();
+                categoryTitle = editTextCategoryName.getText().toString();
 
                 if (checkDuplicateCategory()) {
 //               DO THIS IS CATEGORY DOES NOT EXISTS
@@ -45,7 +53,26 @@ public class AddCategory extends Activity {
                     startActivity(returnHome);
                     finish();
                 }
-        });
+            });
+        } else {
+            categoryTitle = getIntent().getStringExtra("shelfTitle");
+            int id = getIntent().getIntExtra("id",0);
+            setTitle("Edit Shelf");
+            editTextCategoryName.setText(categoryTitle);
+            tvShelfLabel.setText("Edit the shelf name");
+            buttonSave.setText("Edit");
+
+            buttonSave.setOnClickListener(v -> {
+               categoryTitle = editTextCategoryName.getText().toString();
+            if (checkDuplicateCategory()){
+                roomDatabase().mysopDao().updateShelf(categoryTitle,id);
+
+                Intent returnHome = new Intent(AddCategory.this, MainActivity.class);
+                startActivity(returnHome);
+                finish();
+            }
+            });
+        }
     }
 
     public AppDatabase roomDatabase() {

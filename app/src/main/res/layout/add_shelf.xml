@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constrain_layout_add_category"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:padding="16dp"
-    android:background="@drawable/radius_corners"
     tools:context=".Categories.AddCategory">
 
     <TextView

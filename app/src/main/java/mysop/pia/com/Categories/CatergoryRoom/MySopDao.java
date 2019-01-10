@@ -17,4 +17,7 @@ public interface MySopDao {
 
     @Query("DELETE FROM MYSOP WHERE :categoryName = categoryTitle")
     void deleteCategory(String categoryName);
+
+    @Query("UPDATE MYSOP SET categoryTitle = :shelfTitle WHERE id = :id")
+    void updateShelf(String shelfTitle, int id);
 }

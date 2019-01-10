@@ -2,6 +2,7 @@ package mysop.pia.com;
 
 import android.app.AlertDialog;
 import android.arch.persistence.room.Room;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,7 +14,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,7 +32,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import mysop.pia.com.Categories.CategoryOptionsFrag;
+import mysop.pia.com.Categories.AddCategory;
 import mysop.pia.com.Categories.CategoryRecyclerAdapter;
 import mysop.pia.com.Categories.CatergoryRoom.AppDatabase;
 import mysop.pia.com.Categories.CatergoryRoom.MySOPs;
@@ -50,8 +50,6 @@ public class MainActivity extends AppCompatActivity {
     ImageView imageviewNoCategory;
     @BindView(R.id.textview_no_categories)
     TextView textviewNoCategory;
-    @BindView(R.id.framelayout_category_options_frag)
-    FrameLayout mShelfOptionsFrag;
 
     CategoryRecyclerAdapter categoriesRecyclerAdapter;
     FirebaseUser user;
@@ -74,14 +72,9 @@ public class MainActivity extends AppCompatActivity {
         checkForCategories();
 
         fab.setOnClickListener(view -> {
-            mShelfOptionsFrag.setVisibility(View.VISIBLE);
-
-            CategoryOptionsFrag categoryOptions = new CategoryOptionsFrag();
-            categoryOptions.getCategoryOptionsFrag(this);
-            this.getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.framelayout_category_options_frag, categoryOptions)
-                    .addToBackStack("tag")
-                    .commit();
+            Intent addCategory = new Intent(MainActivity.this, AddCategory.class);
+            startActivity(addCategory);
+            finish();
         });
     }
 
@@ -105,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupRecylerviewDBAndAdapter() {
 //      SETUP RECYCLERVIEW AND ADAPTER
-        categoriesRecyclerAdapter = new CategoryRecyclerAdapter(sopList, this, mShelfOptionsFrag, roomDatabase());
+        categoriesRecyclerAdapter = new CategoryRecyclerAdapter(sopList, this, roomDatabase());
         recyclerViewCategories.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerViewCategories.setAdapter(categoriesRecyclerAdapter);
     }

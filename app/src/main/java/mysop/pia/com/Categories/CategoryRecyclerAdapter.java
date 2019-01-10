@@ -6,12 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -30,16 +28,14 @@ import mysop.pia.com.Steps.StepsRoom.StepsAppDatabase;
 
 public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecyclerAdapter.Viewholder> {
 
-    private final FrameLayout mCatOptionsFrag;
     private final AppDatabase db;
     private List<MySOPs> categoryList;
     private Context context;
     public static String categoryName;
 
-    public CategoryRecyclerAdapter(List<MySOPs> sopCategories, Context context, FrameLayout mCatOptionsFrag, AppDatabase appDatabase) {
+    public CategoryRecyclerAdapter(List<MySOPs> sopCategories, Context context, AppDatabase appDatabase) {
         this.context = context;
         this.categoryList = sopCategories;
-        this.mCatOptionsFrag = mCatOptionsFrag;
         this.db = appDatabase;
     }
 
@@ -76,12 +72,11 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
                 popup.setOnMenuItemClickListener(item -> {
                     switch (item.getItemId()) {
                         case R.id.book_shelf_edit:
-                            editCategory();
+                            editCategory(categoryList.get(position).getCategoryTitle(), categoryList.get(position).getId());
                             return true;
                         case R.id.book_shelf_share:
                             Intent shareFirebase = new Intent(context, Firebase.class);
                             context.startActivity(shareFirebase);
-                            mCatOptionsFrag.setVisibility(View.GONE);
                             return true;
                         case R.id.book_shelf_delete:
                             alertToDelete(categoryList.get(position).getCategoryTitle(), position);
@@ -101,6 +96,15 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
                 categoryName = categoryList.get(position).getCategoryTitle();
                 context.startActivity(categorySops);
             });
+    }
+
+    private void editCategory(String categoryTitle, int id) {
+        Intent editShelf = new Intent(context, AddCategory.class);
+        editShelf.putExtra("shelfTitle", categoryTitle);
+        editShelf.putExtra("id", id);
+        editShelf.putExtra("edit", false);
+        context.startActivity(editShelf);
+
     }
 
     @NonNull
@@ -129,16 +133,6 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
-    }
-
-    private void editCategory() {
-        CategoryOptionsFrag categoryOptions = new CategoryOptionsFrag();
-            categoryOptions.getCategoryOptionsFrag(context);
-            ((FragmentActivity) context).getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.framelayout_category_options_frag, categoryOptions)
-                    .addToBackStack("tag")
-                    .commit();
-
     }
 
     private void alertToDelete(String categoryName, int position) {
