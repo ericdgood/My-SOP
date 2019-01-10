@@ -2,7 +2,6 @@ package mysop.pia.com;
 
 import android.app.AlertDialog;
 import android.arch.persistence.room.Room;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -33,7 +32,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import mysop.pia.com.Categories.AddCategory;
+import mysop.pia.com.Categories.CategoryOptionsFrag;
 import mysop.pia.com.Categories.CategoryRecyclerAdapter;
 import mysop.pia.com.Categories.CatergoryRoom.AppDatabase;
 import mysop.pia.com.Categories.CatergoryRoom.MySOPs;
@@ -52,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.textview_no_categories)
     TextView textviewNoCategory;
     @BindView(R.id.framelayout_category_options_frag)
-    FrameLayout mCatOptionsFrag;
+    FrameLayout mShelfOptionsFrag;
 
     CategoryRecyclerAdapter categoriesRecyclerAdapter;
     FirebaseUser user;
@@ -75,9 +74,14 @@ public class MainActivity extends AppCompatActivity {
         checkForCategories();
 
         fab.setOnClickListener(view -> {
-            Intent addCategory = new Intent(MainActivity.this, AddCategory.class);
-            startActivity(addCategory);
-            finish();
+            mShelfOptionsFrag.setVisibility(View.VISIBLE);
+
+            CategoryOptionsFrag categoryOptions = new CategoryOptionsFrag();
+            categoryOptions.getCategoryOptionsFrag(this);
+            this.getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.framelayout_category_options_frag, categoryOptions)
+                    .addToBackStack("tag")
+                    .commit();
         });
     }
 
@@ -101,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupRecylerviewDBAndAdapter() {
 //      SETUP RECYCLERVIEW AND ADAPTER
-        categoriesRecyclerAdapter = new CategoryRecyclerAdapter(sopList, this, mCatOptionsFrag, roomDatabase());
+        categoriesRecyclerAdapter = new CategoryRecyclerAdapter(sopList, this, mShelfOptionsFrag, roomDatabase());
         recyclerViewCategories.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerViewCategories.setAdapter(categoriesRecyclerAdapter);
     }

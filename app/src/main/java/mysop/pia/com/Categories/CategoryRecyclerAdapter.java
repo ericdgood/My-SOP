@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -75,7 +76,7 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
                 popup.setOnMenuItemClickListener(item -> {
                     switch (item.getItemId()) {
                         case R.id.book_shelf_edit:
-                            Toast.makeText(context, "Item Edited", Toast.LENGTH_SHORT).show();
+                            editCategory();
                             return true;
                         case R.id.book_shelf_share:
                             Intent shareFirebase = new Intent(context, Firebase.class);
@@ -100,20 +101,6 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
                 categoryName = categoryList.get(position).getCategoryTitle();
                 context.startActivity(categorySops);
             });
-//TODO: USE FRAG FOR EDIT BOOK SHELF
-////        OPEN OPTIONS ON LONG PRESS
-//        viewholder.categoryLayout.setOnLongClickListener(v -> {
-//            mCatOptionsFrag.setVisibility(View.VISIBLE);
-//            categoryName = categoryList.get(position).getCategoryTitle();
-//
-//            CategoryOptionsFrag categoryOptions = new CategoryOptionsFrag();
-//            categoryOptions.getCategoryOptionsFrag(context, categoryName, mCatOptionsFrag);
-//            ((FragmentActivity) context).getSupportFragmentManager().beginTransaction()
-//                    .replace(R.id.framelayout_category_options_frag, categoryOptions)
-//                    .addToBackStack("tag")
-//                    .commit();
-//            return true;
-//        });
     }
 
     @NonNull
@@ -142,6 +129,16 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+    }
+
+    private void editCategory() {
+        CategoryOptionsFrag categoryOptions = new CategoryOptionsFrag();
+            categoryOptions.getCategoryOptionsFrag(context);
+            ((FragmentActivity) context).getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.framelayout_category_options_frag, categoryOptions)
+                    .addToBackStack("tag")
+                    .commit();
+
     }
 
     private void alertToDelete(String categoryName, int position) {
