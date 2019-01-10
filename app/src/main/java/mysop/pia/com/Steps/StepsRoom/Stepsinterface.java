@@ -49,4 +49,8 @@ public interface Stepsinterface {
     //    DELETE ALL SHELF BOOKS
     @Query("DELETE FROM steps WHERE :shelf = category")
     void DeleteShelfBooks(String shelf);
+
+    //    UPDATE PAGES WHEN SHELF IS EDITED
+    @Query("UPDATE steps SET category = :newShelf WHERE :oldShelf = category")
+    void updatePagesShelf(String newShelf ,String oldShelf);
 }

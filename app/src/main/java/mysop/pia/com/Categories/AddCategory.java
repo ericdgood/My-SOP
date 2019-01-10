@@ -17,6 +17,7 @@ import mysop.pia.com.Categories.CatergoryRoom.AppDatabase;
 import mysop.pia.com.Categories.CatergoryRoom.MySOPs;
 import mysop.pia.com.MainActivity;
 import mysop.pia.com.R;
+import mysop.pia.com.Steps.StepsRoom.StepsAppDatabase;
 
 public class AddCategory extends Activity {
 
@@ -63,9 +64,10 @@ public class AddCategory extends Activity {
             buttonSave.setText("Edit");
 
             buttonSave.setOnClickListener(v -> {
-               categoryTitle = editTextCategoryName.getText().toString();
+                categoryTitle = editTextCategoryName.getText().toString();
             if (checkDuplicateCategory()){
                 roomDatabase().mysopDao().updateShelf(categoryTitle,id);
+                pagesRoom().listOfSteps().updatePagesShelf(categoryTitle, getIntent().getStringExtra("shelfTitle"));
 
                 Intent returnHome = new Intent(AddCategory.this, MainActivity.class);
                 startActivity(returnHome);
@@ -77,6 +79,13 @@ public class AddCategory extends Activity {
 
     public AppDatabase roomDatabase() {
         return Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "mysop")
+                .fallbackToDestructiveMigration()
+                .allowMainThreadQueries()
+                .build();
+    }
+
+    public StepsAppDatabase pagesRoom() {
+        return Room.databaseBuilder(getApplicationContext(), StepsAppDatabase.class, "steps")
                 .fallbackToDestructiveMigration()
                 .allowMainThreadQueries()
                 .build();
