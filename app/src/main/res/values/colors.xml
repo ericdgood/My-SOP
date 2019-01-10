@@ -10,4 +10,6 @@
     <color name="logoYellowBookColor">#FBD741</color>
     <color name="logoRedBookColor">#DA4343</color>
 
+    <color name="text">#1d1d1d</color>
+
 </resources>

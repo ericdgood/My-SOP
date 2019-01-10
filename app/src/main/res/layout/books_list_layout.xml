@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constrain_booklist_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp">
+
+    <RelativeLayout
+        android:id="@+id/relativelayout_bookimage"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:paddingBottom="8dp">
+
+        <ImageView
+            android:id="@+id/imageview_handbook"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/handbook"/>
+
+        <ImageView
+            android:id="@+id/image_booklist_saved"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="40dp"
+            android:src="@drawable/ic_bookmark_border" />
+
+        <ImageView
+            android:id="@+id/image_booklist_options"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="25dp"
+            android:src="@drawable/ic_action_overflow"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/text_booklist_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/text"
+        android:textSize="21sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintLeft_toRightOf="@id/relativelayout_bookimage"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Air Filter"/>
+
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/text"
+        app:layout_constraintBottom_toBottomOf="@id/text_booklist_title"
+        app:layout_constraintLeft_toLeftOf="@id/text_booklist_title"
+        app:layout_constraintRight_toRightOf="@id/text_booklist_title"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="1dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5"/>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+
+</android.support.constraint.ConstraintLayout>

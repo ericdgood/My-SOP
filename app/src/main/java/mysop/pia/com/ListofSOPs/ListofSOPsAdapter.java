@@ -30,26 +30,11 @@ public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Vi
         this.listOfSOPS = listOfSOPs;
     }
 
-    public class Viewholder extends RecyclerView.ViewHolder {
-        //        BINDVIEWS HERE
-        @BindView(R.id.textview_list_sops_title)
-        TextView textViewListOfSopsTitle;
-        @BindView(R.id.textview_list_sops_number_of_steps)
-        TextView textviewNumberOfSteps;
-        @BindView(R.id.constrain_layout_list_of_sop_layout)
-        ConstraintLayout constrainListOfSOPs;
-
-        Viewholder(@NonNull View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-        }
-    }
-
     @Override
     public void onBindViewHolder(@NonNull ListofSOPsAdapter.Viewholder viewholder, int position) {
-        viewholder.textViewListOfSopsTitle.setText(listOfSOPS.get(position).getSopTitle());
+        viewholder.tvBookTitle.setText(listOfSOPS.get(position).getSopTitle());
 
-        viewholder.constrainListOfSOPs.setOnClickListener(v -> {
+        viewholder.constrainBookList.setOnClickListener(v -> {
             Intent listOfSteps = new Intent(context, ListOfSteps.class);
             listOfSteps.putExtra("sopTitle", listOfSOPS.get(position).getSopTitle());
             context.startActivity(listOfSteps);
@@ -59,8 +44,21 @@ public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Vi
     @NonNull
     @Override
     public ListofSOPsAdapter.Viewholder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_sops_layout, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.books_list_layout, viewGroup, false);
         return new Viewholder(view);
+    }
+
+    public class Viewholder extends RecyclerView.ViewHolder {
+        //        BINDVIEWS HERE
+        @BindView(R.id.text_booklist_title)
+        TextView tvBookTitle;
+        @BindView(R.id.constrain_booklist_layout)
+        ConstraintLayout constrainBookList;
+
+        Viewholder(@NonNull View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
     }
 
     @Override
