@@ -28,6 +28,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -115,15 +116,32 @@ public class MainActivity extends AppCompatActivity {
         sopList = roomDatabase().mysopDao().getAllSOPs();
         getFirebaseBooks();
         if (sopList.size() > 0) {
+            arrangeCategoryTitles();
+            staticBookShelfs();
             setupRecylerviewDBAndAdapter();
         } else {
             imageviewNoCategory.setVisibility(View.VISIBLE);
-            String creatBookShelf = "Creat a book shelf \n to keep your handbooks organized";
+            String creatBookShelf = "Create a book shelf \n to keep your handbooks organized";
             textviewNoCategory.setText(creatBookShelf);
             textviewNoCategory.setVisibility(View.VISIBLE);
         }
     }
 
+
+    private void staticBookShelfs(){
+        MySOPs bookMarked = new MySOPs("Saved Books","JonNyBgOoDeMARKED");
+        MySOPs shared = new MySOPs("Shared Books","JonNyBgOoDeSHARED");
+        sopList.add(0,shared);
+        sopList.add(1,bookMarked);
+    }
+
+    private void arrangeCategoryTitles(){
+        Collections.sort(sopList, (item, t1) -> {
+            String s1 = item.getCategoryTitle();
+            String s2 = t1.getCategoryTitle();
+            return s1.compareToIgnoreCase(s2);
+        });
+    }
     private void getFirebaseBooks() {
         if (user != null) {
             mSopStepsDatabaseReference.child(user.getDisplayName()).addChildEventListener(new ChildEventListener() {

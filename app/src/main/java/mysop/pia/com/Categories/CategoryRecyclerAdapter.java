@@ -42,43 +42,64 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
 
     @Override
     public void onBindViewHolder(@NonNull CategoryRecyclerAdapter.Viewholder viewholder, int position) {
-        viewholder.categoryTitle.setText(categoryList.get(position).getCategoryTitle());
+            String sharedAuthor = categoryList.get(position).getSharedAuthor();
+        ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) viewholder.imageviewCategory.getLayoutParams();
 
-        viewholder.imgCatOptions.setOnClickListener(v -> {
+        if (sharedAuthor != (null) && sharedAuthor.equals("JonNyBgOoDeSHARED")) {
+//            THIS IS FOR BOOK MARKED SHELF
+            params.height = 100;
+            viewholder.imageviewCategory.setImageResource(R.drawable.ic_action_share);
+            viewholder.categoryTitle.setTextSize(21);
+            viewholder.imgCatOptions.setVisibility(View.GONE);
+
+        }
+        if (sharedAuthor != (null) && sharedAuthor.equals("JonNyBgOoDeMARKED")) {
+//            THIS IS FOR SHARED BOOKS
+            params.height = 100;
+            viewholder.categoryTitle.setText(categoryList.get(position).getCategoryTitle());
+            viewholder.categoryTitle.setTextSize(21);
+            viewholder.imageviewCategory.setImageResource(R.drawable.empty_book_shelf);
+            viewholder.imgCatOptions.setVisibility(View.GONE);
+        }
+         else {
+            viewholder.categoryTitle.setText(categoryList.get(position).getCategoryTitle());
+
+            viewholder.imgCatOptions.setOnClickListener(v -> {
 //            OPEN OPTIONS
-            //creating a popup menu
-            PopupMenu popup = new PopupMenu(context, viewholder.imgCatOptions);
-            //inflating menu from xml resource
-            popup.inflate(R.menu.menu_book_shelf);
-            //adding click listener
-            popup.setOnMenuItemClickListener(item -> {
-                switch (item.getItemId()) {
-                    case R.id.book_shelf_edit:
-                        Toast.makeText(context, "Item Edited", Toast.LENGTH_SHORT).show();
-                        return true;
-                    case R.id.book_shelf_share:
-                        Intent shareFirebase = new Intent(context, Firebase.class);
-                        context.startActivity(shareFirebase);
-                        mCatOptionsFrag.setVisibility(View.GONE);
-                        return true;
-                    case R.id.book_shelf_delete:
-                        alertToDelete(categoryList.get(position).getCategoryTitle(), position);
-                        return true;
-                    default:
-                        return false;
-                }
+                //creating a popup menu
+                PopupMenu popup = new PopupMenu(context, viewholder.imgCatOptions);
+                //inflating menu from xml resource
+                popup.inflate(R.menu.menu_book_shelf);
+                //adding click listener
+                popup.setOnMenuItemClickListener(item -> {
+                    switch (item.getItemId()) {
+                        case R.id.book_shelf_edit:
+                            Toast.makeText(context, "Item Edited", Toast.LENGTH_SHORT).show();
+                            return true;
+                        case R.id.book_shelf_share:
+                            Intent shareFirebase = new Intent(context, Firebase.class);
+                            context.startActivity(shareFirebase);
+                            mCatOptionsFrag.setVisibility(View.GONE);
+                            return true;
+                        case R.id.book_shelf_delete:
+                            alertToDelete(categoryList.get(position).getCategoryTitle(), position);
+                            return true;
+                        default:
+                            return false;
+                    }
+                });
+                //displaying the popup
+                popup.show();
             });
-            //displaying the popup
-            popup.show();
-        });
 
 
 //        DO THIS ON PRESS
-        viewholder.categoryLayout.setOnClickListener((View view) -> {
-            Intent categorySops = new Intent(context, ListofSOPs.class);
-            categoryName = categoryList.get(position).getCategoryTitle();
-            context.startActivity(categorySops);
-        });
+            viewholder.categoryLayout.setOnClickListener((View view) -> {
+                Intent categorySops = new Intent(context, ListofSOPs.class);
+                categoryName = categoryList.get(position).getCategoryTitle();
+                context.startActivity(categorySops);
+            });
+        }
 //TODO: USE FRAG FOR EDIT BOOK SHELF
 ////        OPEN OPTIONS ON LONG PRESS
 //        viewholder.categoryLayout.setOnLongClickListener(v -> {
