@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(view -> {
             Intent addCategory = new Intent(MainActivity.this, AddCategory.class);
             startActivity(addCategory);
+            finish();
         });
     }
 

@@ -1,6 +1,7 @@
 package mysop.pia.com.Categories;
 
 import android.app.AlertDialog;
+import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -24,6 +25,7 @@ import mysop.pia.com.Categories.CatergoryRoom.MySOPs;
 import mysop.pia.com.Firebase.Firebase;
 import mysop.pia.com.ListofSOPs.ListofSOPs;
 import mysop.pia.com.R;
+import mysop.pia.com.Steps.StepsRoom.StepsAppDatabase;
 
 public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecyclerAdapter.Viewholder> {
 
@@ -150,6 +152,7 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
                 .setPositiveButton(android.R.string.yes, (dialog, which) -> {
                     // continue with delete
                     db.mysopDao().deleteCategory(categoryName);
+                    stepsRoomDatabase().listOfSteps().DeleteShelfBooks(categoryName);
                     Toast.makeText(context, categoryName + " is Deleted" + position, Toast.LENGTH_SHORT).show();
                     categoryList.remove(position);
                     notifyDataSetChanged();
@@ -162,4 +165,12 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
                 .show();
 //        return position;
     }
+
+    private StepsAppDatabase stepsRoomDatabase() {
+        return Room.databaseBuilder(context, StepsAppDatabase.class, "steps")
+                .fallbackToDestructiveMigration()
+                .allowMainThreadQueries()
+                .build();
+    }
+
 }

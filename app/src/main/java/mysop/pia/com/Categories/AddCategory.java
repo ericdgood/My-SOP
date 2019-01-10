@@ -71,4 +71,12 @@ public class AddCategory extends Activity {
         }
         return true;
     }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent returnhome = new Intent(this, MainActivity.class);
+        startActivity(returnhome);
+    }
 }
