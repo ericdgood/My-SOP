@@ -30,8 +30,9 @@
         android:orientation="vertical">
 
         <ScrollView
+            android:id="@+id/recycl"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="6dp">
 
             <android.support.v7.widget.RecyclerView
@@ -58,7 +59,8 @@
             style="@style/ConstraintCenterHorizontal"
             android:src="@drawable/bookshelfedit"
             android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@id/textview_no_categories"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/recycl"/>
 
         <TextView
             android:id="@+id/textview_no_categories"
@@ -67,24 +69,17 @@
             android:gravity="center"
             android:lineSpacingExtra="6dp"
             android:layout_height="wrap_content"
-            android:visibility="gone"
             android:textSize="21sp"
-            app:layout_constraintBottom_toBottomOf="@id/guideline"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/imageview_sop_logo_no_categories"
             tools:text="Create a book shelf to organize your Handbooks"/>
         <FrameLayout
             android:id="@+id/framelayout_category_options_frag"
             style="@style/ConstraintCenterHorizontal"
             android:layout_width="300dp"
             android:layout_height="400dp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@id/guideline" />
+            android:visibility="gone"/>
 
-        <android.support.constraint.Guideline
-            android:id="@+id/guideline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.8" />
 
     </android.support.constraint.ConstraintLayout>
 

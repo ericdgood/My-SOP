@@ -124,6 +124,8 @@ public class MainActivity extends AppCompatActivity {
             String creatBookShelf = "Create a book shelf \n to keep your handbooks organized";
             textviewNoCategory.setText(creatBookShelf);
             textviewNoCategory.setVisibility(View.VISIBLE);
+            staticBookShelfs();
+            setupRecylerviewDBAndAdapter();
         }
     }
 

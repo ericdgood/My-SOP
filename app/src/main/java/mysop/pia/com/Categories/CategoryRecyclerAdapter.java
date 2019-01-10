@@ -47,21 +47,20 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
 
         if (sharedAuthor != (null) && sharedAuthor.equals("JonNyBgOoDeSHARED")) {
 //            THIS IS FOR BOOK MARKED SHELF
-            params.height = 100;
+            params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
             viewholder.imageviewCategory.setImageResource(R.drawable.ic_action_share);
             viewholder.categoryTitle.setTextSize(21);
             viewholder.imgCatOptions.setVisibility(View.GONE);
-
         }
+
         if (sharedAuthor != (null) && sharedAuthor.equals("JonNyBgOoDeMARKED")) {
 //            THIS IS FOR SHARED BOOKS
-            params.height = 100;
-            viewholder.categoryTitle.setText(categoryList.get(position).getCategoryTitle());
+            params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
             viewholder.categoryTitle.setTextSize(21);
-            viewholder.imageviewCategory.setImageResource(R.drawable.empty_book_shelf);
+            viewholder.imageviewCategory.setImageResource(R.drawable.ic_bookmark);
             viewholder.imgCatOptions.setVisibility(View.GONE);
         }
-         else {
+
             viewholder.categoryTitle.setText(categoryList.get(position).getCategoryTitle());
 
             viewholder.imgCatOptions.setOnClickListener(v -> {
@@ -99,7 +98,6 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
                 categoryName = categoryList.get(position).getCategoryTitle();
                 context.startActivity(categorySops);
             });
-        }
 //TODO: USE FRAG FOR EDIT BOOK SHELF
 ////        OPEN OPTIONS ON LONG PRESS
 //        viewholder.categoryLayout.setOnLongClickListener(v -> {
