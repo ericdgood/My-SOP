@@ -131,7 +131,7 @@ public class AddStep extends AppCompatActivity {
             }
 
 //            SAVE STEPS FOR SOP
-            StepsRoomData newStep = new StepsRoomData(categoryName ,sopTitle, stepTitle, stepNumber, stepDescription, image);
+            StepsRoomData newStep = new StepsRoomData(categoryName ,sopTitle, stepTitle, stepNumber, stepDescription, image, 0);
             if (!editStep) {
                 stepsRoomDatabase().listOfSteps().insertSteps(newStep);
                 return true;

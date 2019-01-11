@@ -28,13 +28,17 @@ public class StepsRoomData {
     @ColumnInfo(name = "imageURI")
     private String imageURI;
 
-    public StepsRoomData(String category, String sopTitle, String stepTitle, int stepNumber, String stepDescription, String imageURI) {
+    @ColumnInfo(name = "savedBook")
+    private int savedBook;
+
+    public StepsRoomData(String category, String sopTitle, String stepTitle, int stepNumber, String stepDescription, String imageURI, int savedBook) {
         this.category = category;
         this.sopTitle = sopTitle;
         this.stepTitle = stepTitle;
         this.stepNumber = stepNumber;
         this.stepDescription = stepDescription;
         this.imageURI = imageURI;
+        this.savedBook = savedBook;
     }
 
     public int getId() {
@@ -67,5 +71,9 @@ public class StepsRoomData {
 
     public String getImageURI() {
         return imageURI;
+    }
+
+    public int getSavedBook() {
+        return savedBook;
     }
 }

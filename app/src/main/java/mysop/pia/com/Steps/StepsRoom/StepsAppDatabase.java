@@ -3,7 +3,7 @@ package mysop.pia.com.Steps.StepsRoom;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.RoomDatabase;
 
-@Database(entities = {StepsRoomData.class}, version = 5)
+@Database(entities = {StepsRoomData.class}, version = 7)
 public abstract class StepsAppDatabase extends RoomDatabase {
     public abstract Stepsinterface listOfSteps();
 }
@@ -12,3 +12,5 @@ public abstract class StepsAppDatabase extends RoomDatabase {
 //VERSION 3 - ADDED STEP DESCRIPTION AND IMAGEURI
 //VERSION 4 - REMOVED SOP ROOM DATABASE
 //VERSION 5 - ADDED STEP NUMBER
+//VERSION 6 - ADD SAVED BOOK
+//VERSION 7 - CHANGED SAVE BOOK TO INT

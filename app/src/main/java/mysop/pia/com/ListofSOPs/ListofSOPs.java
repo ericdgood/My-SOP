@@ -80,17 +80,6 @@ public class ListofSOPs extends AppCompatActivity {
                             alertToDelete(alertBoxTitle, alertBoxMessage, viewHolder);
                         }
                 ));
-//                underlayButtons.add(new SwipeHelper.UnderlayButton(
-//                        "Share",
-//                        getColor(R.color.logoYellowBookColor),
-//                        pos -> {
-//                            // TODO: Shared
-//                            sopTitle = listOfSOPs.get(viewHolder.getAdapterPosition()).getSopTitle();
-//                            alertBoxTitle = "Share SOP";
-//                            alertBoxMessage = "Would you like to share " + sopTitle;
-//                            alertToDelete(alertBoxTitle, alertBoxMessage, viewHolder);
-//                        }
-//                ));
             }
         };
     }
@@ -142,7 +131,7 @@ public class ListofSOPs extends AppCompatActivity {
 
     private void setupRecyclerviewAndAdapter() {
         listOfSOPs = stepsRoomDatabase().listOfSteps().getAllSOPs(CategoryRecyclerAdapter.categoryName);
-        SOPsRecyclerAdapter = new ListofSOPsAdapter(this, listOfSOPs);
+        SOPsRecyclerAdapter = new ListofSOPsAdapter(this, listOfSOPs, stepsRoomDatabase());
         recyclerviewListofSOPs.setLayoutManager(new LinearLayoutManager(this));
         recyclerviewListofSOPs.setAdapter(SOPsRecyclerAdapter);
     }

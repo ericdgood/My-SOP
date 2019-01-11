@@ -53,4 +53,8 @@ public interface Stepsinterface {
     //    UPDATE PAGES WHEN SHELF IS EDITED
     @Query("UPDATE steps SET category = :newShelf WHERE :oldShelf = category")
     void updatePagesShelf(String newShelf ,String oldShelf);
+
+    //    UPDATE PAGES WHEN SHELF IS EDITED
+    @Query("UPDATE steps SET savedBook = :save WHERE id = :id")
+    void updateBookSaved(int save, int id);
 }
