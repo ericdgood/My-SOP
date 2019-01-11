@@ -31,7 +31,11 @@ public class StepsRoomData {
     @ColumnInfo(name = "savedBook")
     private int savedBook;
 
-    public StepsRoomData(String category, String sopTitle, String stepTitle, int stepNumber, String stepDescription, String imageURI, int savedBook) {
+    @ColumnInfo(name = "bookColor")
+    private String bookColor;
+
+    public StepsRoomData(String category, String sopTitle, String stepTitle, int stepNumber,
+                         String stepDescription, String imageURI, int savedBook, String bookColor) {
         this.category = category;
         this.sopTitle = sopTitle;
         this.stepTitle = stepTitle;
@@ -39,6 +43,7 @@ public class StepsRoomData {
         this.stepDescription = stepDescription;
         this.imageURI = imageURI;
         this.savedBook = savedBook;
+        this.bookColor = bookColor;
     }
 
     public int getId() {
@@ -75,5 +80,9 @@ public class StepsRoomData {
 
     public int getSavedBook() {
         return savedBook;
+    }
+
+    public String getBookColor() {
+        return bookColor;
     }
 }

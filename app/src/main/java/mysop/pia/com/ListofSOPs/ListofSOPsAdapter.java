@@ -43,19 +43,42 @@ public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Vi
     public void onBindViewHolder(@NonNull ListofSOPsAdapter.Viewholder viewholder, int position) {
         viewholder.tvBookTitle.setText(listOfSOPS.get(position).getSopTitle());
 
+        bookColor(viewholder, position);
+
         viewholder.constrainBookList.setOnClickListener(v -> {
             Intent listOfSteps = new Intent(context, ListOfSteps.class);
             listOfSteps.putExtra("sopTitle", listOfSOPS.get(position).getSopTitle());
             context.startActivity(listOfSteps);
         });
 
-        bookOptions(viewholder,position);
+//        BOOK OPTIONS
+        bookOptions(viewholder, position);
 
+//      BOOKMARK BOOKS
         savedBook = listOfSOPS.get(position).getSavedBook();
-        if (savedBook == 1){
+        if (savedBook == 1) {
             viewholder.imgBookSave.setImageResource(R.drawable.ic_bookmark);
         }
-        saveBook(viewholder,position, listOfSOPS.get(position).getSopTitle());
+        saveBook(viewholder, position, listOfSOPS.get(position).getSopTitle());
+    }
+
+    private void bookColor(Viewholder viewholder, int position) {
+        String bookColor = listOfSOPS.get(position).getBookColor();
+        if (bookColor != null) {
+            switch (bookColor) {
+                case "Red":
+                    viewholder.imgHandbook.setColorFilter(context.getColor(R.color.logoRedBookColor));
+                case "Blue":
+                    viewholder.imgHandbook.setColorFilter(context.getColor(R.color.logoBlueBookColor));
+                case "Green":
+                    viewholder.imgHandbook.setColorFilter(context.getColor(R.color.logoGreenBookColor));
+                case "Yellow":
+                    viewholder.imgHandbook.setColorFilter(context.getColor(R.color.logoYellowBookColor));
+                case "Orange":
+                    viewholder.imgHandbook.setColorFilter(context.getColor(R.color.logoOrangeBookColor));
+                default:
+            }
+        }
     }
 
     @NonNull
@@ -68,23 +91,23 @@ public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Vi
     private void saveBook(Viewholder viewholder, int position, String sopTitle) {
         int id = listOfSOPS.get(position).getId();
         viewholder.imgBookSave.setOnClickListener(v -> {
-        if (savedBook == 0){
+            if (savedBook == 0) {
 //            SAVE BOOK
-            viewholder.imgBookSave.setImageResource(R.drawable.ic_bookmark);
-            db.listOfSteps().updateBookSaved(1,id);
-            savedBook = 1;
-            Toast.makeText(context, sopTitle + " Bookmarked", Toast.LENGTH_SHORT).show();
-        } else if (savedBook == 1){
+                viewholder.imgBookSave.setImageResource(R.drawable.ic_bookmark);
+                db.listOfSteps().updateBookSaved(1, id);
+                savedBook = 1;
+                Toast.makeText(context, sopTitle + " Bookmarked", Toast.LENGTH_SHORT).show();
+            } else if (savedBook == 1) {
 //            UNSAVE BOOK
-            viewholder.imgBookSave.setImageResource(R.drawable.ic_bookmark_border);
-            db.listOfSteps().updateBookSaved(0,id);
-            savedBook = 0;
-            Toast.makeText(context, sopTitle + " Un-Bookmarked", Toast.LENGTH_SHORT).show();
-        }
+                viewholder.imgBookSave.setImageResource(R.drawable.ic_bookmark_border);
+                db.listOfSteps().updateBookSaved(0, id);
+                savedBook = 0;
+                Toast.makeText(context, sopTitle + " Un-Bookmarked", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 
-    private void bookOptions(Viewholder viewholder, int position){
+    private void bookOptions(Viewholder viewholder, int position) {
         viewholder.imgBookOptions.setOnClickListener(v -> {
 //            OPEN OPTIONS
             PopupMenu popup = new PopupMenu(context, viewholder.imgBookOptions);
@@ -92,12 +115,12 @@ public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Vi
             popup.setOnMenuItemClickListener(item -> {
                 switch (item.getItemId()) {
                     case R.id.book_shelf_edit:
-                        editBook(listOfSOPS.get(position).getSopTitle(),listOfSOPS.get(position).getId());
+                        editBook(listOfSOPS.get(position).getSopTitle(), listOfSOPS.get(position).getId());
                         return true;
                     case R.id.book_shelf_share:
                         return true;
                     case R.id.book_shelf_delete:
-                        alertToDelete(listOfSOPS.get(position).getSopTitle(),position);
+                        alertToDelete(listOfSOPS.get(position).getSopTitle(), position);
                         return true;
                     default:
                         return false;
@@ -114,7 +137,7 @@ public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Vi
         editSOP.putExtra("editSopTitle", sopTitle);
         editSOP.putExtra("editId", id);
         context.startActivity(editSOP);
-        ((Activity)context).finish();
+        ((Activity) context).finish();
     }
 
     private void alertToDelete(String bookTitle, int position) {
@@ -152,6 +175,8 @@ public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Vi
         ImageView imgBookSave;
         @BindView(R.id.image_booklist_options)
         ImageView imgBookOptions;
+        @BindView(R.id.imageview_handbook)
+        ImageView imgHandbook;
 
         Viewholder(@NonNull View itemView) {
             super(itemView);

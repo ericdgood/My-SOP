@@ -62,6 +62,7 @@ public class AddStep extends AppCompatActivity {
     String categoryName;
     int stepNumber;
     String stepDescription;
+    String bookColor;
     boolean editStep;
     int PERMISSION_GALLERY = 1;
     int PERMISSION_CAMERA = 2;
@@ -83,6 +84,7 @@ public class AddStep extends AppCompatActivity {
 //      GETS SOPTITLE FROM ADD SOP INTENT
         sopTitle = getIntent().getStringExtra("sopTitle");
         categoryName = getIntent().getStringExtra("sopCategory");
+        bookColor = getIntent().getStringExtra("bookColor");
         stepNumber = getIntent().getIntExtra("stepNumber", 1);
         setStepText();
         pickImageFromGallery();
@@ -131,7 +133,7 @@ public class AddStep extends AppCompatActivity {
             }
 
 //            SAVE STEPS FOR SOP
-            StepsRoomData newStep = new StepsRoomData(categoryName ,sopTitle, stepTitle, stepNumber, stepDescription, image, 0);
+            StepsRoomData newStep = new StepsRoomData(categoryName ,sopTitle, stepTitle, stepNumber, stepDescription, image, 0, bookColor);
             if (!editStep) {
                 stepsRoomDatabase().listOfSteps().insertSteps(newStep);
                 return true;

@@ -9,7 +9,7 @@
         android:id="@+id/textview_new_sop_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Create a new SOP"
+        android:text="Create a new Handbook"
         android:textSize="21sp"
         style="@style/ConstraintCenterHorizontal"/>
 
@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textCapSentences"
-        android:hint="SOP Title"
+        android:hint="Handbook Title"
         app:layout_constraintTop_toBottomOf="@id/textview_new_sop_label"/>
 
     <EditText
@@ -27,9 +27,57 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:background="@drawable/description_border"
-        android:hint="SOP Description"
+        android:hint="Handbook Description"
         android:padding="16dp"
         app:layout_constraintTop_toBottomOf="@id/edittext_add_sop_title"/>
+
+    <TextView
+        android:id="@+id/book_color_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="6dp"
+        android:text="Color of book"
+        app:layout_constraintTop_toBottomOf="@id/edittext_sop_description"/>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/color_selection" android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/book_color_label">
+
+        <ImageView android:id="@+id/book_color_red"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="8dp"
+            android:background="@color/logoRedBookColor"/>
+
+        <ImageView android:id="@+id/book_color_green"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="8dp"
+            android:background="@color/logoGreenBookColor"/>
+
+        <ImageView android:id="@+id/book_color_blue"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="8dp"
+            android:background="@color/logoBlueBookColor"/>
+
+        <ImageView android:id="@+id/book_color_orange"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="8dp"
+            android:background="@color/logoOrangeBookColor"/>
+
+        <ImageView android:id="@+id/book_color_yellow"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="8dp"
+            android:background="@color/logoYellowBookColor"/>
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/button_add_sop_add_step"
@@ -37,7 +85,7 @@
         android:layout_height="wrap_content"
         android:text="add step"
         android:layout_margin="4dp"
-        app:layout_constraintTop_toBottomOf="@id/edittext_sop_description" />
+        app:layout_constraintTop_toBottomOf="@id/color_selection" />
 
     <Button
         android:id="@+id/button_edit_sop"
