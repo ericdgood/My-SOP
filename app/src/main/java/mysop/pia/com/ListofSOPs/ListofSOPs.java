@@ -129,8 +129,16 @@ public class ListofSOPs extends AppCompatActivity {
         textviewCategoryListTitle.setText(titleConcat);
     }
 
+    public void getBooks(){
+        if (CategoryRecyclerAdapter.categoryName.equals("Saved Books")){
+            listOfSOPs = stepsRoomDatabase().listOfSteps().getAllSavedBooks(1);
+        } else {
+            listOfSOPs = stepsRoomDatabase().listOfSteps().getAllSOPs(CategoryRecyclerAdapter.categoryName);
+        }
+    }
+
     private void setupRecyclerviewAndAdapter() {
-        listOfSOPs = stepsRoomDatabase().listOfSteps().getAllSOPs(CategoryRecyclerAdapter.categoryName);
+        getBooks();
         SOPsRecyclerAdapter = new ListofSOPsAdapter(this, listOfSOPs, stepsRoomDatabase());
         recyclerviewListofSOPs.setLayoutManager(new LinearLayoutManager(this));
         recyclerviewListofSOPs.setAdapter(SOPsRecyclerAdapter);

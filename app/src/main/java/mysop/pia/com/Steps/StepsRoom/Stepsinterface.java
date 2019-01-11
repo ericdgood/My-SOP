@@ -20,6 +20,10 @@ public interface Stepsinterface {
     @Query("SELECT * FROM steps WHERE :category = category")
     List<StepsRoomData> getAllSOPs(String category);
 
+    //    GET ALL SAVED BOOK
+    @Query("SELECT * FROM steps WHERE :save = savedBook")
+    List<StepsRoomData> getAllSavedBooks(int save);
+
     //    GET ONLY STEP TITLES FOR FIREBASE TEST
     @Query("SELECT * FROM steps")
     List<StepsRoomData> getCatSOPs();
