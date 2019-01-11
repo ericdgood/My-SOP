@@ -105,15 +105,15 @@ public class AddSOP extends AppCompatActivity {
         buttonEditSOP.setVisibility(View.VISIBLE);
         tvAddBookLabel.setText("Edit Book info");
         editTextAddSopTitle.setText(getIntent().getStringExtra("editSopTitle"));
-
+        bookColor();
         buttonEditSOP.setOnClickListener(v -> {
             addSopTitle = editTextAddSopTitle.getText().toString();
-            if (checkDuplicateSOP()) {
+
                 stepsRoomDatabase().listOfSteps().updateSop(addSopTitle, getIntent().getStringExtra("editSopTitle"));
+                stepsRoomDatabase().listOfSteps().updateBookColor(bookColor,getIntent().getIntExtra("editId",0));
                 Intent returnToSOP = new Intent(this, ListofSOPs.class);
                 startActivity(returnToSOP);
                 finish();
-            }
         });
     }
 
