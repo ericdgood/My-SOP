@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void staticBookShelfs(){
-        MySOPs bookMarked = new MySOPs("Saved Books","JonNyBgOoDeMARKED");
+        MySOPs bookMarked = new MySOPs("Bookmarked","JonNyBgOoDeMARKED");
         MySOPs shared = new MySOPs("Shared Books","JonNyBgOoDeSHARED");
         sopList.add(0,shared);
         sopList.add(1,bookMarked);

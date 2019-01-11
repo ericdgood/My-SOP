@@ -144,7 +144,7 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
                     // continue with delete
                     db.mysopDao().deleteCategory(categoryName);
                     stepsRoomDatabase().listOfSteps().DeleteShelfBooks(categoryName);
-                    Toast.makeText(context, categoryName + " is Deleted" + position, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, categoryName + " is Deleted", Toast.LENGTH_SHORT).show();
                     categoryList.remove(position);
                     notifyDataSetChanged();
                     Toast.makeText(context,  categoryName + " Deleted", Toast.LENGTH_SHORT).show();

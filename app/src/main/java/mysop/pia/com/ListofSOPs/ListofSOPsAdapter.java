@@ -1,5 +1,6 @@
 package mysop.pia.com.ListofSOPs;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -9,7 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -45,11 +48,13 @@ public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Vi
             context.startActivity(listOfSteps);
         });
 
+        bookOptions(viewholder,position);
+
         savedBook = listOfSOPS.get(position).getSavedBook();
         if (savedBook == 1){
             viewholder.imgBookSave.setImageResource(R.drawable.ic_bookmark);
         }
-        saveBook(viewholder,position);
+        saveBook(viewholder,position, listOfSOPS.get(position).getSopTitle());
     }
 
     @NonNull
@@ -59,7 +64,7 @@ public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Vi
         return new Viewholder(view);
     }
 
-    private void saveBook(Viewholder viewholder, int position) {
+    private void saveBook(Viewholder viewholder, int position, String sopTitle) {
         int id = listOfSOPS.get(position).getId();
         viewholder.imgBookSave.setOnClickListener(v -> {
         if (savedBook == 0){
@@ -67,13 +72,61 @@ public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Vi
             viewholder.imgBookSave.setImageResource(R.drawable.ic_bookmark);
             db.listOfSteps().updateBookSaved(1,id);
             savedBook = 1;
+            Toast.makeText(context, sopTitle + " Bookmarked", Toast.LENGTH_SHORT).show();
         } else if (savedBook == 1){
 //            UNSAVE BOOK
             viewholder.imgBookSave.setImageResource(R.drawable.ic_bookmark_border);
             db.listOfSteps().updateBookSaved(0,id);
             savedBook = 0;
+            Toast.makeText(context, sopTitle + " Un-Bookmarked", Toast.LENGTH_SHORT).show();
         }
         });
+    }
+
+    private void bookOptions(Viewholder viewholder, int position){
+        viewholder.imgBookOptions.setOnClickListener(v -> {
+//            OPEN OPTIONS
+            //creating a popup menu
+            PopupMenu popup = new PopupMenu(context, viewholder.imgBookOptions);
+            //inflating menu from xml resource
+            popup.inflate(R.menu.menu_book_shelf);
+            //adding click listener
+            popup.setOnMenuItemClickListener(item -> {
+                switch (item.getItemId()) {
+                    case R.id.book_shelf_edit:
+                        return true;
+                    case R.id.book_shelf_share:
+                        return true;
+                    case R.id.book_shelf_delete:
+                        alertToDelete(listOfSOPS.get(position).getSopTitle(),position);
+                        return true;
+                    default:
+                        return false;
+                }
+            });
+            //displaying the popup
+            popup.show();
+        });
+    }
+
+    private void alertToDelete(String bookTitle, int position) {
+        AlertDialog.Builder builder;
+        builder = new AlertDialog.Builder(context, android.R.style.Theme_Material_Light_Dialog_Alert);
+        builder.setTitle("Delete entry")
+                .setMessage("Are you sure you want to delete " + bookTitle + "?")
+                .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                    // continue with delete
+                    db.listOfSteps().DeleteSOP(bookTitle);
+                    Toast.makeText(context, bookTitle + " is Deleted", Toast.LENGTH_SHORT).show();
+                    listOfSOPS.remove(position);
+                    notifyDataSetChanged();
+                })
+                .setNegativeButton(android.R.string.no, (dialog, which) -> {
+                    // do nothing
+                })
+                .setIcon(R.drawable.ic_delete)
+                .show();
+//        return position;
     }
 
     @Override
@@ -89,6 +142,8 @@ public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Vi
         ConstraintLayout constrainBookList;
         @BindView(R.id.image_booklist_saved)
         ImageView imgBookSave;
+        @BindView(R.id.image_booklist_options)
+        ImageView imgBookOptions;
 
         Viewholder(@NonNull View itemView) {
             super(itemView);

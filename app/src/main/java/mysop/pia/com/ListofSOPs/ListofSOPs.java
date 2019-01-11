@@ -130,8 +130,11 @@ public class ListofSOPs extends AppCompatActivity {
     }
 
     public void getBooks(){
-        if (CategoryRecyclerAdapter.categoryName.equals("Saved Books")){
+        if (CategoryRecyclerAdapter.categoryName.equals("Bookmarked")){
             listOfSOPs = stepsRoomDatabase().listOfSteps().getAllSavedBooks(1);
+            if (listOfSOPs.size() == 0){
+                textviewCategoryListTitle.setText("No Bookmarked Handbooks");
+            }
         } else {
             listOfSOPs = stepsRoomDatabase().listOfSteps().getAllSOPs(CategoryRecyclerAdapter.categoryName);
         }
