@@ -1,5 +1,6 @@
 package mysop.pia.com.ListofSOPs;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -86,14 +87,12 @@ public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Vi
     private void bookOptions(Viewholder viewholder, int position){
         viewholder.imgBookOptions.setOnClickListener(v -> {
 //            OPEN OPTIONS
-            //creating a popup menu
             PopupMenu popup = new PopupMenu(context, viewholder.imgBookOptions);
-            //inflating menu from xml resource
             popup.inflate(R.menu.menu_book_shelf);
-            //adding click listener
             popup.setOnMenuItemClickListener(item -> {
                 switch (item.getItemId()) {
                     case R.id.book_shelf_edit:
+                        editBook(listOfSOPS.get(position).getSopTitle(),listOfSOPS.get(position).getId());
                         return true;
                     case R.id.book_shelf_share:
                         return true;
@@ -107,6 +106,15 @@ public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Vi
             //displaying the popup
             popup.show();
         });
+    }
+
+    private void editBook(String sopTitle, int id) {
+        Intent editSOP = new Intent(context, AddSOP.class);
+        editSOP.putExtra("editSop", 1);
+        editSOP.putExtra("editSopTitle", sopTitle);
+        editSOP.putExtra("editId", id);
+        context.startActivity(editSOP);
+        ((Activity)context).finish();
     }
 
     private void alertToDelete(String bookTitle, int position) {

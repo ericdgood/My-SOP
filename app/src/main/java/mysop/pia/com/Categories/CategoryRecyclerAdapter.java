@@ -1,5 +1,6 @@
 package mysop.pia.com.Categories;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.arch.persistence.room.Room;
 import android.content.Context;
@@ -104,7 +105,7 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
         editShelf.putExtra("id", id);
         editShelf.putExtra("edit", false);
         context.startActivity(editShelf);
-
+        ((Activity)context).finish();
     }
 
     @NonNull
