@@ -94,7 +94,7 @@
         android:layout_margin="4dp"
         android:text="save SOP"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/edittext_sop_description"/>
+        app:layout_constraintTop_toBottomOf="@id/color_selection"/>
 
 
 </android.support.constraint.ConstraintLayout>

@@ -39,6 +39,10 @@ public interface Stepsinterface {
     @Query("UPDATE steps SET sopTitle = :newTitle WHERE :oldTitle = sopTitle")
     void updateSop(String newTitle ,String oldTitle);
 
+    //    UPDATE SOP TITLE
+    @Query("UPDATE steps SET bookColor = :bookColor WHERE id = :id")
+    void updateBookColor(String bookColor, int id);
+
 //    UPDATE STEP NUMBERS WHEN MOVE IN RECYCLERVIEW
     @Query("UPDATE steps SET stepNumber = :newN WHERE :dragged = id")
     void updateOnMove(int newN ,int dragged);

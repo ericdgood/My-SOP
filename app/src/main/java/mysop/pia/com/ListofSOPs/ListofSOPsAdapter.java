@@ -28,6 +28,7 @@ import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
 
 public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Viewholder> {
 
+    private static final String TAG = "tezst";
     private final StepsAppDatabase db;
     private List<StepsRoomData> listOfSOPS;
     private Context context;
@@ -43,7 +44,8 @@ public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Vi
     public void onBindViewHolder(@NonNull ListofSOPsAdapter.Viewholder viewholder, int position) {
         viewholder.tvBookTitle.setText(listOfSOPS.get(position).getSopTitle());
 
-        bookColor(viewholder, position);
+//        bookColor(viewholder, position);
+        viewholder.imgHandbook.setColorFilter(bookColor(position));
 
         viewholder.constrainBookList.setOnClickListener(v -> {
             Intent listOfSteps = new Intent(context, ListOfSteps.class);
@@ -62,23 +64,24 @@ public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Vi
         saveBook(viewholder, position, listOfSOPS.get(position).getSopTitle());
     }
 
-    private void bookColor(Viewholder viewholder, int position) {
+    private int bookColor(int position) {
         String bookColor = listOfSOPS.get(position).getBookColor();
         if (bookColor != null) {
             switch (bookColor) {
                 case "Red":
-                    viewholder.imgHandbook.setColorFilter(context.getColor(R.color.logoRedBookColor));
+                    return context.getColor(R.color.logoRedBookColor);
                 case "Blue":
-                    viewholder.imgHandbook.setColorFilter(context.getColor(R.color.logoBlueBookColor));
+                    return context.getColor(R.color.logoBlueBookColor);
                 case "Green":
-                    viewholder.imgHandbook.setColorFilter(context.getColor(R.color.logoGreenBookColor));
+                    return context.getColor(R.color.logoGreenBookColor);
                 case "Yellow":
-                    viewholder.imgHandbook.setColorFilter(context.getColor(R.color.logoYellowBookColor));
+                    return context.getColor(R.color.logoYellowBookColor);
                 case "Orange":
-                    viewholder.imgHandbook.setColorFilter(context.getColor(R.color.logoOrangeBookColor));
+                    return context.getColor(R.color.logoOrangeBookColor);
                 default:
             }
         }
+        return context.getColor(R.color.logoBlueBookColor);
     }
 
     @NonNull
