@@ -43,22 +43,14 @@
         android:id="@+id/text_booklist_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp"
         android:textColor="@color/text"
         android:textSize="21sp"
         android:textStyle="bold|italic"
         app:layout_constraintLeft_toRightOf="@id/relativelayout_bookimage"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Air Filter"/>
-
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="@color/text"
-        app:layout_constraintBottom_toBottomOf="@id/text_booklist_title"
-        app:layout_constraintLeft_toLeftOf="@id/text_booklist_title"
-        app:layout_constraintRight_toRightOf="@id/text_booklist_title"/>
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline"

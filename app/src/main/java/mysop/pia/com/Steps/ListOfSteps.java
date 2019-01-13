@@ -1,11 +1,11 @@
 package mysop.pia.com.Steps;
 
+import android.app.Activity;
 import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -20,7 +20,7 @@ import mysop.pia.com.R;
 import mysop.pia.com.Steps.StepsRoom.StepsAppDatabase;
 import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
 
-public class ListOfSteps extends AppCompatActivity {
+public class ListOfSteps extends Activity {
 
     private static final String TAG = "List of Steps";
     @BindView(R.id.textview_list_steps_title)
@@ -39,6 +39,7 @@ public class ListOfSteps extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_of_steps);
         ButterKnife.bind(this);
+
         sopTitle = getIntent().getStringExtra("sopTitle");
 
         textviewTitle.setText(sopTitle);
