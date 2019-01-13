@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="40dp"
-            android:src="@drawable/ic_bookmark_border" />
+            android:src="@drawable/baseline_bookmark_border_black_36dp" />
 
         <ImageView
             android:id="@+id/image_booklist_options"

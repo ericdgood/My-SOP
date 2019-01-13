@@ -28,11 +28,10 @@ import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
 
 public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Viewholder> {
 
-    private static final String TAG = "tezst";
     private final StepsAppDatabase db;
     private List<StepsRoomData> listOfSOPS;
     private Context context;
-    int savedBook = 0;
+    private int savedBook;
 
     ListofSOPsAdapter(Context context, List<StepsRoomData> listOfSOPs, StepsAppDatabase stepsAppDatabase) {
         this.context = context;
@@ -44,7 +43,6 @@ public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Vi
     public void onBindViewHolder(@NonNull ListofSOPsAdapter.Viewholder viewholder, int position) {
         viewholder.tvBookTitle.setText(listOfSOPS.get(position).getSopTitle());
 
-//        bookColor(viewholder, position);
         viewholder.imgHandbook.setColorFilter(bookColor(position));
 
         viewholder.constrainBookList.setOnClickListener(v -> {
@@ -94,18 +92,18 @@ public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Vi
     private void saveBook(Viewholder viewholder, int position, String sopTitle) {
         int id = listOfSOPS.get(position).getId();
         viewholder.imgBookSave.setOnClickListener(v -> {
-            if (savedBook == 0) {
+            if (savedBook == 1) {
+//            UNSAVE BOOK
+                savedBook = 0;
+                viewholder.imgBookSave.setImageResource(R.drawable.baseline_bookmark_border_black_36dp);
+                db.listOfSteps().updateBookSaved(0, id);
+                Toast.makeText(context, sopTitle + " Un-Bookmarked", Toast.LENGTH_SHORT).show();
+            } else if (savedBook == 0) {
 //            SAVE BOOK
+                savedBook = 1;
                 viewholder.imgBookSave.setImageResource(R.drawable.ic_bookmark);
                 db.listOfSteps().updateBookSaved(1, id);
-                savedBook = 1;
                 Toast.makeText(context, sopTitle + " Bookmarked", Toast.LENGTH_SHORT).show();
-            } else if (savedBook == 1) {
-//            UNSAVE BOOK
-                viewholder.imgBookSave.setImageResource(R.drawable.ic_bookmark_border);
-                db.listOfSteps().updateBookSaved(0, id);
-                savedBook = 0;
-                Toast.makeText(context, sopTitle + " Un-Bookmarked", Toast.LENGTH_SHORT).show();
             }
         });
     }

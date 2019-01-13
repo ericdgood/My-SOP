@@ -101,6 +101,7 @@ public class AddSOP extends AppCompatActivity {
     }
 
     private void editSop() {
+//        TODO CHANGE BOOK SHELF
         buttonAddStep.setVisibility(View.GONE);
         buttonEditSOP.setVisibility(View.VISIBLE);
         tvAddBookLabel.setText("Edit Book info");

@@ -1,5 +1,6 @@
 package mysop.pia.com.ListofSOPs;
 
+import android.annotation.SuppressLint;
 import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -21,17 +23,12 @@ import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
 
 public class ListofSOPs extends AppCompatActivity {
 
-    private static final String TAG = "Hello";
     @BindView(R.id.recyclerview_list_of_sops)
     RecyclerView recyclerviewListofSOPs;
-    @BindView(R.id.listsop_categorytitle)
-    TextView textviewCategoryListTitle;
+    @BindView(R.id.no_bookmarked)
+    TextView tvNoBookmarks;
     @BindView(R.id.fab_addsop)
     FloatingActionButton fabAddSOP;
-    private String alertBoxTitle;
-    private String alertBoxMessage;
-    String sopTitle;
-    int editID;
 
     List<StepsRoomData> listOfSOPs = new ArrayList<>();
     ListofSOPsAdapter SOPsRecyclerAdapter;
@@ -42,7 +39,7 @@ public class ListofSOPs extends AppCompatActivity {
         setContentView(R.layout.list_of_sops);
         ButterKnife.bind(this);
 
-        setUpPage();
+        setTitle(CategoryRecyclerAdapter.categoryName + " Handbooks");
 
         setupRecyclerviewAndAdapter();
 
@@ -53,19 +50,21 @@ public class ListofSOPs extends AppCompatActivity {
         });
     }
 
-    private void setUpPage() {
-        String titleConcat = "List of " + CategoryRecyclerAdapter.categoryName + " SOPs";
-        textviewCategoryListTitle.setText(titleConcat);
-    }
-
+    @SuppressLint("RestrictedApi")
     public void getBooks(){
         if (CategoryRecyclerAdapter.categoryName.equals("Bookmarked")){
+//            TODO HIDE FAB IN BOOKMARKED
+        fabAddSOP.setVisibility(View.GONE);
             listOfSOPs = stepsRoomDatabase().listOfSteps().getAllSavedBooks(1);
             if (listOfSOPs.size() == 0){
-                textviewCategoryListTitle.setText("No Bookmarked Handbooks");
+                tvNoBookmarks.setVisibility(View.VISIBLE);
             }
         } else {
             listOfSOPs = stepsRoomDatabase().listOfSteps().getAllSOPs(CategoryRecyclerAdapter.categoryName);
+            if (listOfSOPs.size() == 0){
+                tvNoBookmarks.setVisibility(View.VISIBLE);
+                tvNoBookmarks.setText("Add a Handbook to " + CategoryRecyclerAdapter.categoryName);
+            }
         }
     }
 

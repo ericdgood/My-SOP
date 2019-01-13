@@ -57,7 +57,7 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
 //            THIS IS FOR SHARED BOOKS
             params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
             viewholder.categoryTitle.setTextSize(21);
-            viewholder.imageviewCategory.setImageResource(R.drawable.ic_bookmark);
+            viewholder.imageviewCategory.setImageResource(R.drawable.baseline_bookmarks_black_36dp);
             viewholder.imgCatOptions.setVisibility(View.GONE);
         }
 
