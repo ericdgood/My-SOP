@@ -24,6 +24,7 @@ public class ListOfStepsAdapter extends RecyclerView.Adapter<ListOfStepsAdapter.
     Context context;
     public static int stepId;
 
+
     ListOfStepsAdapter(Context context, List<StepsRoomData> listOfSteps) {
         this.context = context;
         this.listOfSteps = listOfSteps;
@@ -41,12 +42,9 @@ public class ListOfStepsAdapter extends RecyclerView.Adapter<ListOfStepsAdapter.
 
         viewholder.constraintListOfSteps.setOnClickListener(v -> {
             Intent goToStep = new Intent(context, StepActivity.class);
-            goToStep.putExtra("sopTitle", listOfSteps.get(position).getSopTitle());
+            goToStep.putExtra("position", position);
             stepId = listOfSteps.get(position).getId();
-            goToStep.putExtra("stepImage", listOfSteps.get(position).getImageURI());
-            goToStep.putExtra("stepTitle", listOfSteps.get(position).getStepTitle());
-            goToStep.putExtra("stepNumber",String.valueOf(listOfSteps.get(position).getStepNumber()));
-            goToStep.putExtra("stepDescription", listOfSteps.get(position).getStepDescription());
+            goToStep.putExtra("sopTitle", listOfSteps.get(position).getSopTitle());
             context.startActivity(goToStep);
         });
     }

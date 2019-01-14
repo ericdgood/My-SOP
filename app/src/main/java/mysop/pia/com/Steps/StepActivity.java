@@ -1,5 +1,6 @@
 package mysop.pia.com.Steps;
 
+import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,9 +12,13 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import mysop.pia.com.R;
+import mysop.pia.com.Steps.StepsRoom.StepsAppDatabase;
+import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
 
 public class StepActivity extends AppCompatActivity {
 
@@ -30,6 +35,9 @@ public class StepActivity extends AppCompatActivity {
     @BindView(R.id.button_page_next)
     Button btnPageNext;
 
+    List<StepsRoomData> listOfSteps;
+    int position;
+    int numberOfSteps;
     String stringPicture;
     String stringDescription;
     String stringStepTitle;
@@ -42,28 +50,34 @@ public class StepActivity extends AppCompatActivity {
         setContentView(R.layout.activity_step);
         ButterKnife.bind(this);
 
-        getPassedStepExtra();
-        setTitleBar();
-        setStepTitle();
-        pictureVisibility();
-        descriptionVisibility();
+        stringStepTitle = getIntent().getStringExtra("sopTitle");
+        position = getIntent().getIntExtra("position", 0);
 
+        listOfSteps = stepsRoomDatabase().listOfSteps().getAllSteps(stringStepTitle);
+        numberOfSteps = listOfSteps.size();
+        stringStepNumber = String.valueOf(listOfSteps.get(position).getStepNumber());
+
+        setTitleBar();
+//        GET AND SET TITLE
+        setStepTitle();
+//        GET AND SET IMAGE
+        pictureVisibility();
+//        GET AND SET DESCRIPTION
+        descriptionVisibility();
+//        nextPrev();
+    }
+
+    private void setTitleBar(){
+        String stepNumberConCat = "Step " + stringStepNumber + " out of " + numberOfSteps;
+        setTitle(stepNumberConCat);
     }
 
     private void setStepTitle() {
         textviewStepTitle.setText(stringStepTitle);
     }
 
-    private void getPassedStepExtra() {
-//        PASSED FROM LIST OF STEPS ADAPTER
-        stringPicture = getIntent().getStringExtra("stepImage");
-        stringDescription = getIntent().getStringExtra("stepDescription");
-        stringStepTitle = getIntent().getStringExtra("stepTitle");
-        stringStepNumber = getIntent().getStringExtra("stepNumber");
-        StringSopTitle = getIntent().getStringExtra("sopTitle");
-    }
-
     private void pictureVisibility(){
+        stringPicture = listOfSteps.get(position).getImageURI();
         if (stringPicture != null) {
             Glide.with(this).load(stringPicture).into(imageviewStepPicture);
         } else {
@@ -72,6 +86,7 @@ public class StepActivity extends AppCompatActivity {
     }
 
     private void descriptionVisibility(){
+        stringDescription = listOfSteps.get(position).getStepDescription();
         if (!stringDescription.equals("")) {
             textviewStepDescription.setText(stringDescription);
         } else {
@@ -79,9 +94,14 @@ public class StepActivity extends AppCompatActivity {
         }
     }
 
-    private void setTitleBar(){
-        String stepNumberConCat = "Step " + stringStepNumber + " details";
-        setTitle(stepNumberConCat);
+    private void nextPrev(){
+        int stepNum = Integer.parseInt(stringStepNumber);
+
+        if (stepNum < numberOfSteps){
+            btnPageNext.setOnClickListener(v -> {
+
+            });
+        }
     }
 
     @Override
@@ -109,4 +129,10 @@ public class StepActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public StepsAppDatabase stepsRoomDatabase() {
+        return Room.databaseBuilder(getApplicationContext(), StepsAppDatabase.class, "steps")
+                .fallbackToDestructiveMigration()
+                .allowMainThreadQueries()
+                .build();
+    }
 }
