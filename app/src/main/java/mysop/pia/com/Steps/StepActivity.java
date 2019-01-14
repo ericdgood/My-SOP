@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -64,10 +65,11 @@ public class StepActivity extends AppCompatActivity {
         pictureVisibility();
 //        GET AND SET DESCRIPTION
         descriptionVisibility();
-//        nextPrev();
+//        NEXT OR PREVIOUS PAGES
+        nextPrev();
     }
 
-    private void setTitleBar(){
+    private void setTitleBar() {
         String stepNumberConCat = "Step " + stringStepNumber + " out of " + numberOfSteps;
         setTitle(stepNumberConCat);
     }
@@ -77,7 +79,7 @@ public class StepActivity extends AppCompatActivity {
         textviewStepTitle.setText(stringStepTitle);
     }
 
-    private void pictureVisibility(){
+    private void pictureVisibility() {
         stringPicture = listOfSteps.get(position).getImageURI();
         if (stringPicture != null) {
             Glide.with(this).load(stringPicture).into(imageviewStepPicture);
@@ -86,7 +88,7 @@ public class StepActivity extends AppCompatActivity {
         }
     }
 
-    private void descriptionVisibility(){
+    private void descriptionVisibility() {
         stringDescription = listOfSteps.get(position).getStepDescription();
         if (!stringDescription.equals("")) {
             textviewStepDescription.setText(stringDescription);
@@ -95,53 +97,71 @@ public class StepActivity extends AppCompatActivity {
         }
     }
 
-    private void nextPrev(){
+    private void nextPrev() {
         int stepNum = Integer.parseInt(stringStepNumber);
 
-        if (stepNum < numberOfSteps){
+        if (stepNum <= numberOfSteps) {
             btnPageNext.setOnClickListener(v -> {
-
+                Intent nextStep = new Intent(this, StepActivity.class);
+                nextStep.putExtra("sopTitle", StringSopTitle);
+                nextStep.putExtra("position", position + 1);
+                startActivity(nextStep);
             });
+
+            btnPagePrev.setOnClickListener(v -> {
+                Intent nextStep = new Intent(this, StepActivity.class);
+                nextStep.putExtra("sopTitle", StringSopTitle);
+                nextStep.putExtra("position", position - 1);
+                startActivity(nextStep);
+            });
+
+            if (stepNum == numberOfSteps) {
+                btnPageNext.setVisibility(View.GONE);
+            }
+
+            if (stepNum == 1) {
+                btnPagePrev.setVisibility(View.GONE);
+            }
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.step_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.menu_step_edit_step) {
-            Intent editStep = new Intent(this, AddStep.class);
-            editStep.putExtra("editStep", true);
-            editStep.putExtra("stepNumber",Integer.valueOf(stringStepNumber));
-            editStep.putExtra("stepTitle", stringStepTitle);
-            editStep.putExtra("stepDescription", stringDescription);
-            editStep.putExtra("editImage", stringPicture);
-            editStep.putExtra("sopTitle", StringSopTitle);
-            startActivity(editStep);
-            finish();
+        @Override
+        public boolean onCreateOptionsMenu (Menu menu){
+            getMenuInflater().inflate(R.menu.step_menu, menu);
             return true;
         }
 
-        return super.onOptionsItemSelected(item);
-    }
+        @Override
+        public boolean onOptionsItemSelected (MenuItem item){
+            int id = item.getItemId();
+            if (id == R.id.menu_step_edit_step) {
+                Intent editStep = new Intent(this, AddStep.class);
+                editStep.putExtra("editStep", true);
+                editStep.putExtra("stepNumber", Integer.valueOf(stringStepNumber));
+                editStep.putExtra("stepTitle", stringStepTitle);
+                editStep.putExtra("stepDescription", stringDescription);
+                editStep.putExtra("editImage", stringPicture);
+                editStep.putExtra("sopTitle", StringSopTitle);
+                startActivity(editStep);
+                finish();
+                return true;
+            }
 
-    public StepsAppDatabase stepsRoomDatabase() {
-        return Room.databaseBuilder(getApplicationContext(), StepsAppDatabase.class, "steps")
-                .fallbackToDestructiveMigration()
-                .allowMainThreadQueries()
-                .build();
-    }
+            return super.onOptionsItemSelected(item);
+        }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent returnToListSteps = new Intent(this, ListOfSteps.class);
-        returnToListSteps.putExtra("sopTitle", listOfSteps.get(position).getSopTitle());
-        startActivity(returnToListSteps);
+        public StepsAppDatabase stepsRoomDatabase () {
+            return Room.databaseBuilder(getApplicationContext(), StepsAppDatabase.class, "steps")
+                    .fallbackToDestructiveMigration()
+                    .allowMainThreadQueries()
+                    .build();
+        }
+
+        @Override
+        public void onBackPressed () {
+            super.onBackPressed();
+            Intent returnToListSteps = new Intent(this, ListOfSteps.class);
+            returnToListSteps.putExtra("sopTitle", listOfSteps.get(position).getSopTitle());
+            startActivity(returnToListSteps);
+        }
     }
-}
