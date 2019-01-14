@@ -78,21 +78,44 @@ public class AddSOP extends AppCompatActivity {
         }
     }
 
+    private void clearColorBorder(){
+        viewBookRed.setImageResource(0);
+        viewBookBlue.setImageResource(0);
+        viewBookGreen.setImageResource(0);
+        viewBookYellow.setImageResource(0);
+        viewBookOrange.setImageResource(0);
+    }
+
     public void bookColor() {
         viewBookRed.setOnClickListener(v -> {
-            bookColor = "Red";toastColor();
+            bookColor = "Red";
+            clearColorBorder();
+            viewBookRed.setImageResource(R.drawable.description_border);
+            toastColor();
         });
         viewBookBlue.setOnClickListener(v -> {
-            bookColor = "Blue";toastColor();
+            bookColor = "Blue";
+            clearColorBorder();
+            viewBookBlue.setImageResource(R.drawable.description_border);
+            toastColor();
         });
         viewBookGreen.setOnClickListener(v -> {
-            bookColor = "Green";toastColor();
+            bookColor = "Green";
+            clearColorBorder();
+            viewBookGreen.setImageResource(R.drawable.description_border);
+            toastColor();
         });
         viewBookYellow.setOnClickListener(v -> {
-            bookColor = "Yellow";toastColor();
+            bookColor = "Yellow";
+            clearColorBorder();
+            viewBookYellow.setImageResource(R.drawable.description_border);
+            toastColor();
         });
         viewBookOrange.setOnClickListener(v -> {
-            bookColor = "Orange"; toastColor();
+            bookColor = "Orange";
+            clearColorBorder();
+            viewBookOrange.setImageResource(R.drawable.description_border);
+            toastColor();
         });
     }
 

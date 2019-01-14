@@ -35,4 +35,7 @@
         <item name="layout_constraintTop_toTopOf">parent</item>
         <item name="layout_constraintBottom_toBottomOf">parent</item>
     </style>
+
+    <!--SELECTED COLOR FO BOOK-->
+
 </resources>
