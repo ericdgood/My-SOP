@@ -106,6 +106,7 @@ public class StepActivity extends AppCompatActivity {
                 nextStep.putExtra("sopTitle", StringSopTitle);
                 nextStep.putExtra("position", position + 1);
                 startActivity(nextStep);
+                finish();
             });
 
             btnPagePrev.setOnClickListener(v -> {
@@ -113,6 +114,7 @@ public class StepActivity extends AppCompatActivity {
                 nextStep.putExtra("sopTitle", StringSopTitle);
                 nextStep.putExtra("position", position - 1);
                 startActivity(nextStep);
+                finish();
             });
 
             if (stepNum == numberOfSteps) {
