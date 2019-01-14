@@ -1,5 +1,6 @@
 package mysop.pia.com.Steps;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -46,6 +47,7 @@ public class ListOfStepsAdapter extends RecyclerView.Adapter<ListOfStepsAdapter.
             stepId = listOfSteps.get(position).getId();
             goToStep.putExtra("sopTitle", listOfSteps.get(position).getSopTitle());
             context.startActivity(goToStep);
+            ((Activity)context).finish();
         });
     }
 

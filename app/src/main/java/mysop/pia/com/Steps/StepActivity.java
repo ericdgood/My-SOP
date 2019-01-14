@@ -50,10 +50,10 @@ public class StepActivity extends AppCompatActivity {
         setContentView(R.layout.activity_step);
         ButterKnife.bind(this);
 
-        stringStepTitle = getIntent().getStringExtra("sopTitle");
+        StringSopTitle = getIntent().getStringExtra("sopTitle");
         position = getIntent().getIntExtra("position", 0);
 
-        listOfSteps = stepsRoomDatabase().listOfSteps().getAllSteps(stringStepTitle);
+        listOfSteps = stepsRoomDatabase().listOfSteps().getAllSteps(StringSopTitle);
         numberOfSteps = listOfSteps.size();
         stringStepNumber = String.valueOf(listOfSteps.get(position).getStepNumber());
 
@@ -73,6 +73,7 @@ public class StepActivity extends AppCompatActivity {
     }
 
     private void setStepTitle() {
+        stringStepTitle = listOfSteps.get(position).getStepTitle();
         textviewStepTitle.setText(stringStepTitle);
     }
 
@@ -134,5 +135,13 @@ public class StepActivity extends AppCompatActivity {
                 .fallbackToDestructiveMigration()
                 .allowMainThreadQueries()
                 .build();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent returnToListSteps = new Intent(this, ListOfSteps.class);
+        returnToListSteps.putExtra("sopTitle", listOfSteps.get(position).getSopTitle());
+        startActivity(returnToListSteps);
     }
 }

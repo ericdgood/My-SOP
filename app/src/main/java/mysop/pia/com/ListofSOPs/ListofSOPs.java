@@ -32,6 +32,8 @@ public class ListofSOPs extends AppCompatActivity {
 
     List<StepsRoomData> listOfSOPs = new ArrayList<>();
     ListofSOPsAdapter SOPsRecyclerAdapter;
+    String categoryName;
+    private String TAG;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +41,9 @@ public class ListofSOPs extends AppCompatActivity {
         setContentView(R.layout.list_of_sops);
         ButterKnife.bind(this);
 
-        setTitle(CategoryRecyclerAdapter.categoryName + " Handbooks");
+        categoryName = CategoryRecyclerAdapter.categoryName;
+
+        setTitle(categoryName + " Handbooks");
 
         setupRecyclerviewAndAdapter();
 
@@ -52,18 +56,17 @@ public class ListofSOPs extends AppCompatActivity {
 
     @SuppressLint("RestrictedApi")
     public void getBooks(){
-        if (CategoryRecyclerAdapter.categoryName.equals("Bookmarked")){
-//            TODO HIDE FAB IN BOOKMARKED
+        if (categoryName.equals("Bookmarked")){
         fabAddSOP.setVisibility(View.GONE);
             listOfSOPs = stepsRoomDatabase().listOfSteps().getAllSavedBooks(1);
             if (listOfSOPs.size() == 0){
                 tvNoBookmarks.setVisibility(View.VISIBLE);
             }
         } else {
-            listOfSOPs = stepsRoomDatabase().listOfSteps().getAllSOPs(CategoryRecyclerAdapter.categoryName);
+            listOfSOPs = stepsRoomDatabase().listOfSteps().getAllSOPs(categoryName);
             if (listOfSOPs.size() == 0){
                 tvNoBookmarks.setVisibility(View.VISIBLE);
-                tvNoBookmarks.setText("Add a Handbook to " + CategoryRecyclerAdapter.categoryName);
+                tvNoBookmarks.setText("Add a Handbook to " + categoryName);
             }
         }
     }
