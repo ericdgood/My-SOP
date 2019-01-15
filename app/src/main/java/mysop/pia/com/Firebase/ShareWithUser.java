@@ -84,7 +84,6 @@ public class ShareWithUser extends AppCompatActivity {
                             String pageDescription = book.get(i).getStepDescription();
 
                             SharedBook sharedPages = new SharedBook(pageTitle, pageNum, pageImg, pageDescription);
-
                             bookPages.add(sharedPages);
                         }
 
