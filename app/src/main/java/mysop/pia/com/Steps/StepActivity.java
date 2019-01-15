@@ -166,6 +166,7 @@ public class StepActivity extends AppCompatActivity {
                 .setPositiveButton(android.R.string.yes, (dialog, which) -> {
                     // continue with delete
                     stepsRoomDatabase().listOfSteps().DeletePAGE(stringStepTitle);
+                    stepsRoomDatabase().listOfSteps().updatePageNumber(Integer.parseInt(stringStepNumber),StringSopTitle);
                     Toast.makeText(this, stringStepTitle + " is Deleted from book", Toast.LENGTH_SHORT).show();
                     Intent returnToPageList = new Intent(this, ListOfSteps.class);
                     returnToPageList.putExtra("sopTitle", StringSopTitle);

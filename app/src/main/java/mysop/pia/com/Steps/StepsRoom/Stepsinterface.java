@@ -58,6 +58,10 @@ public interface Stepsinterface {
     @Query("DELETE FROM steps WHERE :pageTitle = stepTitle")
     void DeletePAGE(String pageTitle);
 
+    //    UPDATE PAGES WHEN SHELF IS EDITED
+    @Query("UPDATE steps SET stepNumber = (stepNumber - 1) WHERE stepNumber > :pageNumber AND :bookTitle = sopTitle ")
+    void updatePageNumber(int pageNumber, String bookTitle);
+
     //    DELETE ALL SHELF BOOKS
     @Query("DELETE FROM steps WHERE :shelf = category")
     void DeleteShelfBooks(String shelf);
