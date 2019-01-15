@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,6 +35,8 @@ public class ShareWithUser extends AppCompatActivity {
     EditText etSearchUsers;
     @BindView(R.id.button_share_search)
     Button btnSearch;
+    @BindView(R.id.tv_share_display_name)
+    TextView tvDisplayUsername;
 
     String bookTitle;
     String searchUserName;
@@ -54,6 +57,10 @@ public class ShareWithUser extends AppCompatActivity {
         mSopStepsDatabaseReference = mFirebaseDatabase.getReference().child("sop");
         user = FirebaseAuth.getInstance().getCurrentUser();
 
+        assert user != null;
+        String displayName = "User name is " + user.getDisplayName();
+        tvDisplayUsername.setText(displayName);
+
         btnSearch.setOnClickListener(v -> {
             searchUserName = etSearchUsers.getText().toString().toLowerCase();
 
@@ -65,6 +72,8 @@ public class ShareWithUser extends AppCompatActivity {
                     if (dataSnapshot.getChildrenCount() > 0) {
                         bookTitle = ListofSOPsAdapter.bookTitle;
                         List<StepsRoomData> sharedBook = stepsRoomDatabase().listOfSteps().getAllSteps(bookTitle);
+
+                        List<SharedBook> shared =
 
                         mSopStepsDatabaseReference.child(searchUserName).push().setValue(sharedBook);
 

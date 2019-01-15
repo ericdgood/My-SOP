@@ -151,12 +151,10 @@ public class MainActivity extends AppCompatActivity {
             mSopStepsDatabaseReference.child(user.getDisplayName()).addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                    MySOPs sharedInfo = dataSnapshot.getValue(MySOPs.class);
+//                    RECEIVE THE SHARED BOOK
+//                    StepsRoomData shareBook = new StepsRoomData()
                     StepsRoomData sharedBook = dataSnapshot.getValue(StepsRoomData.class);
-                    if (sharedInfo.getSharedAuthor() != null) {
-                        alertToDelete(sharedInfo.getCategoryTitle(), sharedInfo.getSharedAuthor(), sharedInfo);
-
-                    }
+                        alertToDelete(sharedBook);
                 }
 
                 @Override
@@ -182,17 +180,17 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void alertToDelete(String categoryTitle, String sharedAuthor, MySOPs sharedInfo) {
+    private void alertToDelete(StepsRoomData sharedBook) {
         AlertDialog.Builder builder;
         builder = new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Dialog_Alert);
         builder.setTitle("Shared Book")
-                .setMessage(sharedAuthor + " would like to share " + categoryTitle + " handbook with you" )
+                .setMessage(" would like to share " + sharedBook.getSopTitle() + " handbook with you" )
                 .setPositiveButton("Accept", (dialog, which) -> {
 //                    DO THIS WHEN RECEIVE A SHARED BOOK
-                    sopList.add(sharedInfo);
+//                    sopList.add(sharedInfo);
 
-                    categoriesRecyclerAdapter.notifyDataSetChanged();
-                    Toast.makeText(MainActivity.this, "Item added to list", Toast.LENGTH_SHORT).show();
+//                    categoriesRecyclerAdapter.notifyDataSetChanged();
+                    Toast.makeText(MainActivity.this, "step num" + sharedBook.getStepNumber(), Toast.LENGTH_SHORT).show();
                 })
                 .setNegativeButton("Deny", (dialog, which) -> {
                     // do nothing
