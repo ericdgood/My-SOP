@@ -37,8 +37,6 @@ public class Firebase extends Activity {
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
 
-    boolean newUser = false;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,9 +51,6 @@ public class Firebase extends Activity {
         mAuthStateListener = firebaseAuth -> {
             FirebaseUser user = firebaseAuth.getCurrentUser();
             if (user != null) {
-//                    USER ALREADY HAS ACCOUNT
-//                onSignedInInitialize(user.getDisplayName());
-
                 com.google.firebase.database.Query newUserMatch = mUsersDatabaseReference.orderByChild("userName").equalTo(user.getDisplayName());
 
                 newUserMatch.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -79,22 +74,10 @@ public class Firebase extends Activity {
 
                     }
                 });
-
-//                CHECK TO SEE IF ITS THEIR FIRST TIME SIGNING IN
-//                if (!newUser) {
-////                    IF THEY ARE A USER THIS GOES TO SHARE CLASS
-//                    Intent ShareWithUser = new Intent(Firebase.this, mysop.pia.com.Firebase.ShareWithUser.class);
-//                    startActivity(ShareWithUser);
-//                    finish();
-//                    Toast.makeText(this, "Already Signed In as " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
-//                }
-//                else {
-////                    IF IT IS THEIR FIRST TIME SIGNING IN THEY CREATE A USERNAME
-//                    chooseUserName();
-//                }
             } else {
 //                    USER IS SIGNED OUT
 //                onSignedOutCleanup();
+
 //                FIREBASE CREATE ACCOUNT
                 startActivityForResult(
                         AuthUI.getInstance()
@@ -105,9 +88,6 @@ public class Firebase extends Activity {
                                         new AuthUI.IdpConfig.EmailBuilder().build()))
                                 .build(),
                         RC_SIGN_IN);
-
-//                USER CREATES ACCOUNT
-//                newUser = true;
             }
         };
     }
@@ -125,11 +105,6 @@ public class Firebase extends Activity {
                 finish();
             }
         }
-    }
-
-    private void onSignedInInitialize(String username) {
-//        mUsername = username;
-//        attachDatabaseReadListener();
     }
 
     private void onSignedOutCleanup() {
@@ -170,7 +145,7 @@ public class Firebase extends Activity {
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 //                            IF A USERNAME MATCHES ANOTHER IT IS GREATER THAN 0
                             if (dataSnapshot.getChildrenCount() > 0) {
-                                Toast.makeText(Firebase.this, "Choose a different user name", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Firebase.this, "Choose a different user name", Toast.LENGTH_LONG).show();
                             } else {
 
                                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
