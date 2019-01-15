@@ -20,7 +20,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -74,16 +76,24 @@ public class ShareWithUser extends AppCompatActivity {
                         bookTitle = ListofSOPsAdapter.bookTitle;
                         List<StepsRoomData> book = stepsRoomDatabase().listOfSteps().getAllSteps(bookTitle);
 
-                        List<String> shared = new ArrayList<>();
+                        List<SharedBook> bookPages = new ArrayList<>();
                         for (int i = 0; i < book.size(); i++) {
-                        String bookTitle = book.get(i).getSopTitle();
-                            String bookPage = book.get(i).getStepTitle();
+                            String pageTitle = book.get(i).getStepTitle();
+                            int pageNum = book.get(i).getStepNumber();
+                            String pageImg = book.get(i).getImageURI();
+                            String pageDescription = book.get(i).getStepDescription();
 
-                        shared.add(bookTitle);
-                        shared.add(bookPage);
+                            SharedBook sharedPages = new SharedBook(pageTitle, pageNum, pageImg, pageDescription);
+
+                            bookPages.add(sharedPages);
                         }
 
-                        mSopStepsDatabaseReference.child(searchUserName).push().setValue(shared);
+                        Map bookInfo = new HashMap();
+                        bookInfo.put("author", user.getDisplayName());
+
+                        DatabaseReference path = mSopStepsDatabaseReference.child(searchUserName).push().child(bookTitle);
+                        path.child("bookPages").setValue(bookPages);
+                        path.child("bookInfo").setValue(bookInfo);
 
                         Intent goToBooks = new Intent(ShareWithUser.this, MainActivity.class);
                         startActivity(goToBooks);
