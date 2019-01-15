@@ -37,6 +37,7 @@ import mysop.pia.com.Categories.CategoryRecyclerAdapter;
 import mysop.pia.com.Categories.CatergoryRoom.AppDatabase;
 import mysop.pia.com.Categories.CatergoryRoom.MySOPs;
 import mysop.pia.com.Firebase.Firebase;
+import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -151,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                     MySOPs sharedInfo = dataSnapshot.getValue(MySOPs.class);
+                    StepsRoomData sharedBook = dataSnapshot.getValue(StepsRoomData.class);
                     if (sharedInfo.getSharedAuthor() != null) {
                         alertToDelete(sharedInfo.getCategoryTitle(), sharedInfo.getSharedAuthor(), sharedInfo);
 
@@ -188,6 +190,7 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton("Accept", (dialog, which) -> {
 //                    DO THIS WHEN RECEIVE A SHARED BOOK
                     sopList.add(sharedInfo);
+
                     categoriesRecyclerAdapter.notifyDataSetChanged();
                     Toast.makeText(MainActivity.this, "Item added to list", Toast.LENGTH_SHORT).show();
                 })

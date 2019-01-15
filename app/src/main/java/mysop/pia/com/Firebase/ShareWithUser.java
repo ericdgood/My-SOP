@@ -1,5 +1,6 @@
 package mysop.pia.com.Firebase;
 
+import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,12 +18,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import mysop.pia.com.Categories.CategoryRecyclerAdapter;
-import mysop.pia.com.Categories.CatergoryRoom.MySOPs;
+import mysop.pia.com.ListofSOPs.ListofSOPsAdapter;
 import mysop.pia.com.MainActivity;
 import mysop.pia.com.R;
+import mysop.pia.com.Steps.StepsRoom.StepsAppDatabase;
+import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
 
 public class ShareWithUser extends AppCompatActivity {
 
@@ -31,6 +35,7 @@ public class ShareWithUser extends AppCompatActivity {
     @BindView(R.id.button_share_search)
     Button btnSearch;
 
+    String bookTitle;
     String searchUserName;
 
     private DatabaseReference mUsersDatabaseReference;
@@ -58,9 +63,10 @@ public class ShareWithUser extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (dataSnapshot.getChildrenCount() > 0) {
-                        MySOPs sharedCat = new MySOPs(CategoryRecyclerAdapter.categoryName, user.getDisplayName());
+                        bookTitle = ListofSOPsAdapter.bookTitle;
+                        List<StepsRoomData> sharedBook = stepsRoomDatabase().listOfSteps().getAllSteps(bookTitle);
 
-                        mSopStepsDatabaseReference.child(searchUserName).push().setValue(sharedCat);
+                        mSopStepsDatabaseReference.child(searchUserName).push().setValue(sharedBook);
 
                         Intent goToBooks = new Intent(ShareWithUser.this, MainActivity.class);
                         startActivity(goToBooks);
@@ -78,5 +84,12 @@ public class ShareWithUser extends AppCompatActivity {
 
         });
 
+    }
+
+    public StepsAppDatabase stepsRoomDatabase() {
+        return Room.databaseBuilder(getApplicationContext(), StepsAppDatabase.class, "steps")
+                .fallbackToDestructiveMigration()
+                .allowMainThreadQueries()
+                .build();
     }
 }

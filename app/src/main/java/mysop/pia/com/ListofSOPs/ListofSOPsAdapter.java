@@ -19,6 +19,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import mysop.pia.com.Firebase.Firebase;
 import mysop.pia.com.R;
 import mysop.pia.com.Steps.ListOfSteps;
 import mysop.pia.com.Steps.StepsRoom.StepsAppDatabase;
@@ -32,6 +33,7 @@ public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Vi
     private List<StepsRoomData> listOfSOPS;
     private Context context;
     private int savedBook;
+    public static String bookTitle;
 
     ListofSOPsAdapter(Context context, List<StepsRoomData> listOfSOPs, StepsAppDatabase stepsAppDatabase) {
         this.context = context;
@@ -119,6 +121,9 @@ public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Vi
                         editBook(listOfSOPS.get(position).getSopTitle(), listOfSOPS.get(position).getId());
                         return true;
                     case R.id.book_shelf_share:
+                        Intent shareBook = new Intent(context, Firebase.class);
+                        bookTitle = listOfSOPS.get(position).getSopTitle();
+                        context.startActivity(shareBook);
                         return true;
                     case R.id.book_shelf_delete:
                         alertToDelete(listOfSOPS.get(position).getSopTitle(), position);
