@@ -32,48 +32,70 @@ public class Firebase extends Activity {
 
     private static final String TAG = "firebase";
 
-    public static final String ANONYMOUS = "anonymous";
     public static final int RC_SIGN_IN = 1;
-    public static String mUsername;
-    private String sopTitle;
-    // Firebase instance variables
-    private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mUsersDatabaseReference;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
 
-    boolean newAccoutn = true;
-
+    boolean newUser = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
 
-        sopTitle = getIntent().getStringExtra("sopTitle");
-        mUsername = ANONYMOUS;
-
         // Initialize Firebase components
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
         mUsersDatabaseReference = mFirebaseDatabase.getReference().child("Users");
         mFirebaseAuth = FirebaseAuth.getInstance();
 
+//        FIREBASE SIGN IN
         mAuthStateListener = firebaseAuth -> {
             FirebaseUser user = firebaseAuth.getCurrentUser();
             if (user != null) {
 //                    USER ALREADY HAS ACCOUNT
-                onSignedInInitialize(user.getDisplayName());
-//                TODO: SELECT USER TO SHARE SOP WITH
-                if (newAccoutn){
-                    Intent ShareWithUser = new Intent(Firebase.this, mysop.pia.com.Firebase.ShareWithUser.class);
-                    startActivity(ShareWithUser);
-                    finish();
-                }
-                Toast.makeText(this, "Already Signed In as " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
+//                onSignedInInitialize(user.getDisplayName());
+
+                com.google.firebase.database.Query newUserMatch = mUsersDatabaseReference.orderByChild("userName").equalTo(user.getDisplayName());
+
+                newUserMatch.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.getChildrenCount() > 0){
+//                            DO THIS IF THEY HAVE AN ACCOUNT
+                            Intent ShareWithUser = new Intent(Firebase.this, mysop.pia.com.Firebase.ShareWithUser.class);
+                            startActivity(ShareWithUser);
+                            finish();
+                            Toast.makeText(Firebase.this, "Already Signed In as " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+//                            DO THIS IF THEY ARE NEW USERS
+                            chooseUserName();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+//                CHECK TO SEE IF ITS THEIR FIRST TIME SIGNING IN
+//                if (!newUser) {
+////                    IF THEY ARE A USER THIS GOES TO SHARE CLASS
+//                    Intent ShareWithUser = new Intent(Firebase.this, mysop.pia.com.Firebase.ShareWithUser.class);
+//                    startActivity(ShareWithUser);
+//                    finish();
+//                    Toast.makeText(this, "Already Signed In as " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
+//                }
+//                else {
+////                    IF IT IS THEIR FIRST TIME SIGNING IN THEY CREATE A USERNAME
+//                    chooseUserName();
+//                }
             } else {
 //                    USER IS SIGNED OUT
-                onSignedOutCleanup();
-//                USER CREATES ACCOUNT
+//                onSignedOutCleanup();
+//                FIREBASE CREATE ACCOUNT
                 startActivityForResult(
                         AuthUI.getInstance()
                                 .createSignInIntentBuilder()
@@ -83,6 +105,9 @@ public class Firebase extends Activity {
                                         new AuthUI.IdpConfig.EmailBuilder().build()))
                                 .build(),
                         RC_SIGN_IN);
+
+//                USER CREATES ACCOUNT
+//                newUser = true;
             }
         };
     }
@@ -93,8 +118,7 @@ public class Firebase extends Activity {
         if (requestCode == RC_SIGN_IN) {
             if (resultCode == RESULT_OK) {
                 // Sign-in succeeded, set up the UI
-                chooseUserName();
-                Toast.makeText(this, "Signed in!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Signed in!", Toast.LENGTH_SHORT).show();
             } else if (resultCode == RESULT_CANCELED) {
                 // Sign in was canceled by the user, finish the activity
                 Toast.makeText(this, "Sign in canceled", Toast.LENGTH_SHORT).show();
@@ -104,12 +128,12 @@ public class Firebase extends Activity {
     }
 
     private void onSignedInInitialize(String username) {
-        mUsername = username;
+//        mUsername = username;
 //        attachDatabaseReadListener();
     }
 
     private void onSignedOutCleanup() {
-        mUsername = ANONYMOUS;
+//        mUsername = ANONYMOUS;
 //        mMessageAdapter.clear();
 //        detachDatabaseReadListener();
     }
@@ -130,7 +154,6 @@ public class Firebase extends Activity {
 
     public void chooseUserName() {
         setContentView(R.layout.firebase);
-        newAccoutn = false;
 
         Button buttonAddUserName = findViewById(R.id.button_share);
         EditText etUserName = findViewById(R.id.edittext_firebase_username);
@@ -145,6 +168,7 @@ public class Firebase extends Activity {
                     userNameQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                            IF A USERNAME MATCHES ANOTHER IT IS GREATER THAN 0
                             if (dataSnapshot.getChildrenCount() > 0) {
                                 Toast.makeText(Firebase.this, "Choose a different user name", Toast.LENGTH_SHORT).show();
                             } else {

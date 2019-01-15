@@ -36,6 +36,7 @@ import mysop.pia.com.Categories.AddCategory;
 import mysop.pia.com.Categories.CategoryRecyclerAdapter;
 import mysop.pia.com.Categories.CatergoryRoom.AppDatabase;
 import mysop.pia.com.Categories.CatergoryRoom.MySOPs;
+import mysop.pia.com.Firebase.Firebase;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -89,7 +90,9 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.edit_category) {
+        if (id == R.id.sign_in) {
+            Intent share = new Intent(this, Firebase.class);
+            startActivity(share);
             return true;
         }
 

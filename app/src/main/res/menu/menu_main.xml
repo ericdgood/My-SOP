@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="mysop.pia.com.MainActivity">
     <item
-        android:id="@+id/edit_category"
+        android:id="@+id/sign_in"
         android:orderInCategory="100"
-        android:title="Edit Cat"
+        android:title="Sign in"
         app:showAsAction="never" />
 
 </menu>
