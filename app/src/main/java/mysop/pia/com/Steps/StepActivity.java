@@ -1,5 +1,6 @@
 package mysop.pia.com.Steps;
 
+import android.app.AlertDialog;
 import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -148,9 +150,35 @@ public class StepActivity extends AppCompatActivity {
                 finish();
                 return true;
             }
+            if (id == R.id.menu_step_delete) {
+                alertToDelete();
+                return true;
+            }
 
             return super.onOptionsItemSelected(item);
         }
+
+    private void alertToDelete() {
+        AlertDialog.Builder builder;
+        builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Light_Dialog_Alert);
+        builder.setTitle("Delete step")
+                .setMessage("Are you sure you want to delete this step?")
+                .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                    // continue with delete
+                    stepsRoomDatabase().listOfSteps().DeletePAGE(stringStepTitle);
+                    Toast.makeText(this, stringStepTitle + " is Deleted from book", Toast.LENGTH_SHORT).show();
+                    Intent returnToPageList = new Intent(this, ListOfSteps.class);
+                    returnToPageList.putExtra("sopTitle", StringSopTitle);
+                    startActivity(returnToPageList);
+                    finish();
+                })
+                .setNegativeButton(android.R.string.no, (dialog, which) -> {
+                    // do nothing
+                })
+                .setIcon(R.drawable.ic_delete)
+                .show();
+//        return position;
+    }
 
         public StepsAppDatabase stepsRoomDatabase () {
             return Room.databaseBuilder(getApplicationContext(), StepsAppDatabase.class, "steps")

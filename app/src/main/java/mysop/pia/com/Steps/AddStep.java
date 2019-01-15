@@ -157,7 +157,7 @@ public class AddStep extends AppCompatActivity {
     }
 
     public void setStepText() {
-        String stepConcat = "Step" + stepNumber;
+        String stepConcat = "Step " + stepNumber;
         textviewStepCount.setText(stepConcat);
     }
 

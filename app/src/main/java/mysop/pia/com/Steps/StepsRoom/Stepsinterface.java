@@ -54,6 +54,10 @@ public interface Stepsinterface {
     @Query("DELETE FROM steps WHERE :sopTitle = sopTitle")
     void DeleteSOP(String sopTitle);
 
+    //    DELETE PAGE FROM BOOK
+    @Query("DELETE FROM steps WHERE :pageTitle = stepTitle")
+    void DeletePAGE(String pageTitle);
+
     //    DELETE ALL SHELF BOOKS
     @Query("DELETE FROM steps WHERE :shelf = category")
     void DeleteShelfBooks(String shelf);
