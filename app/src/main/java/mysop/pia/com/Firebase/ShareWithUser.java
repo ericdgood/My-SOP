@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -71,11 +72,18 @@ public class ShareWithUser extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (dataSnapshot.getChildrenCount() > 0) {
                         bookTitle = ListofSOPsAdapter.bookTitle;
-                        List<StepsRoomData> sharedBook = stepsRoomDatabase().listOfSteps().getAllSteps(bookTitle);
+                        List<StepsRoomData> book = stepsRoomDatabase().listOfSteps().getAllSteps(bookTitle);
 
-                        List<SharedBook> shared =
+                        List<String> shared = new ArrayList<>();
+                        for (int i = 0; i < book.size(); i++) {
+                        String bookTitle = book.get(i).getSopTitle();
+                            String bookPage = book.get(i).getStepTitle();
 
-                        mSopStepsDatabaseReference.child(searchUserName).push().setValue(sharedBook);
+                        shared.add(bookTitle);
+                        shared.add(bookPage);
+                        }
+
+                        mSopStepsDatabaseReference.child(searchUserName).push().setValue(shared);
 
                         Intent goToBooks = new Intent(ShareWithUser.this, MainActivity.class);
                         startActivity(goToBooks);
