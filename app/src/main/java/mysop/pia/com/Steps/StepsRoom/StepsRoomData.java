@@ -2,6 +2,7 @@ package mysop.pia.com.Steps.StepsRoom;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
 @Entity(tableName = "steps")
@@ -45,6 +46,9 @@ public class StepsRoomData {
         this.savedBook = savedBook;
         this.bookColor = bookColor;
     }
+
+    @Ignore
+    public StepsRoomData(){}
 
     public int getId() {
         return id;

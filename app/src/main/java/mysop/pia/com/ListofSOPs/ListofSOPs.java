@@ -4,12 +4,21 @@ import android.annotation.SuppressLint;
 import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,11 +44,19 @@ public class ListofSOPs extends AppCompatActivity {
     String categoryName;
     private String TAG;
 
+    FirebaseUser user;
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mSopStepsDatabaseReference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_of_sops);
         ButterKnife.bind(this);
+
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        mSopStepsDatabaseReference = mFirebaseDatabase.getReference().child("sop").child(user.getDisplayName());
 
         categoryName = CategoryRecyclerAdapter.categoryName;
 
@@ -62,7 +79,12 @@ public class ListofSOPs extends AppCompatActivity {
             if (listOfSOPs.size() == 0){
                 tvNoBookmarks.setVisibility(View.VISIBLE);
             }
-        } else {
+        }
+        else if (categoryName.equals("Shared Books")){
+            fabAddSOP.setVisibility(View.GONE);
+            getFirebaseBooks();
+        }
+        else {
             listOfSOPs = stepsRoomDatabase().listOfSteps().getAllSOPs(categoryName);
             if (listOfSOPs.size() == 0){
                 tvNoBookmarks.setVisibility(View.VISIBLE);
@@ -83,6 +105,22 @@ public class ListofSOPs extends AppCompatActivity {
                 .fallbackToDestructiveMigration()
                 .allowMainThreadQueries()
                 .build();
+    }
+
+    private void getFirebaseBooks() {
+        mSopStepsDatabaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                StepsRoomData book = dataSnapshot.child("test").child("0").getValue(StepsRoomData.class);
+                listOfSOPs.add(book);
+                SOPsRecyclerAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
 }

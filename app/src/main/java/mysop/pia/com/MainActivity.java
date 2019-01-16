@@ -152,9 +152,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 //                    RECEIVE THE SHARED BOOK
-//                    StepsRoomData shareBook = new StepsRoomData()
-                    StepsRoomData sharedBook = dataSnapshot.getValue(StepsRoomData.class);
-                        alertToDelete(sharedBook);
+
                 }
 
                 @Override
