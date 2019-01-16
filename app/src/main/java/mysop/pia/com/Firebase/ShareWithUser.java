@@ -19,9 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -75,29 +73,13 @@ public class ShareWithUser extends AppCompatActivity {
                         bookTitle = ListofSOPsAdapter.bookTitle;
                         List<StepsRoomData> book = stepsRoomDatabase().listOfSteps().getAllSteps(bookTitle);
 //
-//                        List<SharedBook> bookPages = new ArrayList<>();
-//                        for (int i = 0; i < book.size(); i++) {
-//                            String pageTitle = book.get(i).getStepTitle();
-//                            int pageNum = book.get(i).getStepNumber();
-//                            String pageImg = book.get(i).getImageURI();
-//                            String pageDescription = book.get(i).getStepDescription();
-//
-//                            SharedBook sharedPages = new SharedBook(pageTitle, pageNum, pageImg, pageDescription);
-//                            bookPages.add(sharedPages);
-//                        }
-
-                        Map bookInfo = new HashMap();
-                        bookInfo.put("author", user.getDisplayName());
                             mSopStepsDatabaseReference.child(searchUserName).child("test").setValue(book);
-//                        DatabaseReference path = mSopStepsDatabaseReference.child(searchUserName).push().child(bookTitle);
-//                        path.child("bookPages").setValue(bookPages);
-//                        path.child("bookInfo").setValue(bookInfo);
 
                         Intent goToBooks = new Intent(ShareWithUser.this, MainActivity.class);
                         startActivity(goToBooks);
-                        Toast.makeText(ShareWithUser.this, "Found User", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ShareWithUser.this, "Book sent to " + searchUserName, Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(ShareWithUser.this, "No user by that name", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ShareWithUser.this, "No user by that name.", Toast.LENGTH_SHORT).show();
                     }
                 }
 

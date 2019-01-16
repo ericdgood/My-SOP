@@ -83,6 +83,11 @@ public class ListofSOPs extends AppCompatActivity {
         else if (categoryName.equals("Shared Books")){
             fabAddSOP.setVisibility(View.GONE);
             getFirebaseBooks();
+//            TODO: DO THIS IF NO SHARED BOOKS
+//            if (listOfSOPs.size() == 0){
+//                tvNoBookmarks.setVisibility(View.VISIBLE);
+//                tvNoBookmarks.setText("No shared Handbooks");
+//            }
         }
         else {
             listOfSOPs = stepsRoomDatabase().listOfSteps().getAllSOPs(categoryName);
