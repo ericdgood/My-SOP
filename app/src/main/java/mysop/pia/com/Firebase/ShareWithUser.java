@@ -19,10 +19,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import mysop.pia.com.Categories.CatergoryRoom.MySOPs;
 import mysop.pia.com.ListofSOPs.ListofSOPsAdapter;
 import mysop.pia.com.MainActivity;
 import mysop.pia.com.R;
@@ -72,8 +75,13 @@ public class ShareWithUser extends AppCompatActivity {
                     if (dataSnapshot.getChildrenCount() > 0) {
                         bookTitle = ListofSOPsAdapter.bookTitle;
                         List<StepsRoomData> book = stepsRoomDatabase().listOfSteps().getAllSteps(bookTitle);
+                        MySOPs sharedCat = new MySOPs(book.get(0).getCategory(), user.getDisplayName());
 
-                            mSopStepsDatabaseReference.child(searchUserName).push().setValue(book);
+                        Map sharedbook = new HashMap();
+                        sharedbook.put("shelfTitle", sharedCat);
+                        sharedbook.put("book", book);
+
+                            mSopStepsDatabaseReference.child(searchUserName).push().setValue(sharedbook);
 
                         Intent goToBooks = new Intent(ShareWithUser.this, MainActivity.class);
                         startActivity(goToBooks);

@@ -37,6 +37,7 @@ import mysop.pia.com.Categories.CategoryRecyclerAdapter;
 import mysop.pia.com.Categories.CatergoryRoom.AppDatabase;
 import mysop.pia.com.Categories.CatergoryRoom.MySOPs;
 import mysop.pia.com.Firebase.Firebase;
+import mysop.pia.com.Steps.StepsRoom.StepsAppDatabase;
 import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
 
 public class MainActivity extends AppCompatActivity {
@@ -146,13 +147,14 @@ public class MainActivity extends AppCompatActivity {
             return s1.compareToIgnoreCase(s2);
         });
     }
-    private void getFirebaseBooks() {
-        if (user != null) {
+
+        private void getFirebaseBooks() {
             mSopStepsDatabaseReference.child(user.getDisplayName()).addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//                    RECEIVE THE SHARED BOOK
-
+                    MySOPs book = dataSnapshot.child("shelfTitle").getValue(MySOPs.class);
+                    sopList.add(book);
+                    categoriesRecyclerAdapter.notifyDataSetChanged();
                 }
 
                 @Override
@@ -175,7 +177,14 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             });
-        }
+    }
+
+
+    public StepsAppDatabase stepsRoomDatabase() {
+        return Room.databaseBuilder(getApplicationContext(), StepsAppDatabase.class, "steps")
+                .fallbackToDestructiveMigration()
+                .allowMainThreadQueries()
+                .build();
     }
 
     private void alertToDelete(StepsRoomData sharedBook) {

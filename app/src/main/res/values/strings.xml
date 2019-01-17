@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My SOP</string>
+    <string name="app_name">The Handbook</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_add_category">AddCategory</string>
     <string name="add_a_new_category">Add a new category</string>

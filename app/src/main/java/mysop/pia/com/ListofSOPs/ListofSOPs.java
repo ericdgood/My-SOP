@@ -119,9 +119,9 @@ public class ListofSOPs extends AppCompatActivity {
         bookPull.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                StepsRoomData book = dataSnapshot.child("0").getValue(StepsRoomData.class);
-                listOfSOPs.add(book);
-                SOPsRecyclerAdapter.notifyDataSetChanged();
+//                StepsRoomData book = dataSnapshot.child("0").getValue(StepsRoomData.class);
+//                listOfSOPs.add(book);
+//                SOPsRecyclerAdapter.notifyDataSetChanged();
             }
 
             @Override
