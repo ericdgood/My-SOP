@@ -5,6 +5,7 @@ import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,11 +15,11 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,12 +114,29 @@ public class ListofSOPs extends AppCompatActivity {
     }
 
     private void getFirebaseBooks() {
-        mSopStepsDatabaseReference.addValueEventListener(new ValueEventListener() {
+        com.google.firebase.database.Query bookPull = mSopStepsDatabaseReference.orderByChild("book");
+
+        bookPull.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                StepsRoomData book = dataSnapshot.child("test").child("0").getValue(StepsRoomData.class);
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                StepsRoomData book = dataSnapshot.child("0").getValue(StepsRoomData.class);
                 listOfSOPs.add(book);
                 SOPsRecyclerAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
             }
 
             @Override
@@ -126,6 +144,22 @@ public class ListofSOPs extends AppCompatActivity {
 
             }
         });
+
+//        mSopStepsDatabaseReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                Log.i(TAG, "onDataChange: " + mSopStepsDatabaseReference.);
+//
+//                StepsRoomData book = dataSnapshot.child("0").getValue(StepsRoomData.class);
+//                listOfSOPs.add(book);
+//                SOPsRecyclerAdapter.notifyDataSetChanged();
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
     }
 
 }

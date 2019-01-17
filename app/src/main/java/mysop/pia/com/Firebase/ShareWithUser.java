@@ -72,8 +72,8 @@ public class ShareWithUser extends AppCompatActivity {
                     if (dataSnapshot.getChildrenCount() > 0) {
                         bookTitle = ListofSOPsAdapter.bookTitle;
                         List<StepsRoomData> book = stepsRoomDatabase().listOfSteps().getAllSteps(bookTitle);
-//
-                            mSopStepsDatabaseReference.child(searchUserName).child("test").setValue(book);
+
+                            mSopStepsDatabaseReference.child(searchUserName).push().setValue(book);
 
                         Intent goToBooks = new Intent(ShareWithUser.this, MainActivity.class);
                         startActivity(goToBooks);
