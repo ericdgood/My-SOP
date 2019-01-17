@@ -114,12 +114,11 @@ public class ListofSOPs extends AppCompatActivity {
     }
 
     private void getFirebaseBooks() {
-        com.google.firebase.database.Query bookPull = mSopStepsDatabaseReference.orderByChild("book");
-
-        bookPull.addChildEventListener(new ChildEventListener() {
+        mSopStepsDatabaseReference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//                StepsRoomData book = dataSnapshot.child("0").getValue(StepsRoomData.class);
+//                StepsRoomData book = dataSnapshot.child("book").child("1").getValue(StepsRoomData.class);
+//                Log.i(TAG, "onChildAdded: " + book);
 //                listOfSOPs.add(book);
 //                SOPsRecyclerAdapter.notifyDataSetChanged();
             }

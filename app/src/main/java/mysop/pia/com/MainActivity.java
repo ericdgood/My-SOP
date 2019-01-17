@@ -152,9 +152,10 @@ public class MainActivity extends AppCompatActivity {
             mSopStepsDatabaseReference.child(user.getDisplayName()).addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                    MySOPs book = dataSnapshot.child("shelfTitle").getValue(MySOPs.class);
-                    sopList.add(book);
-                    categoriesRecyclerAdapter.notifyDataSetChanged();
+//                    MySOPs book = dataSnapshot.child("shelfTitle").getValue(MySOPs.class);
+//                    stepsRoomDatabase().listOfSteps().insertSteps(sharedBook);
+//                    sopList.add(book);
+//                    categoriesRecyclerAdapter.notifyDataSetChanged();
                 }
 
                 @Override

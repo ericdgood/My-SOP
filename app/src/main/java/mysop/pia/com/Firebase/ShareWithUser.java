@@ -19,14 +19,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import mysop.pia.com.Categories.CategoryRecyclerAdapter;
 import mysop.pia.com.Categories.CatergoryRoom.MySOPs;
-import mysop.pia.com.ListofSOPs.ListofSOPsAdapter;
 import mysop.pia.com.MainActivity;
 import mysop.pia.com.R;
 import mysop.pia.com.Steps.StepsRoom.StepsAppDatabase;
@@ -70,16 +71,24 @@ public class ShareWithUser extends AppCompatActivity {
             com.google.firebase.database.Query userNameQuery = mUsersDatabaseReference.orderByChild("userName").equalTo(searchUserName);
 
             userNameQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                public static final String TAG = "testing";
+
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (dataSnapshot.getChildrenCount() > 0) {
-                        bookTitle = ListofSOPsAdapter.bookTitle;
-                        List<StepsRoomData> book = stepsRoomDatabase().listOfSteps().getAllSteps(bookTitle);
-                        MySOPs sharedCat = new MySOPs(book.get(0).getCategory(), user.getDisplayName());
+                        MySOPs sharedCat = new MySOPs(CategoryRecyclerAdapter.categoryName, user.getDisplayName());
+                        List<StepsRoomData> book = stepsRoomDatabase().listOfSteps().getAllSOPs(CategoryRecyclerAdapter.categoryName);
+
+                        List<List<StepsRoomData>> bookPages = new ArrayList<>();
+                        for (int i = 0; i < book.size(); i++) {
+                            List<StepsRoomData> pages = stepsRoomDatabase().listOfSteps().getAllSteps(book.get(i).getSopTitle());
+                            bookPages.add(pages);
+                        }
 
                         Map sharedbook = new HashMap();
                         sharedbook.put("shelfTitle", sharedCat);
                         sharedbook.put("book", book);
+                        sharedbook.put("pages", bookPages);
 
                             mSopStepsDatabaseReference.child(searchUserName).push().setValue(sharedbook);
 
