@@ -151,11 +151,17 @@ public class MainActivity extends AppCompatActivity {
         private void getFirebaseBooks() {
             mSopStepsDatabaseReference.child(user.getDisplayName()).addChildEventListener(new ChildEventListener() {
                 @Override
-                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//                    MySOPs book = dataSnapshot.child("shelfTitle").getValue(MySOPs.class);
-//                    stepsRoomDatabase().listOfSteps().insertSteps(sharedBook);
-//                    sopList.add(book);
-//                    categoriesRecyclerAdapter.notifyDataSetChanged();
+                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {   
+                    String category = null;
+                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                        StepsRoomData stringValue = ds.getValue(StepsRoomData.class);
+                        stepsRoomDatabase().listOfSteps().insertSteps(stringValue);
+                        category = stringValue.getCategory();
+                    }
+                    
+                    MySOPs book = new MySOPs(category, null);
+                    sopList.add(book);
+                    categoriesRecyclerAdapter.notifyDataSetChanged();
                 }
 
                 @Override

@@ -142,7 +142,7 @@ public class AddSOP extends AppCompatActivity {
     }
 
     private boolean checkDuplicateSOP() {
-        List<StepsRoomData> SOPs = stepsRoomDatabase().listOfSteps().getAllSOPs(categoryName);
+        List<StepsRoomData> SOPs = stepsRoomDatabase().listOfSteps().getAllSOPs(categoryName, 1);
 
 
         for (int i = 0; i < SOPs.size(); i++) {

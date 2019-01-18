@@ -17,16 +17,16 @@ public interface Stepsinterface {
     List<StepsRoomData> getAllSteps(String sopTitle);
 
 //    GET ALL SOPS FOR CATEGORY
+    @Query("SELECT * FROM steps WHERE :category = category AND :pageNum = stepNumber")
+    List<StepsRoomData> getAllSOPs(String category, int pageNum);
+
+    //    GET ALL SOPS FOR CATEGORY
     @Query("SELECT * FROM steps WHERE :category = category")
-    List<StepsRoomData> getAllSOPs(String category);
+    List<StepsRoomData> getAllBooks(String category);
 
     //    GET ALL SAVED BOOK
     @Query("SELECT * FROM steps WHERE :save = savedBook")
     List<StepsRoomData> getAllSavedBooks(int save);
-
-    //    GET ONLY STEP TITLES FOR FIREBASE TEST
-    @Query("SELECT * FROM steps")
-    List<StepsRoomData> getCatSOPs();
 
 //  INSERT NEW SOP
     @Insert

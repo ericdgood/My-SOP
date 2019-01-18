@@ -107,6 +107,7 @@ public class AddStep extends AppCompatActivity {
                 int nextStepNum = stepNumber + 1;
                 nextStep.putExtra("stepNumber", nextStepNum);
                 nextStep.putExtra("sopTitle", sopTitle);
+                nextStep.putExtra("sopCategory", categoryName);
                 startActivity(nextStep);
                 finish();
             }

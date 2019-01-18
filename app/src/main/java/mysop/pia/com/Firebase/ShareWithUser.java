@@ -19,10 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -77,20 +74,28 @@ public class ShareWithUser extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (dataSnapshot.getChildrenCount() > 0) {
                         MySOPs sharedCat = new MySOPs(CategoryRecyclerAdapter.categoryName, user.getDisplayName());
-                        List<StepsRoomData> book = stepsRoomDatabase().listOfSteps().getAllSOPs(CategoryRecyclerAdapter.categoryName);
+//                        List<StepsRoomData> book = stepsRoomDatabase().listOfSteps().getAllSOPs(CategoryRecyclerAdapter.categoryName);
+//
+//                        Map sharedbook = new HashMap();
+//                        List<List<StepsRoomData>> pages = new ArrayList<>();
+//                        for (int i = 0; i < book.size(); i++) {
+//                            List<StepsRoomData> test = stepsRoomDatabase().listOfSteps().getAllBooks(CategoryRecyclerAdapter.categoryName, book.get(i).getSopTitle());
+//                            List<StepsRoomData> test = stepsRoomDatabase().listOfSteps().getAllSteps(book.get(i).getSopTitle());
 
-                        List<List<StepsRoomData>> bookPages = new ArrayList<>();
-                        for (int i = 0; i < book.size(); i++) {
-                            List<StepsRoomData> pages = stepsRoomDatabase().listOfSteps().getAllSteps(book.get(i).getSopTitle());
-                            bookPages.add(pages);
-                        }
+//                            pages.add(test);
+//                            List<List<StepsRoomData>> pages = new ArrayList<>();
 
-                        Map sharedbook = new HashMap();
-                        sharedbook.put("shelfTitle", sharedCat);
-                        sharedbook.put("book", book);
-                        sharedbook.put("pages", bookPages);
-
-                            mSopStepsDatabaseReference.child(searchUserName).push().setValue(sharedbook);
+//                            sharedbook.put("shelfTitle", sharedCat);
+//                            sharedbook.put("pages", test);
+//                            mSopStepsDatabaseReference.child(searchUserName).setValue(test);
+//
+//                        }
+                        List<StepsRoomData> book = stepsRoomDatabase().listOfSteps().getAllBooks(CategoryRecyclerAdapter.categoryName);
+//
+//                        Map sharedbook = new HashMap();
+//                        sharedbook.put("shelfTitle", sharedCat);
+//                        sharedbook.put("pages", pages);
+                        mSopStepsDatabaseReference.child(searchUserName).push().setValue(book);
 
                         Intent goToBooks = new Intent(ShareWithUser.this, MainActivity.class);
                         startActivity(goToBooks);
