@@ -24,6 +24,7 @@ import mysop.pia.com.Categories.CatergoryRoom.AppDatabase;
 import mysop.pia.com.Categories.CatergoryRoom.MySOPs;
 import mysop.pia.com.Firebase.Firebase;
 import mysop.pia.com.ListofSOPs.ListofSOPs;
+import mysop.pia.com.ListofSOPs.ListofSOPsAdapter;
 import mysop.pia.com.R;
 import mysop.pia.com.Steps.StepsRoom.StepsAppDatabase;
 
@@ -77,6 +78,7 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
                             return true;
                         case R.id.book_shelf_share:
                             Intent shareFirebase = new Intent(context, Firebase.class);
+                            ListofSOPsAdapter.bookShare = 0;
                             context.startActivity(shareFirebase);
                             return true;
                         case R.id.book_shelf_delete:

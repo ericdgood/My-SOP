@@ -24,7 +24,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import mysop.pia.com.Categories.CategoryRecyclerAdapter;
-import mysop.pia.com.Categories.CatergoryRoom.MySOPs;
+import mysop.pia.com.ListofSOPs.ListofSOPsAdapter;
 import mysop.pia.com.MainActivity;
 import mysop.pia.com.R;
 import mysop.pia.com.Steps.StepsRoom.StepsAppDatabase;
@@ -68,41 +68,25 @@ public class ShareWithUser extends AppCompatActivity {
             com.google.firebase.database.Query userNameQuery = mUsersDatabaseReference.orderByChild("userName").equalTo(searchUserName);
 
             userNameQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-                public static final String TAG = "testing";
-
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (dataSnapshot.getChildrenCount() > 0) {
-                        MySOPs sharedCat = new MySOPs(CategoryRecyclerAdapter.categoryName, user.getDisplayName());
-//                        List<StepsRoomData> book = stepsRoomDatabase().listOfSteps().getAllSOPs(CategoryRecyclerAdapter.categoryName);
-//
-//                        Map sharedbook = new HashMap();
-//                        List<List<StepsRoomData>> pages = new ArrayList<>();
-//                        for (int i = 0; i < book.size(); i++) {
-//                            List<StepsRoomData> test = stepsRoomDatabase().listOfSteps().getAllBooks(CategoryRecyclerAdapter.categoryName, book.get(i).getSopTitle());
-//                            List<StepsRoomData> test = stepsRoomDatabase().listOfSteps().getAllSteps(book.get(i).getSopTitle());
-
-//                            pages.add(test);
-//                            List<List<StepsRoomData>> pages = new ArrayList<>();
-
-//                            sharedbook.put("shelfTitle", sharedCat);
-//                            sharedbook.put("pages", test);
-//                            mSopStepsDatabaseReference.child(searchUserName).setValue(test);
-//
-//                        }
-                        List<StepsRoomData> book = stepsRoomDatabase().listOfSteps().getAllBooks(CategoryRecyclerAdapter.categoryName);
-//
-//                        Map sharedbook = new HashMap();
-//                        sharedbook.put("shelfTitle", sharedCat);
-//                        sharedbook.put("pages", pages);
-                        mSopStepsDatabaseReference.child(searchUserName).push().setValue(book);
-
-                        Intent goToBooks = new Intent(ShareWithUser.this, MainActivity.class);
-                        startActivity(goToBooks);
-                        Toast.makeText(ShareWithUser.this, "Book sent to " + searchUserName, Toast.LENGTH_SHORT).show();
+                        if (ListofSOPsAdapter.bookShare == 1) {
+                            List<StepsRoomData> book = stepsRoomDatabase().listOfSteps().getAllSteps(ListofSOPsAdapter.bookTitle);
+                            mSopStepsDatabaseReference.child(searchUserName).push().setValue(book);
+                            Toast.makeText(ShareWithUser.this,  ListofSOPsAdapter.bookTitle + " sent to " + searchUserName, Toast.LENGTH_LONG).show();
+                        } else {
+//                        SEND ALL BOOKS ON A BOOK SHELF TO USER
+                            List<StepsRoomData> book = stepsRoomDatabase().listOfSteps().getAllBooks(CategoryRecyclerAdapter.categoryName);
+                            mSopStepsDatabaseReference.child(searchUserName).push().setValue(book);
+                            Toast.makeText(ShareWithUser.this, CategoryRecyclerAdapter.categoryName + " sent to " + searchUserName, Toast.LENGTH_LONG).show();
+                        }
                     } else {
                         Toast.makeText(ShareWithUser.this, "No user by that name.", Toast.LENGTH_SHORT).show();
                     }
+
+                    Intent goToBooks = new Intent(ShareWithUser.this, MainActivity.class);
+                    startActivity(goToBooks);
                 }
 
                 @Override

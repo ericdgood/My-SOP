@@ -156,6 +156,7 @@ public class MainActivity extends AppCompatActivity {
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
                         StepsRoomData stringValue = ds.getValue(StepsRoomData.class);
                         stepsRoomDatabase().listOfSteps().insertSteps(stringValue);
+                        assert stringValue != null;
                         category = stringValue.getCategory();
                     }
                     

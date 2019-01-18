@@ -33,6 +33,7 @@ public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Vi
     private List<StepsRoomData> listOfSOPS;
     private Context context;
     private int savedBook;
+    public static int bookShare = 0;
     public static String bookTitle;
 
     ListofSOPsAdapter(Context context, List<StepsRoomData> listOfSOPs, StepsAppDatabase stepsAppDatabase) {
@@ -122,6 +123,7 @@ public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Vi
                         return true;
                     case R.id.book_shelf_share:
                         Intent shareBook = new Intent(context, Firebase.class);
+                        bookShare = 1;
                         bookTitle = listOfSOPS.get(position).getSopTitle();
                         context.startActivity(shareBook);
                         return true;
