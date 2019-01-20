@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActvity";
     private List<MySOPs> sopList = new ArrayList<>();
+    public static List<StepsRoomData> firebaseSteps = new ArrayList<>();
 
     @BindView(R.id.recyclerview_categories)
     RecyclerView recyclerViewCategories;
@@ -156,10 +157,7 @@ public class MainActivity extends AppCompatActivity {
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
                         StepsRoomData stringValue = ds.getValue(StepsRoomData.class);
 
-                        if (stringValue.getSharedStatus() == 0){
-                            stepsRoomDatabase().listOfSteps().insertSteps(stringValue);
-                            stepsRoomDatabase().listOfSteps().updateBookSHaredStatus(stringValue.getSopTitle());
-                        }
+                        firebaseSteps.add(stringValue);
 
                         assert stringValue != null;
                         if (stringValue.getStepNumber() == 1 && !stringValue.getCategory().equals(category)) {

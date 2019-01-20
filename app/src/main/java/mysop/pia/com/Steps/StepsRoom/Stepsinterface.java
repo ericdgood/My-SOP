@@ -29,8 +29,8 @@ public interface Stepsinterface {
     List<StepsRoomData> getAllSavedBooks(int save);
 
     //    GET ALL BOOKs
-    @Query("SELECT * FROM steps")
-    List<StepsRoomData> getAllBooks();
+    @Query("SELECT * FROM steps WHERE sharedStatus = 1")
+    List<StepsRoomData> getAllSharedBooks();
 
 //  INSERT NEW SOP
     @Insert

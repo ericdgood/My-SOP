@@ -11,17 +11,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import mysop.pia.com.Categories.CategoryRecyclerAdapter;
+import mysop.pia.com.MainActivity;
 import mysop.pia.com.R;
 import mysop.pia.com.Steps.StepsRoom.StepsAppDatabase;
 import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
@@ -38,11 +34,7 @@ public class ListofSOPs extends AppCompatActivity {
     List<StepsRoomData> listOfSOPs = new ArrayList<>();
     ListofSOPsAdapter SOPsRecyclerAdapter;
     String categoryName;
-    private String TAG;
-
-    FirebaseUser user;
-    private FirebaseDatabase mFirebaseDatabase;
-    private DatabaseReference mSopStepsDatabaseReference;
+    int sharedBook = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +42,6 @@ public class ListofSOPs extends AppCompatActivity {
         setContentView(R.layout.list_of_sops);
         ButterKnife.bind(this);
 
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        user = FirebaseAuth.getInstance().getCurrentUser();
-        mSopStepsDatabaseReference = mFirebaseDatabase.getReference().child("sop").child(user.getDisplayName());
 
         categoryName = CategoryRecyclerAdapter.categoryName;
 
@@ -81,7 +70,7 @@ public class ListofSOPs extends AppCompatActivity {
                 tvNoBookmarks.setVisibility(View.VISIBLE);
                 tvNoBookmarks.setText("No shared Handbooks");
             }
-        } else {
+        } else if (sharedBook == 0) {
             listOfSOPs = stepsRoomDatabase().listOfSteps().getAllSOPs(categoryName, 1);
         }
     }
@@ -94,7 +83,7 @@ public class ListofSOPs extends AppCompatActivity {
     }
 
     private void setupRecyclerviewAndAdapter() {
-//        getFirebaseBooks();
+        getFirebaseBooks();
         getBooks();
         noBooks();
         SOPsRecyclerAdapter = new ListofSOPsAdapter(this, listOfSOPs, stepsRoomDatabase());
@@ -107,5 +96,15 @@ public class ListofSOPs extends AppCompatActivity {
                 .fallbackToDestructiveMigration()
                 .allowMainThreadQueries()
                 .build();
+    }
+
+    private void getFirebaseBooks(){
+        List<StepsRoomData> fbsteps = MainActivity.firebaseSteps;
+        for (int i = 0; i < fbsteps.size(); i++) {
+            if (fbsteps.get(i).getCategory().equals(categoryName) && fbsteps.get(i).getStepNumber() == 1) {
+                listOfSOPs.add(fbsteps.get(i));
+                sharedBook = sharedBook + 1;
+            }
+        }
     }
 }
