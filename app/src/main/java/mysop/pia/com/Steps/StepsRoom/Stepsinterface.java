@@ -28,6 +28,10 @@ public interface Stepsinterface {
     @Query("SELECT * FROM steps WHERE :save = savedBook")
     List<StepsRoomData> getAllSavedBooks(int save);
 
+    //    GET ALL BOOKs
+    @Query("SELECT * FROM steps")
+    List<StepsRoomData> getAllBooks();
+
 //  INSERT NEW SOP
     @Insert
     void insertSteps(StepsRoomData... steps);
@@ -74,7 +78,12 @@ public interface Stepsinterface {
     @Query("UPDATE steps SET savedBook = :save WHERE id = :id")
     void updateBookSaved(int save, int id);
 
+    //    UPDATE SHARED STATUS
+    @Query("UPDATE steps SET sharedStatus = 1 WHERE sopTitle = :bookTitle")
+    void updateBookSHaredStatus(String bookTitle);
+
+
     //    UPDATE BOOK FOR SHARING
-    @Query("UPDATE steps SET sharedAuthor = :sharedAuthor WHERE category = :shelf")
+    @Query("UPDATE steps SET sharedAuthor = :sharedAuthor WHERE category = :shelf AND sharedStatus = 1")
     void updateBookSharing(String sharedAuthor, String shelf);
 }

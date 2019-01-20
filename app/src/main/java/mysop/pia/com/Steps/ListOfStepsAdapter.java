@@ -45,7 +45,6 @@ public class ListOfStepsAdapter extends RecyclerView.Adapter<ListOfStepsAdapter.
             Intent goToStep = new Intent(context, StepActivity.class);
             goToStep.putExtra("position", position);
             stepId = listOfSteps.get(position).getId();
-            goToStep.putExtra("sopTitle", listOfSteps.get(position).getSopTitle());
             context.startActivity(goToStep);
             ((Activity)context).finish();
         });

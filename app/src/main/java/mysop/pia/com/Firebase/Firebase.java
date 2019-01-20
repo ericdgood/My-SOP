@@ -163,6 +163,7 @@ public class Firebase extends Activity {
 
                                 Map neuUser = new HashMap();
                                 neuUser.put("userName", username);
+                                neuUser.put("email", user.getEmail());
                                 mUsersDatabaseReference.push().setValue(neuUser);
 
                                 Toast.makeText(Firebase.this, "User name updated", Toast.LENGTH_SHORT).show();

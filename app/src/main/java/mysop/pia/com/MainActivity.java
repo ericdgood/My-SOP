@@ -91,13 +91,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.sign_in) {
-            Intent share = new Intent(this, Firebase.class);
-            startActivity(share);
-            return true;
-        }
+            //noinspection SimplifiableIfStatement
+            if (id == R.id.sign_in) {
+                Intent share = new Intent(this, Firebase.class);
+                startActivity(share);
+                return true;
+            }
 
         return super.onOptionsItemSelected(item);
     }
@@ -149,44 +148,50 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getFirebaseBooks() {
-        mSopStepsDatabaseReference.child(user.getDisplayName()).addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                String category = null;
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    StepsRoomData stringValue = ds.getValue(StepsRoomData.class);
+        if (user != null) {
+            mSopStepsDatabaseReference.child(user.getDisplayName()).addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                    String category = null;
+                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                        StepsRoomData stringValue = ds.getValue(StepsRoomData.class);
 
-                    assert stringValue != null;
-                    if (stringValue.getStepNumber() == 1 && !stringValue.getCategory().equals(category)) {
-                        category = stringValue.getCategory();
-                        MySOPs book = new MySOPs(category, null);
-                        sopList.add(book);
-                        categoriesRecyclerAdapter.notifyDataSetChanged();
+                        if (stringValue.getSharedStatus() == 0){
+                            stepsRoomDatabase().listOfSteps().insertSteps(stringValue);
+                            stepsRoomDatabase().listOfSteps().updateBookSHaredStatus(stringValue.getSopTitle());
+                        }
+
+                        assert stringValue != null;
+                        if (stringValue.getStepNumber() == 1 && !stringValue.getCategory().equals(category)) {
+                            category = stringValue.getCategory();
+                            MySOPs book = new MySOPs(category, null);
+                            sopList.add(book);
+                            categoriesRecyclerAdapter.notifyDataSetChanged();
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
-            }
+                }
 
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
 
-            }
+                }
 
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
-            }
+                }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
-
+                }
+            });
+        }
     }
 
 

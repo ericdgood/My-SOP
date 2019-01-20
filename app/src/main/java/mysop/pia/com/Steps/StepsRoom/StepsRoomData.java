@@ -38,8 +38,11 @@ public class StepsRoomData {
     @ColumnInfo(name = "sharedAuthor")
     private String sharedAuthor;
 
+    @ColumnInfo(name = "sharedStatus")
+    private int sharedStatus;
+
     public StepsRoomData(String category, String sopTitle, String stepTitle, int stepNumber,
-                         String stepDescription, String imageURI, int savedBook, String bookColor, String sharedAuthor) {
+                         String stepDescription, String imageURI, int savedBook, String bookColor, String sharedAuthor, int sharedStatus) {
         this.category = category;
         this.sopTitle = sopTitle;
         this.stepTitle = stepTitle;
@@ -49,6 +52,7 @@ public class StepsRoomData {
         this.savedBook = savedBook;
         this.bookColor = bookColor;
         this.sharedAuthor = sharedAuthor;
+        this.sharedStatus = sharedStatus;
     }
 
     @Ignore
@@ -97,4 +101,9 @@ public class StepsRoomData {
     public String getSharedAuthor() {
         return sharedAuthor;
     }
+
+    public int getSharedStatus() {
+        return sharedStatus;
+    }
+
 }
