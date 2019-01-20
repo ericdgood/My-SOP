@@ -66,12 +66,13 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ButterKnife.bind(this);
-        setTitle("The Handbook");
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mSopStepsDatabaseReference = mFirebaseDatabase.getReference().child("sop");
         user = FirebaseAuth.getInstance().getCurrentUser();
 
+        sopList = roomDatabase().mysopDao().getAllSOPs();
+        getFirebaseBooks();
         checkForCategories();
 
         fab.setOnClickListener(view -> {
@@ -116,8 +117,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void checkForCategories() {
-        sopList = roomDatabase().mysopDao().getAllSOPs();
-        getFirebaseBooks();
+//        TODO REMOVE IMAGE IF ONLY SHARED SHELF
         if (sopList.size() > 0) {
             arrangeCategoryTitles();
             staticBookShelfs();
@@ -133,14 +133,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void staticBookShelfs(){
-        MySOPs bookMarked = new MySOPs("Bookmarked","JonNyBgOoDeMARKED");
-        MySOPs shared = new MySOPs("Shared Books","JonNyBgOoDeSHARED");
-        sopList.add(0,shared);
-        sopList.add(1,bookMarked);
+    private void staticBookShelfs() {
+        MySOPs bookMarked = new MySOPs("Bookmarked", "JonNyBgOoDeMARKED");
+        MySOPs shared = new MySOPs("Shared Books", "JonNyBgOoDeSHARED");
+        sopList.add(0, shared);
+        sopList.add(1, bookMarked);
     }
 
-    private void arrangeCategoryTitles(){
+    private void arrangeCategoryTitles() {
         Collections.sort(sopList, (item, t1) -> {
             String s1 = item.getCategoryTitle();
             String s2 = t1.getCategoryTitle();
@@ -148,43 +148,45 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-        private void getFirebaseBooks() {
-            mSopStepsDatabaseReference.child(user.getDisplayName()).addChildEventListener(new ChildEventListener() {
-                @Override
-                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {   
-                    String category = null;
-                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                        StepsRoomData stringValue = ds.getValue(StepsRoomData.class);
-                        stepsRoomDatabase().listOfSteps().insertSteps(stringValue);
-                        assert stringValue != null;
+    private void getFirebaseBooks() {
+        mSopStepsDatabaseReference.child(user.getDisplayName()).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                String category = null;
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    StepsRoomData stringValue = ds.getValue(StepsRoomData.class);
+
+                    assert stringValue != null;
+                    if (stringValue.getStepNumber() == 1 && !stringValue.getCategory().equals(category)) {
                         category = stringValue.getCategory();
+                        MySOPs book = new MySOPs(category, null);
+                        sopList.add(book);
+                        categoriesRecyclerAdapter.notifyDataSetChanged();
                     }
-                    
-                    MySOPs book = new MySOPs(category, null);
-                    sopList.add(book);
-                    categoriesRecyclerAdapter.notifyDataSetChanged();
                 }
+            }
 
-                @Override
-                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
-                }
+            }
 
-                @Override
-                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
 
-                }
+            }
 
-                @Override
-                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
-                }
+            }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                }
-            });
+            }
+        });
+
     }
 
 
@@ -199,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog.Builder builder;
         builder = new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Dialog_Alert);
         builder.setTitle("Shared Book")
-                .setMessage(" would like to share " + sharedBook.getSopTitle() + " handbook with you" )
+                .setMessage(" would like to share " + sharedBook.getSopTitle() + " handbook with you")
                 .setPositiveButton("Accept", (dialog, which) -> {
 //                    DO THIS WHEN RECEIVE A SHARED BOOK
 //                    sopList.add(sharedInfo);

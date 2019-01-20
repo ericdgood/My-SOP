@@ -79,6 +79,7 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
                         case R.id.book_shelf_share:
                             Intent shareFirebase = new Intent(context, Firebase.class);
                             ListofSOPsAdapter.bookShare = 0;
+                            categoryName = categoryList.get(position).getCategoryTitle();
                             context.startActivity(shareFirebase);
                             return true;
                         case R.id.book_shelf_delete:

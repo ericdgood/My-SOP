@@ -72,11 +72,13 @@ public class ShareWithUser extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (dataSnapshot.getChildrenCount() > 0) {
                         if (ListofSOPsAdapter.bookShare == 1) {
+                            stepsRoomDatabase().listOfSteps().updateBookSharing(user.getDisplayName(), ListofSOPsAdapter.bookTitle);
                             List<StepsRoomData> book = stepsRoomDatabase().listOfSteps().getAllSteps(ListofSOPsAdapter.bookTitle);
                             mSopStepsDatabaseReference.child(searchUserName).push().setValue(book);
                             Toast.makeText(ShareWithUser.this,  ListofSOPsAdapter.bookTitle + " sent to " + searchUserName, Toast.LENGTH_LONG).show();
                         } else {
 //                        SEND ALL BOOKS ON A BOOK SHELF TO USER
+                            stepsRoomDatabase().listOfSteps().updateBookSharing(user.getDisplayName(), CategoryRecyclerAdapter.categoryName);
                             List<StepsRoomData> book = stepsRoomDatabase().listOfSteps().getAllBooks(CategoryRecyclerAdapter.categoryName);
                             mSopStepsDatabaseReference.child(searchUserName).push().setValue(book);
                             Toast.makeText(ShareWithUser.this, CategoryRecyclerAdapter.categoryName + " sent to " + searchUserName, Toast.LENGTH_LONG).show();
