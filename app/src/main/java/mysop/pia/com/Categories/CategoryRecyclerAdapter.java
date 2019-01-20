@@ -43,7 +43,7 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
 
     @Override
     public void onBindViewHolder(@NonNull CategoryRecyclerAdapter.Viewholder viewholder, int position) {
-            String sharedAuthor = categoryList.get(position).getSharedAuthor();
+        String sharedAuthor = categoryList.get(position).getSharedAuthor();
         ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) viewholder.imageviewCategory.getLayoutParams();
 
         if (sharedAuthor != (null) && sharedAuthor.equals("JonNyBgOoDeSHARED")) {
@@ -62,44 +62,43 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
             viewholder.imgCatOptions.setVisibility(View.GONE);
         }
 
-            viewholder.categoryTitle.setText(categoryList.get(position).getCategoryTitle());
+        viewholder.categoryTitle.setText(categoryList.get(position).getCategoryTitle());
 
-            viewholder.imgCatOptions.setOnClickListener(v -> {
+        viewholder.imgCatOptions.setOnClickListener(v -> {
 //            OPEN OPTIONS
-                //creating a popup menu
-                PopupMenu popup = new PopupMenu(context, viewholder.imgCatOptions);
-                //inflating menu from xml resource
-                popup.inflate(R.menu.menu_book_shelf);
-                //adding click listener
-                popup.setOnMenuItemClickListener(item -> {
-                    switch (item.getItemId()) {
-                        case R.id.book_shelf_edit:
-                            editCategory(categoryList.get(position).getCategoryTitle(), categoryList.get(position).getId());
-                            return true;
-                        case R.id.book_shelf_share:
-                            Intent shareFirebase = new Intent(context, Firebase.class);
-                            ListofSOPsAdapter.bookShare = 0;
-                            categoryName = categoryList.get(position).getCategoryTitle();
-                            context.startActivity(shareFirebase);
-                            return true;
-                        case R.id.book_shelf_delete:
-                            alertToDelete(categoryList.get(position).getCategoryTitle(), position);
-                            return true;
-                        default:
-                            return false;
-                    }
-                });
-                //displaying the popup
-                popup.show();
+            //creating a popup menu
+            PopupMenu popup = new PopupMenu(context, viewholder.imgCatOptions);
+            //inflating menu from xml resource
+            popup.inflate(R.menu.menu_book_shelf);
+            //adding click listener
+            popup.setOnMenuItemClickListener(item -> {
+                switch (item.getItemId()) {
+                    case R.id.book_shelf_edit:
+                        editCategory(categoryList.get(position).getCategoryTitle(), categoryList.get(position).getId());
+                        return true;
+                    case R.id.book_shelf_share:
+                        Intent shareFirebase = new Intent(context, Firebase.class);
+                        ListofSOPsAdapter.bookShare = 0;
+                        categoryName = categoryList.get(position).getCategoryTitle();
+                        context.startActivity(shareFirebase);
+                        return true;
+                    case R.id.book_shelf_delete:
+                        alertToDelete(categoryList.get(position).getCategoryTitle(), position);
+                        return true;
+                    default:
+                        return false;
+                }
             });
-
+            //displaying the popup
+            popup.show();
+        });
 
 //        DO THIS ON PRESS
-            viewholder.categoryLayout.setOnClickListener((View view) -> {
-                Intent categorySops = new Intent(context, ListofSOPs.class);
-                categoryName = categoryList.get(position).getCategoryTitle();
-                context.startActivity(categorySops);
-            });
+        viewholder.categoryLayout.setOnClickListener((View view) -> {
+            Intent categorySops = new Intent(context, ListofSOPs.class);
+            categoryName = categoryList.get(position).getCategoryTitle();
+            context.startActivity(categorySops);
+        });
     }
 
     private void editCategory(String categoryTitle, int id) {
@@ -108,7 +107,7 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
         editShelf.putExtra("id", id);
         editShelf.putExtra("edit", false);
         context.startActivity(editShelf);
-        ((Activity)context).finish();
+        ((Activity) context).finish();
     }
 
     @NonNull
@@ -151,7 +150,7 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
                     Toast.makeText(context, categoryName + " is Deleted", Toast.LENGTH_SHORT).show();
                     categoryList.remove(position);
                     notifyDataSetChanged();
-                    Toast.makeText(context,  categoryName + " Deleted", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, categoryName + " Deleted", Toast.LENGTH_SHORT).show();
                 })
                 .setNegativeButton(android.R.string.no, (dialog, which) -> {
                     // do nothing

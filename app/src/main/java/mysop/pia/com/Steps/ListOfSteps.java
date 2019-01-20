@@ -5,17 +5,28 @@ import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import mysop.pia.com.ListofSOPs.ListofSOPsAdapter;
 import mysop.pia.com.R;
 import mysop.pia.com.Steps.StepsRoom.StepsAppDatabase;
 import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
@@ -31,8 +42,12 @@ public class ListOfSteps extends Activity {
     FloatingActionButton fabAddStep;
 
     List<StepsRoomData> listOfSteps = new ArrayList<>();
-    String sopTitle;
     ListOfStepsAdapter StepsRecyclerAdapter;
+
+    FirebaseUser user;
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mSopStepsDatabaseReference;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +55,15 @@ public class ListOfSteps extends Activity {
         setContentView(R.layout.list_of_steps);
         ButterKnife.bind(this);
 
-        sopTitle = getIntent().getStringExtra("sopTitle");
 
-        textviewTitle.setText(sopTitle);
-        setupRecyclerviewAndAdapter(sopTitle);
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        mSopStepsDatabaseReference = mFirebaseDatabase.getReference().child("sop").child(user.getDisplayName());
+
+        listOfSteps = stepsRoomDatabase().listOfSteps().getAllSteps(ListofSOPsAdapter.bookTitle);
+
+        textviewTitle.setText(ListofSOPsAdapter.bookTitle);
+        setupRecyclerviewAndAdapter();
         fabAddStep();
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN,0) {
@@ -56,11 +76,11 @@ public class ListOfSteps extends Activity {
                 StepsRecyclerAdapter.notifyItemMoved(position_dragged, position_target);
                 StepsRecyclerAdapter.notifyItemChanged(position_dragged, 1);
 
-                int draggedId = stepsRoomDatabase().listOfSteps().getAllSteps(sopTitle).get(position_dragged).getId();
-                int draggedStepNum = stepsRoomDatabase().listOfSteps().getAllSteps(sopTitle).get(position_dragged).getStepNumber();
+                int draggedId = stepsRoomDatabase().listOfSteps().getAllSteps(ListofSOPsAdapter.bookTitle).get(position_dragged).getId();
+                int draggedStepNum = stepsRoomDatabase().listOfSteps().getAllSteps(ListofSOPsAdapter.bookTitle).get(position_dragged).getStepNumber();
 
-                int targetId = stepsRoomDatabase().listOfSteps().getAllSteps(sopTitle).get(position_target).getId();
-                int targetStepNum = stepsRoomDatabase().listOfSteps().getAllSteps(sopTitle).get(position_target).getStepNumber();
+                int targetId = stepsRoomDatabase().listOfSteps().getAllSteps(ListofSOPsAdapter.bookTitle).get(position_target).getId();
+                int targetStepNum = stepsRoomDatabase().listOfSteps().getAllSteps(ListofSOPsAdapter.bookTitle).get(position_target).getStepNumber();
 
                 stepsRoomDatabase().listOfSteps().updateOnMove(targetStepNum, draggedId);
                 stepsRoomDatabase().listOfSteps().updateTarget(draggedStepNum, targetId);
@@ -75,8 +95,8 @@ public class ListOfSteps extends Activity {
         }).attachToRecyclerView(recyclerviewListOfSteps);
     }
 
-    private void setupRecyclerviewAndAdapter(String sopTitle) {
-        listOfSteps = stepsRoomDatabase().listOfSteps().getAllSteps(sopTitle);
+    private void setupRecyclerviewAndAdapter() {
+        getFirebaseBooks();
         StepsRecyclerAdapter = new ListOfStepsAdapter(this, listOfSteps);
         recyclerviewListOfSteps.setLayoutManager(new LinearLayoutManager(this));
         recyclerviewListOfSteps.setAdapter(StepsRecyclerAdapter);
@@ -93,10 +113,51 @@ public class ListOfSteps extends Activity {
         fabAddStep.setOnClickListener(v -> {
             int listOfStepsSize = listOfSteps.size();
             Intent addStep = new Intent(this, AddStep.class);
-            addStep.putExtra("sopTitle", sopTitle);
+            addStep.putExtra("sopTitle", ListofSOPsAdapter.bookTitle);
             addStep.putExtra("stepNumber", listOfStepsSize + 1);
             startActivity(addStep);
             finish();
+        });
+    }
+
+    private void getFirebaseBooks() {
+        mSopStepsDatabaseReference.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                StepsRoomData bookPages;
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    bookPages = ds.getValue(StepsRoomData.class);
+
+                    assert bookPages != null;
+                    Log.i(TAG, "fire: " +bookPages.getSopTitle() + "clicked" + ListofSOPsAdapter.bookTitle);
+                    if (bookPages.getSopTitle().equals(ListofSOPsAdapter.bookTitle)) {
+
+                        listOfSteps.add(bookPages);
+                        StepsRecyclerAdapter.notifyDataSetChanged();
+
+                    }
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
         });
     }
 }

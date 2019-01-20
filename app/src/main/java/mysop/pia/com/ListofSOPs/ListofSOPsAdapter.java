@@ -50,7 +50,7 @@ public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Vi
 
         viewholder.constrainBookList.setOnClickListener(v -> {
             Intent listOfSteps = new Intent(context, ListOfSteps.class);
-            listOfSteps.putExtra("sopTitle", listOfSOPS.get(position).getSopTitle());
+            bookTitle = listOfSOPS.get(position).getSopTitle();
             context.startActivity(listOfSteps);
         });
 
