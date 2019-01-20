@@ -11,17 +11,13 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import mysop.pia.com.ListofSOPs.ListofSOPsAdapter;
+import mysop.pia.com.MainActivity;
 import mysop.pia.com.R;
 import mysop.pia.com.Steps.StepsRoom.StepsAppDatabase;
 import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
@@ -36,12 +32,10 @@ public class ListOfSteps extends Activity {
     @BindView(R.id.fab_list_steps_add_step)
     FloatingActionButton fabAddStep;
 
-    List<StepsRoomData> listOfSteps = new ArrayList<>();
+    public static List<StepsRoomData> listOfSteps = new ArrayList<>();
     ListOfStepsAdapter StepsRecyclerAdapter;
-
-    FirebaseUser user;
-    private FirebaseDatabase mFirebaseDatabase;
-    private DatabaseReference mSopStepsDatabaseReference;
+    String bookTitle;
+    int sharedBook = 0;
 
 
     @Override
@@ -50,14 +44,14 @@ public class ListOfSteps extends Activity {
         setContentView(R.layout.list_of_steps);
         ButterKnife.bind(this);
 
+        bookTitle =ListofSOPsAdapter.bookTitle;
 
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        user = FirebaseAuth.getInstance().getCurrentUser();
-        mSopStepsDatabaseReference = mFirebaseDatabase.getReference().child("sop").child(user.getDisplayName());
+        getFirebaseBooks();
+        if (sharedBook == 0) {
+            listOfSteps = stepsRoomDatabase().listOfSteps().getAllSteps(bookTitle);
+        }
 
-        listOfSteps = stepsRoomDatabase().listOfSteps().getAllSteps(ListofSOPsAdapter.bookTitle);
-
-        textviewTitle.setText(ListofSOPsAdapter.bookTitle);
+        textviewTitle.setText(bookTitle);
         setupRecyclerviewAndAdapter();
         fabAddStep();
 
@@ -71,11 +65,11 @@ public class ListOfSteps extends Activity {
                 StepsRecyclerAdapter.notifyItemMoved(position_dragged, position_target);
                 StepsRecyclerAdapter.notifyItemChanged(position_dragged, 1);
 
-                int draggedId = stepsRoomDatabase().listOfSteps().getAllSteps(ListofSOPsAdapter.bookTitle).get(position_dragged).getId();
-                int draggedStepNum = stepsRoomDatabase().listOfSteps().getAllSteps(ListofSOPsAdapter.bookTitle).get(position_dragged).getStepNumber();
+                int draggedId = stepsRoomDatabase().listOfSteps().getAllSteps(bookTitle).get(position_dragged).getId();
+                int draggedStepNum = stepsRoomDatabase().listOfSteps().getAllSteps(bookTitle).get(position_dragged).getStepNumber();
 
-                int targetId = stepsRoomDatabase().listOfSteps().getAllSteps(ListofSOPsAdapter.bookTitle).get(position_target).getId();
-                int targetStepNum = stepsRoomDatabase().listOfSteps().getAllSteps(ListofSOPsAdapter.bookTitle).get(position_target).getStepNumber();
+                int targetId = stepsRoomDatabase().listOfSteps().getAllSteps(bookTitle).get(position_target).getId();
+                int targetStepNum = stepsRoomDatabase().listOfSteps().getAllSteps(bookTitle).get(position_target).getStepNumber();
 
                 stepsRoomDatabase().listOfSteps().updateOnMove(targetStepNum, draggedId);
                 stepsRoomDatabase().listOfSteps().updateTarget(draggedStepNum, targetId);
@@ -107,11 +101,22 @@ public class ListOfSteps extends Activity {
         fabAddStep.setOnClickListener(v -> {
             int listOfStepsSize = listOfSteps.size();
             Intent addStep = new Intent(this, AddStep.class);
-            addStep.putExtra("sopTitle", ListofSOPsAdapter.bookTitle);
+            addStep.putExtra("sopTitle", bookTitle);
             addStep.putExtra("stepNumber", listOfStepsSize + 1);
             startActivity(addStep);
             finish();
         });
+    }
+
+    private void getFirebaseBooks(){
+        List<StepsRoomData> fbsteps = MainActivity.firebaseSteps;
+        listOfSteps.clear();
+        for (int i = 0; i < fbsteps.size(); i++) {
+            if (fbsteps.get(i).getSopTitle().equals(bookTitle)) {
+                listOfSteps.add(fbsteps.get(i));
+                sharedBook = sharedBook + 1;
+            }
+        }
     }
 
 }
