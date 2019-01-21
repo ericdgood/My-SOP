@@ -12,6 +12,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -148,6 +149,7 @@ public class ListOfSteps extends Activity {
     private void startWidgetService() {
         Intent i = new Intent(this, WidgetUpdateService.class);
         startService(i);
+        Toast.makeText(this, "Pages added to widget", Toast.LENGTH_LONG).show();
     }
 
 }

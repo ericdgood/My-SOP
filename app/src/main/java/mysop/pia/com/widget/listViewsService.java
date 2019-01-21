@@ -59,9 +59,10 @@ class ListViewsFactory implements RemoteViewsService.RemoteViewsFactory
 
     @Override
     public RemoteViews getViewAt(int position)
-    {
+    { String number = String.valueOf(mIngredients.get(position).getStepNumber()) + "..";
         RemoteViews views = new RemoteViews(mContext.getPackageName(), R.layout.widget_layout);
-        views.setTextViewText(R.id.widgetIngredient, mIngredients.get(position).getStepTitle());
+        views.setTextViewText(R.id.widget_page_number, number);
+        views.setTextViewText(R.id.widget_page_title, mIngredients.get(position).getStepTitle());
         return views;
     }
 
