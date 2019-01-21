@@ -38,7 +38,6 @@ import mysop.pia.com.Categories.CatergoryRoom.AppDatabase;
 import mysop.pia.com.Categories.CatergoryRoom.MySOPs;
 import mysop.pia.com.Firebase.Firebase;
 import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
-import mysop.pia.com.widget.WidgetUpdateService;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -97,9 +96,6 @@ public class MainActivity extends AppCompatActivity {
             Intent share = new Intent(this, Firebase.class);
             startActivity(share);
             return true;
-        }
-        if (id == R.id.widget){
-            startWidgetService();
         }
 
         return super.onOptionsItemSelected(item);
@@ -221,10 +217,5 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void startWidgetService()
-    {
-        Intent i = new Intent(this, WidgetUpdateService.class);
-        startService(i);
-    }
 
 }

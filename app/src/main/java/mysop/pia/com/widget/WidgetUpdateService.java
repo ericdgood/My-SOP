@@ -9,13 +9,13 @@ import android.util.Log;
 
 import java.util.List;
 
-import mysop.pia.com.Categories.CatergoryRoom.MySOPs;
-import mysop.pia.com.MainActivity;
+import mysop.pia.com.Steps.ListOfSteps;
+import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
 
 public class WidgetUpdateService extends IntentService
 {
     private static final String TAG = "widget";
-    private final List<MySOPs> mIngredients = MainActivity.sopList;
+    private final List<StepsRoomData> mIngredients = ListOfSteps.listOfSteps;
 
     public WidgetUpdateService()
     {

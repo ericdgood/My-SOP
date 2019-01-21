@@ -9,13 +9,13 @@ import android.widget.RemoteViews;
 
 import java.util.List;
 
-import mysop.pia.com.Categories.CatergoryRoom.MySOPs;
 import mysop.pia.com.R;
+import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
 
 
 public class HandbookWidgetProvider extends AppWidgetProvider {
 
-        public static List<MySOPs> mIngredients;
+        public static List<StepsRoomData> mIngredients;
 
         public HandbookWidgetProvider()
         {
@@ -23,7 +23,7 @@ public class HandbookWidgetProvider extends AppWidgetProvider {
         }
 
         static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                    int[] appWidgetIds, List<MySOPs> ingredients)
+                                    int[] appWidgetIds, List<StepsRoomData> ingredients)
         {
             mIngredients = ingredients;
             for (int appWidgetId : appWidgetIds)

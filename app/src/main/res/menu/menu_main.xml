@@ -8,11 +8,4 @@
         android:orderInCategory="100"
         android:title="Sign in"
         app:showAsAction="never" />
-
-    <item
-        android:id="@+id/widget"
-        android:orderInCategory="100"
-        android:title="Add to Widget"
-        app:showAsAction="never" />
-
 </menu>
