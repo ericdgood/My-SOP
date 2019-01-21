@@ -37,7 +37,6 @@ import mysop.pia.com.Categories.CategoryRecyclerAdapter;
 import mysop.pia.com.Categories.CatergoryRoom.AppDatabase;
 import mysop.pia.com.Categories.CatergoryRoom.MySOPs;
 import mysop.pia.com.Firebase.Firebase;
-import mysop.pia.com.Steps.StepsRoom.StepsAppDatabase;
 import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
 
 public class MainActivity extends AppCompatActivity {
@@ -59,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseUser user;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mSopStepsDatabaseReference;
+    String firebaseShelfs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,19 +153,15 @@ public class MainActivity extends AppCompatActivity {
             mSopStepsDatabaseReference.child(user.getDisplayName()).addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                    String category = null;
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
                         StepsRoomData stringValue = ds.getValue(StepsRoomData.class);
 
-                        firebaseSteps.add(stringValue);
-
-                        assert stringValue != null;
-                        if (stringValue.getStepNumber() == 1 && !stringValue.getCategory().equals(category)) {
-                            category = stringValue.getCategory();
-                            MySOPs book = new MySOPs(category, null);
-                            sopList.add(book);
-                            categoriesRecyclerAdapter.notifyDataSetChanged();
+                        if (stringValue.getSharedStatus() == 1 && stringValue.getStepNumber() == 1){
+                            alertSharedShelf(stringValue, ds);
+                        } else if (stringValue.getSharedStatus() == 2){
+                            addSharedShelfs(stringValue);
                         }
+
                     }
                 }
 
@@ -192,25 +188,18 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-    public StepsAppDatabase stepsRoomDatabase() {
-        return Room.databaseBuilder(getApplicationContext(), StepsAppDatabase.class, "steps")
-                .fallbackToDestructiveMigration()
-                .allowMainThreadQueries()
-                .build();
-    }
-
-    private void alertToDelete(StepsRoomData sharedBook) {
+    private void alertSharedShelf(StepsRoomData sharedBook, DataSnapshot ds) {
         AlertDialog.Builder builder;
         builder = new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Dialog_Alert);
         builder.setTitle("Shared Book")
-                .setMessage(" would like to share " + sharedBook.getSopTitle() + " handbook with you")
+                .setMessage(" would you like to receive " + sharedBook.getSopTitle() + " Handbook from " + sharedBook.getSharedAuthor())
                 .setPositiveButton("Accept", (dialog, which) -> {
 //                    DO THIS WHEN RECEIVE A SHARED BOOK
-//                    sopList.add(sharedInfo);
 
-//                    categoriesRecyclerAdapter.notifyDataSetChanged();
-                    Toast.makeText(MainActivity.this, "step num" + sharedBook.getStepNumber(), Toast.LENGTH_SHORT).show();
+                    firebaseSteps.add(sharedBook);
+                    ds.getRef().child("sharedStatus").setValue(2);
+                    addSharedShelfs(sharedBook);
+
                 })
                 .setNegativeButton("Deny", (dialog, which) -> {
                     // do nothing
@@ -218,5 +207,14 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
+    }
+
+    private void addSharedShelfs(StepsRoomData sharedBook){
+        if (sharedBook.getStepNumber() == 1 && !sharedBook.getCategory().equals(firebaseShelfs)) {
+            firebaseShelfs = sharedBook.getCategory();
+            MySOPs book = new MySOPs(firebaseShelfs, sharedBook.getSharedAuthor());
+            sopList.add(book);
+            categoriesRecyclerAdapter.notifyDataSetChanged();
+        }
     }
 }
