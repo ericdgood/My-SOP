@@ -11,10 +11,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +43,7 @@ import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "test";
     public static List<MySOPs> sopList = new ArrayList<>();
     public static List<StepsRoomData> firebaseSteps = new ArrayList<>();
 
@@ -52,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
     ImageView imageviewNoCategory;
     @BindView(R.id.textview_no_categories)
     TextView textviewNoCategory;
+    @BindView(R.id.progress_bar)
+    ProgressBar progressBar;
 
     CategoryRecyclerAdapter categoriesRecyclerAdapter;
     FirebaseUser user;
@@ -116,8 +121,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void checkForCategories() {
-//        TODO REMOVE IMAGE IF ONLY SHARED SHELF
-        if (sopList.size() > 0) {
+        if (sopList.size() > 0 || user != null) {
             arrangeCategoryTitles();
             staticBookShelfs();
             setupRecylerviewDBAndAdapter();
@@ -154,6 +158,9 @@ public class MainActivity extends AppCompatActivity {
                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
                         StepsRoomData stringValue = ds.getValue(StepsRoomData.class);
+
+                        progressBar.setVisibility(View.GONE);
+                        firebaseSteps.add(stringValue);
 
                         if (stringValue.getSharedStatus() == 1 && stringValue.getStepNumber() == 1) {
                             alertSharedShelf(stringValue, ds);
@@ -194,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton("Accept", (dialog, which) -> {
 //                    DO THIS WHEN RECEIVE A SHARED BOOK
 
-                    firebaseSteps.add(sharedBook);
+                    Log.i(TAG, "alertSharedShelf: " + firebaseSteps);
                     ds.getRef().child("sharedStatus").setValue(2);
                     addSharedShelfs(sharedBook);
 
