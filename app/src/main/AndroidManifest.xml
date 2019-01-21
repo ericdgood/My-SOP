@@ -36,8 +36,21 @@
             android:label="@string/title_list_of_steps" />
         <activity android:name=".Steps.StepActivity"></activity>
         <activity android:name=".Firebase.Firebase" />
-        <activity android:name=".Firebase.Firebase$FirebaseData" />
         <activity android:name=".Firebase.ShareWithUser" />
+
+
+        <receiver android:name=".widget.HandbookWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/handbook_widget_provider" />
+        </receiver>
+
+        <service android:name=".widget.WidgetUpdateService"/>
+        <service android:name=".widget.listViewsService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
     </application>
 
 </manifest>

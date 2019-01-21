@@ -38,11 +38,11 @@ import mysop.pia.com.Categories.CatergoryRoom.AppDatabase;
 import mysop.pia.com.Categories.CatergoryRoom.MySOPs;
 import mysop.pia.com.Firebase.Firebase;
 import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
+import mysop.pia.com.widget.WidgetUpdateService;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "MainActvity";
-    private List<MySOPs> sopList = new ArrayList<>();
+    public static List<MySOPs> sopList = new ArrayList<>();
     public static List<StepsRoomData> firebaseSteps = new ArrayList<>();
 
     @BindView(R.id.recyclerview_categories)
@@ -92,12 +92,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-            //noinspection SimplifiableIfStatement
-            if (id == R.id.sign_in) {
-                Intent share = new Intent(this, Firebase.class);
-                startActivity(share);
-                return true;
-            }
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.sign_in) {
+            Intent share = new Intent(this, Firebase.class);
+            startActivity(share);
+            return true;
+        }
+        if (id == R.id.widget){
+            startWidgetService();
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -156,12 +159,11 @@ public class MainActivity extends AppCompatActivity {
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
                         StepsRoomData stringValue = ds.getValue(StepsRoomData.class);
 
-                        if (stringValue.getSharedStatus() == 1 && stringValue.getStepNumber() == 1){
+                        if (stringValue.getSharedStatus() == 1 && stringValue.getStepNumber() == 1) {
                             alertSharedShelf(stringValue, ds);
-                        } else if (stringValue.getSharedStatus() == 2){
+                        } else if (stringValue.getSharedStatus() == 2) {
                             addSharedShelfs(stringValue);
                         }
-
                     }
                 }
 
@@ -203,13 +205,14 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .setNegativeButton("Deny", (dialog, which) -> {
                     // do nothing
+                    ds.getRef().child("sharedStatus").setValue(3);
                     Toast.makeText(MainActivity.this, "Item not accepted", Toast.LENGTH_SHORT).show();
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
     }
 
-    private void addSharedShelfs(StepsRoomData sharedBook){
+    private void addSharedShelfs(StepsRoomData sharedBook) {
         if (sharedBook.getStepNumber() == 1 && !sharedBook.getCategory().equals(firebaseShelfs)) {
             firebaseShelfs = sharedBook.getCategory();
             MySOPs book = new MySOPs(firebaseShelfs, sharedBook.getSharedAuthor());
@@ -217,4 +220,11 @@ public class MainActivity extends AppCompatActivity {
             categoriesRecyclerAdapter.notifyDataSetChanged();
         }
     }
+
+    private void startWidgetService()
+    {
+        Intent i = new Intent(this, WidgetUpdateService.class);
+        startService(i);
+    }
+
 }

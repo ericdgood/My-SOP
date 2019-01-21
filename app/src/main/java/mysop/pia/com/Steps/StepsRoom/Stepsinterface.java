@@ -86,4 +86,5 @@ public interface Stepsinterface {
 //SHARED STATUS KEY
 //  0 = NOT SHARED
 //  1 = SENT BOOK
-//  2 = ACCEPTED BOOK
+//  2 = REQUEST ACCEPTED
+//  3 = REQUEST DENIED
