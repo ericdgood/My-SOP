@@ -46,12 +46,53 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
         String sharedAuthor = categoryList.get(position).getSharedAuthor();
         ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) viewholder.imageviewCategory.getLayoutParams();
 
+        viewholder.categoryTitle.setText(categoryList.get(position).getCategoryTitle());
+
+        if (categoryList.get(position).getSharedAuthor() == null) {
+            viewholder.imgCatOptions.setOnClickListener(v -> {
+//            OPEN OPTIONS
+                //creating a popup menu
+                PopupMenu popup = new PopupMenu(context, viewholder.imgCatOptions);
+                //inflating menu from xml resource
+                popup.inflate(R.menu.menu_book_shelf);
+                //adding click listener
+                popup.setOnMenuItemClickListener(item -> {
+                    switch (item.getItemId()) {
+                        case R.id.book_shelf_edit:
+                            editCategory(categoryList.get(position).getCategoryTitle(), categoryList.get(position).getId());
+                            return true;
+                        case R.id.book_shelf_share:
+                            Intent shareFirebase = new Intent(context, Firebase.class);
+                            ListofSOPsAdapter.bookShare = 0;
+                            categoryName = categoryList.get(position).getCategoryTitle();
+                            context.startActivity(shareFirebase);
+                            return true;
+                        case R.id.book_shelf_delete:
+                            alertToDelete(categoryList.get(position).getCategoryTitle(), position);
+                            return true;
+                        default:
+                            return false;
+                    }
+                });
+                //displaying the popup
+                popup.show();
+            });
+        } else {
+            viewholder.imgCatOptions.setVisibility(View.INVISIBLE);
+            viewholder.imgCatShared.setVisibility(View.VISIBLE);
+            viewholder.imgCatShared.setOnClickListener(v -> {
+                Toast.makeText(context, categoryList.get(position).getCategoryTitle() + " was shred by " + sharedAuthor, Toast.LENGTH_LONG).show();
+            });
+        }
+
+
         if (sharedAuthor != (null) && sharedAuthor.equals("JonNyBgOoDeSHARED")) {
 //            THIS IS FOR BOOK MARKED SHELF
             params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
             viewholder.imageviewCategory.setImageResource(R.drawable.ic_action_share);
             viewholder.categoryTitle.setTextSize(21);
             viewholder.imgCatOptions.setVisibility(View.GONE);
+            viewholder.imgCatShared.setVisibility(View.GONE);
         }
 
         if (sharedAuthor != (null) && sharedAuthor.equals("JonNyBgOoDeMARKED")) {
@@ -60,38 +101,9 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
             viewholder.categoryTitle.setTextSize(21);
             viewholder.imageviewCategory.setImageResource(R.drawable.baseline_bookmarks_black_36dp);
             viewholder.imgCatOptions.setVisibility(View.GONE);
+            viewholder.imgCatShared.setVisibility(View.GONE);
         }
 
-        viewholder.categoryTitle.setText(categoryList.get(position).getCategoryTitle());
-
-        viewholder.imgCatOptions.setOnClickListener(v -> {
-//            OPEN OPTIONS
-            //creating a popup menu
-            PopupMenu popup = new PopupMenu(context, viewholder.imgCatOptions);
-            //inflating menu from xml resource
-            popup.inflate(R.menu.menu_book_shelf);
-            //adding click listener
-            popup.setOnMenuItemClickListener(item -> {
-                switch (item.getItemId()) {
-                    case R.id.book_shelf_edit:
-                        editCategory(categoryList.get(position).getCategoryTitle(), categoryList.get(position).getId());
-                        return true;
-                    case R.id.book_shelf_share:
-                        Intent shareFirebase = new Intent(context, Firebase.class);
-                        ListofSOPsAdapter.bookShare = 0;
-                        categoryName = categoryList.get(position).getCategoryTitle();
-                        context.startActivity(shareFirebase);
-                        return true;
-                    case R.id.book_shelf_delete:
-                        alertToDelete(categoryList.get(position).getCategoryTitle(), position);
-                        return true;
-                    default:
-                        return false;
-                }
-            });
-            //displaying the popup
-            popup.show();
-        });
 
 //        DO THIS ON PRESS
         viewholder.categoryLayout.setOnClickListener((View view) -> {
@@ -131,6 +143,8 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
         ImageView imageviewCategory;
         @BindView(R.id.imageview_cat_options)
         ImageView imgCatOptions;
+        @BindView(R.id.imageview_cat_shared)
+        ImageView imgCatShared;
 
         Viewholder(@NonNull View itemView) {
             super(itemView);

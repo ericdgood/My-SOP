@@ -190,6 +190,9 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             });
+        } else {
+//            DO THIS IS USER IS NULL
+            progressBar.setVisibility(View.GONE);
         }
     }
 
