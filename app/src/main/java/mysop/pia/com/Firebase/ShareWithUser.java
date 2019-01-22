@@ -18,6 +18,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
@@ -46,6 +48,8 @@ public class ShareWithUser extends AppCompatActivity {
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mSopStepsDatabaseReference;
     FirebaseUser user;
+    private FirebaseStorage mFirebaseStorage;
+    private StorageReference mChatPhotosStorageReference;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,6 +61,7 @@ public class ShareWithUser extends AppCompatActivity {
         mUsersDatabaseReference = mFirebaseDatabase.getReference().child("Users");
         mSopStepsDatabaseReference = mFirebaseDatabase.getReference().child("sop");
         user = FirebaseAuth.getInstance().getCurrentUser();
+        mChatPhotosStorageReference = mFirebaseStorage.getReference().child("page_photo");
 
         assert user != null;
         String displayName = "User name is " + user.getDisplayName();
@@ -74,6 +79,7 @@ public class ShareWithUser extends AppCompatActivity {
                         if (ListofSOPsAdapter.bookShare == 1) {
                             stepsRoomDatabase().listOfSteps().updateBookSharing(user.getDisplayName(), ListofSOPsAdapter.bookTitle);
                             List<StepsRoomData> book = stepsRoomDatabase().listOfSteps().getAllSteps(ListofSOPsAdapter.bookTitle);
+                            sendPhotos();
                             mSopStepsDatabaseReference.child(searchUserName).push().setValue(book);
                             Toast.makeText(ShareWithUser.this,  ListofSOPsAdapter.bookTitle + " sent to " + searchUserName, Toast.LENGTH_LONG).show();
                         } else {
@@ -83,12 +89,13 @@ public class ShareWithUser extends AppCompatActivity {
                             mSopStepsDatabaseReference.child(searchUserName).push().setValue(book);
                             Toast.makeText(ShareWithUser.this, CategoryRecyclerAdapter.categoryName + " sent to " + searchUserName, Toast.LENGTH_LONG).show();
                         }
+
+                        Intent goToBooks = new Intent(ShareWithUser.this, MainActivity.class);
+                        startActivity(goToBooks);
+
                     } else {
                         Toast.makeText(ShareWithUser.this, "No user by that name.", Toast.LENGTH_SHORT).show();
                     }
-
-                    Intent goToBooks = new Intent(ShareWithUser.this, MainActivity.class);
-                    startActivity(goToBooks);
                 }
 
                 @Override
@@ -99,6 +106,12 @@ public class ShareWithUser extends AppCompatActivity {
 
         });
 
+    }
+
+    private void sendPhotos() {
+//  TODO SEND PHOTOS TO STORAGE
+//        assert selectedImage != null;
+//        StorageReference photoRef = mChatPhotosStorageReference.child(selectedImage.getLastPathSegment());
     }
 
     public StepsAppDatabase stepsRoomDatabase() {

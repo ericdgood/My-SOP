@@ -4,11 +4,9 @@ import android.app.Activity;
 import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -59,33 +57,6 @@ public class ListOfSteps extends Activity {
         setupRecyclerviewAndAdapter();
         fabAddStep();
 
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder dragged, @NonNull RecyclerView.ViewHolder target) {
-
-                int position_dragged = dragged.getAdapterPosition();
-                int position_target = target.getAdapterPosition();
-//              TODO: MAKE NUMBERS SHOW SWAP
-                StepsRecyclerAdapter.notifyItemMoved(position_dragged, position_target);
-                StepsRecyclerAdapter.notifyItemChanged(position_dragged, 1);
-
-                int draggedId = stepsRoomDatabase().listOfSteps().getAllSteps(bookTitle).get(position_dragged).getId();
-                int draggedStepNum = stepsRoomDatabase().listOfSteps().getAllSteps(bookTitle).get(position_dragged).getStepNumber();
-
-                int targetId = stepsRoomDatabase().listOfSteps().getAllSteps(bookTitle).get(position_target).getId();
-                int targetStepNum = stepsRoomDatabase().listOfSteps().getAllSteps(bookTitle).get(position_target).getStepNumber();
-
-                stepsRoomDatabase().listOfSteps().updateOnMove(targetStepNum, draggedId);
-                stepsRoomDatabase().listOfSteps().updateTarget(draggedStepNum, targetId);
-
-                return false;
-            }
-
-            @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-
-            }
-        }).attachToRecyclerView(recyclerviewListOfSteps);
     }
 
     private void pageListOption() {
