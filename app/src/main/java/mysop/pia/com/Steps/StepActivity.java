@@ -130,34 +130,37 @@ public class StepActivity extends AppCompatActivity {
         }
     }
 
-        @Override
-        public boolean onCreateOptionsMenu (Menu menu){
-            getMenuInflater().inflate(R.menu.step_menu, menu);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (listOfSteps.get(position).getSharedStatus() == 2 || listOfSteps.get(position).getSharedStatus() == 5) {
+            return false;
+        }
+        getMenuInflater().inflate(R.menu.step_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.menu_step_edit_step) {
+            Intent editStep = new Intent(this, AddStep.class);
+            editStep.putExtra("editStep", true);
+            editStep.putExtra("stepNumber", Integer.valueOf(stringStepNumber));
+            editStep.putExtra("stepTitle", stringStepTitle);
+            editStep.putExtra("stepDescription", stringDescription);
+            editStep.putExtra("editImage", stringPicture);
+            editStep.putExtra("sopTitle", StringSopTitle);
+            startActivity(editStep);
+            finish();
+            return true;
+        }
+        if (id == R.id.menu_step_delete) {
+            alertToDelete();
             return true;
         }
 
-        @Override
-        public boolean onOptionsItemSelected (MenuItem item){
-            int id = item.getItemId();
-            if (id == R.id.menu_step_edit_step) {
-                Intent editStep = new Intent(this, AddStep.class);
-                editStep.putExtra("editStep", true);
-                editStep.putExtra("stepNumber", Integer.valueOf(stringStepNumber));
-                editStep.putExtra("stepTitle", stringStepTitle);
-                editStep.putExtra("stepDescription", stringDescription);
-                editStep.putExtra("editImage", stringPicture);
-                editStep.putExtra("sopTitle", StringSopTitle);
-                startActivity(editStep);
-                finish();
-                return true;
-            }
-            if (id == R.id.menu_step_delete) {
-                alertToDelete();
-                return true;
-            }
-
-            return super.onOptionsItemSelected(item);
-        }
+        return super.onOptionsItemSelected(item);
+    }
 
     private void alertToDelete() {
         AlertDialog.Builder builder;
@@ -167,7 +170,7 @@ public class StepActivity extends AppCompatActivity {
                 .setPositiveButton(android.R.string.yes, (dialog, which) -> {
                     // continue with delete
                     stepsRoomDatabase().listOfSteps().DeletePAGE(stringStepTitle);
-                    stepsRoomDatabase().listOfSteps().updatePageNumber(Integer.parseInt(stringStepNumber),StringSopTitle);
+                    stepsRoomDatabase().listOfSteps().updatePageNumber(Integer.parseInt(stringStepNumber), StringSopTitle);
                     Toast.makeText(this, stringStepTitle + " is Deleted from book", Toast.LENGTH_SHORT).show();
                     Intent returnToPageList = new Intent(this, ListOfSteps.class);
                     returnToPageList.putExtra("sopTitle", StringSopTitle);
@@ -182,18 +185,18 @@ public class StepActivity extends AppCompatActivity {
 //        return position;
     }
 
-        public StepsAppDatabase stepsRoomDatabase () {
-            return Room.databaseBuilder(getApplicationContext(), StepsAppDatabase.class, "steps")
-                    .fallbackToDestructiveMigration()
-                    .allowMainThreadQueries()
-                    .build();
-        }
-
-        @Override
-        public void onBackPressed () {
-            super.onBackPressed();
-            Intent returnToListSteps = new Intent(this, ListOfSteps.class);
-            returnToListSteps.putExtra("sopTitle", listOfSteps.get(position).getSopTitle());
-            startActivity(returnToListSteps);
-        }
+    public StepsAppDatabase stepsRoomDatabase() {
+        return Room.databaseBuilder(getApplicationContext(), StepsAppDatabase.class, "steps")
+                .fallbackToDestructiveMigration()
+                .allowMainThreadQueries()
+                .build();
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent returnToListSteps = new Intent(this, ListOfSteps.class);
+        returnToListSteps.putExtra("sopTitle", listOfSteps.get(position).getSopTitle());
+        startActivity(returnToListSteps);
+    }
+}

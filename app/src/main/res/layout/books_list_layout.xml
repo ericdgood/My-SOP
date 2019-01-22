@@ -27,6 +27,28 @@
             android:layout_marginRight="40dp"
             android:src="@drawable/baseline_bookmark_border_black_36dp" />
 
+        <TextView
+            android:id="@+id/book_shared_by"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:text="Shared BY:"
+            android:textColor="@color/text"
+            android:textStyle="bold"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/book_shared_by_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/book_shared_by"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/text"
+            android:textStyle="bold"
+            android:visibility="gone"
+            tools:text="Bug"/>
+
         <ImageView
             android:id="@+id/image_booklist_options"
             android:layout_width="wrap_content"
@@ -36,6 +58,17 @@
             android:layout_marginBottom="10dp"
             android:layout_marginRight="25dp"
             android:src="@drawable/ic_action_overflow"/>
+
+        <ImageView
+            android:id="@+id/image_booklist_shared"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="35dp"
+            android:src="@drawable/ic_action_share"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 

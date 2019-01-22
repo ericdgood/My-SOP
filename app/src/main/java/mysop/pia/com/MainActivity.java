@@ -158,8 +158,8 @@ public class MainActivity extends AppCompatActivity {
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
                         StepsRoomData stringValue = ds.getValue(StepsRoomData.class);
 
-                        progressBar.setVisibility(View.GONE);
                         firebaseSteps.add(stringValue);
+                        progressBar.setVisibility(View.GONE);
 
                         assert stringValue != null;
                         if (stringValue.getSharedStatus() == 1 || stringValue.getSharedStatus() == 4 && stringValue.getStepNumber() == 1) {

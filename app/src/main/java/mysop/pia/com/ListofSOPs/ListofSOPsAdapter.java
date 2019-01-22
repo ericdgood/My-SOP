@@ -112,31 +112,40 @@ public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Vi
     }
 
     private void bookOptions(Viewholder viewholder, int position) {
-        viewholder.imgBookOptions.setOnClickListener(v -> {
+        if (listOfSOPS.get(position).getSharedStatus() == 2 || listOfSOPS.get(position).getSharedStatus() == 5) {
+            viewholder.imgBookOptions.setVisibility(View.GONE);
+            viewholder.imgBookSave.setVisibility(View.GONE);
+            viewholder.imgBookShared.setVisibility(View.VISIBLE);
+            viewholder.tvBookSharedBy.setVisibility(View.VISIBLE);
+            viewholder.tvBookSharedByAuthor.setText(listOfSOPS.get(position).getSharedAuthor());
+            viewholder.tvBookSharedByAuthor.setVisibility(View.VISIBLE);
+        } else {
+            viewholder.imgBookOptions.setOnClickListener(v -> {
 //            OPEN OPTIONS
-            PopupMenu popup = new PopupMenu(context, viewholder.imgBookOptions);
-            popup.inflate(R.menu.menu_book_shelf);
-            popup.setOnMenuItemClickListener(item -> {
-                switch (item.getItemId()) {
-                    case R.id.book_shelf_edit:
-                        editBook(listOfSOPS.get(position).getSopTitle(), listOfSOPS.get(position).getId());
-                        return true;
-                    case R.id.book_shelf_share:
-                        Intent shareBook = new Intent(context, Firebase.class);
-                        bookShare = 1;
-                        bookTitle = listOfSOPS.get(position).getSopTitle();
-                        context.startActivity(shareBook);
-                        return true;
-                    case R.id.book_shelf_delete:
-                        alertToDelete(listOfSOPS.get(position).getSopTitle(), position);
-                        return true;
-                    default:
-                        return false;
-                }
+                PopupMenu popup = new PopupMenu(context, viewholder.imgBookOptions);
+                popup.inflate(R.menu.menu_book_shelf);
+                popup.setOnMenuItemClickListener(item -> {
+                    switch (item.getItemId()) {
+                        case R.id.book_shelf_edit:
+                            editBook(listOfSOPS.get(position).getSopTitle(), listOfSOPS.get(position).getId());
+                            return true;
+                        case R.id.book_shelf_share:
+                            Intent shareBook = new Intent(context, Firebase.class);
+                            bookShare = 1;
+                            bookTitle = listOfSOPS.get(position).getSopTitle();
+                            context.startActivity(shareBook);
+                            return true;
+                        case R.id.book_shelf_delete:
+                            alertToDelete(listOfSOPS.get(position).getSopTitle(), position);
+                            return true;
+                        default:
+                            return false;
+                    }
+                });
+                //displaying the popup
+                popup.show();
             });
-            //displaying the popup
-            popup.show();
-        });
+        }
     }
 
     private void editBook(String sopTitle, int id) {
@@ -185,6 +194,12 @@ public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Vi
         ImageView imgBookOptions;
         @BindView(R.id.imageview_handbook)
         ImageView imgHandbook;
+        @BindView(R.id.image_booklist_shared)
+        ImageView imgBookShared;
+        @BindView(R.id.book_shared_by)
+        TextView tvBookSharedBy;
+        @BindView(R.id.book_shared_by_author)
+        TextView tvBookSharedByAuthor;
 
         Viewholder(@NonNull View itemView) {
             super(itemView);
