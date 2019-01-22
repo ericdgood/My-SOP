@@ -11,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -162,7 +161,8 @@ public class MainActivity extends AppCompatActivity {
                         progressBar.setVisibility(View.GONE);
                         firebaseSteps.add(stringValue);
 
-                        if (stringValue.getSharedStatus() == 1 && stringValue.getStepNumber() == 1) {
+                        assert stringValue != null;
+                        if (stringValue.getSharedStatus() == 1 || stringValue.getSharedStatus() == 4 && stringValue.getStepNumber() == 1) {
                             alertSharedShelf(stringValue, ds);
                         } else if (stringValue.getSharedStatus() == 2) {
                             addSharedShelfs(stringValue);
@@ -201,9 +201,13 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton("Accept", (dialog, which) -> {
 //                    DO THIS WHEN RECEIVE A SHARED BOOK
 
-                    Log.i(TAG, "alertSharedShelf: " + firebaseSteps);
-                    ds.getRef().child("sharedStatus").setValue(2);
-                    addSharedShelfs(sharedBook);
+                    if (sharedBook.getSharedStatus() == 1) {
+                        ds.getRef().child("sharedStatus").setValue(2);
+                        addSharedShelfs(sharedBook);
+                    }
+                    if (sharedBook.getSharedStatus() == 4){
+                        ds.getRef().child("sharedStatus").setValue(5);
+                    }
 
                 })
                 .setNegativeButton("Deny", (dialog, which) -> {

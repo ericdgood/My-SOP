@@ -78,13 +78,19 @@ public interface Stepsinterface {
     @Query("UPDATE steps SET savedBook = :save WHERE id = :id")
     void updateBookSaved(int save, int id);
 
-    //    UPDATE BOOK FOR SHARING
+    //    UPDATE SHELF FOR SHARING
     @Query("UPDATE steps SET sharedAuthor = :sharedAuthor, sharedStatus = 1 WHERE category = :shelf")
-    void updateBookSharing(String sharedAuthor, String shelf);
+    void updateShelfSharing(String sharedAuthor, String shelf);
+
+    //    UPDATE BOOK FOR SHARING
+    @Query("UPDATE steps SET sharedAuthor = :sharedAuthor, sharedStatus = 4, category = 'Shared Books' WHERE sopTitle = :bookTitle")
+    void updateBookSharing(String sharedAuthor, String bookTitle);
 }
 
 //SHARED STATUS KEY
 //  0 = NOT SHARED
-//  1 = SENT BOOK
-//  2 = REQUEST ACCEPTED
+//  1 = SENT SHELF
+//  2 = SHELF REQUEST ACCEPTED
 //  3 = REQUEST DENIED
+//  4 = SENT BOOK
+//  5 = BOOK REQUEST ACCEPTED
