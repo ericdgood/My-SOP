@@ -2,6 +2,7 @@ package mysop.pia.com.Firebase;
 
 import android.arch.persistence.room.Room;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,6 +19,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
@@ -39,15 +42,14 @@ public class ShareWithUser extends AppCompatActivity {
     @BindView(R.id.tv_share_display_name)
     TextView tvDisplayUsername;
 
-    String bookTitle;
     String searchUserName;
 
     private DatabaseReference mUsersDatabaseReference;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mSopStepsDatabaseReference;
     FirebaseUser user;
-//    private FirebaseStorage mFirebaseStorage;
-//    private StorageReference mChatPhotosStorageReference;
+    private FirebaseStorage mFirebaseStorage;
+    private StorageReference mChatPhotosStorageReference;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,7 +61,8 @@ public class ShareWithUser extends AppCompatActivity {
         mUsersDatabaseReference = mFirebaseDatabase.getReference().child("Users");
         mSopStepsDatabaseReference = mFirebaseDatabase.getReference().child("sop");
         user = FirebaseAuth.getInstance().getCurrentUser();
-//        mChatPhotosStorageReference = mFirebaseStorage.getReference().child("page_photo");
+        mFirebaseStorage = FirebaseStorage.getInstance();
+        mChatPhotosStorageReference = mFirebaseStorage.getReference().child("page_photo");
 
         assert user != null;
         String displayName = "User name is " + user.getDisplayName();
@@ -74,10 +77,11 @@ public class ShareWithUser extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (dataSnapshot.getChildrenCount() > 0) {
+//                        SEND 1 HANDBOOK
                         if (ListofSOPsAdapter.bookShare == 1) {
                             stepsRoomDatabase().listOfSteps().updateBookSharing(user.getDisplayName(), ListofSOPsAdapter.bookTitle);
                             List<StepsRoomData> book = stepsRoomDatabase().listOfSteps().getAllSteps(ListofSOPsAdapter.bookTitle);
-                            sendPhotos();
+                            sendPhotos(book);
                             mSopStepsDatabaseReference.child(searchUserName).push().setValue(book);
                             Toast.makeText(ShareWithUser.this,  ListofSOPsAdapter.bookTitle + " sent to " + searchUserName, Toast.LENGTH_LONG).show();
                         } else {
@@ -106,11 +110,28 @@ public class ShareWithUser extends AppCompatActivity {
 
     }
 
-    private void sendPhotos() {
-//  TODO SEND PHOTOS TO STORAGE
-//        assert selectedImage != null;
-//        StorageReference photoRef = mChatPhotosStorageReference.child(selectedImage.getLastPathSegment());
-    }
+    private void sendPhotos(List<StepsRoomData> book) {
+
+        for (int i = 0; i < book.size(); i++) {
+            String photo = book.get(i).getImageURI();
+            if (photo != null) {
+                Uri photoUri = Uri.parse(photo);
+//                SEND PHOTO TO FIREBASE STORAGE IF BOOK CONTAINS PHOTO
+                StorageReference photoRef = mChatPhotosStorageReference.child(photoUri.getLastPathSegment());
+
+//              Upload file to Firebase Storage
+                photoRef.putFile(photoUri);
+//                        .addOnSuccessListener(this, taskSnapshot -> {
+//                            Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl();
+//                            while (!urlTask.isSuccessful()) ;
+//                            Uri downloadUrl = urlTask.getResult();
+//                            FriendlyMessage friendlyMessage = new FriendlyMessage(null, mUsername, downloadUrl.toString());
+//                            mMessagesDatabaseReference.push().setValue(friendlyMessage);
+//                        });
+            }
+            }
+
+        }
 
     public StepsAppDatabase stepsRoomDatabase() {
         return Room.databaseBuilder(getApplicationContext(), StepsAppDatabase.class, "steps")

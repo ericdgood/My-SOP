@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.ButterKnife;
+import mysop.pia.com.MainActivity;
 import mysop.pia.com.R;
 
 public class Firebase extends Activity {
@@ -36,6 +37,7 @@ public class Firebase extends Activity {
     private DatabaseReference mUsersDatabaseReference;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
+    FirebaseUser user;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,22 +48,28 @@ public class Firebase extends Activity {
         FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
         mUsersDatabaseReference = mFirebaseDatabase.getReference().child("Users");
         mFirebaseAuth = FirebaseAuth.getInstance();
+        user = FirebaseAuth.getInstance().getCurrentUser();
 
 //        FIREBASE SIGN IN
         mAuthStateListener = firebaseAuth -> {
-            FirebaseUser user = firebaseAuth.getCurrentUser();
             if (user != null) {
                 com.google.firebase.database.Query newUserMatch = mUsersDatabaseReference.orderByChild("userName").equalTo(user.getDisplayName());
 
                 newUserMatch.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.getChildrenCount() > 0){
+                        if (dataSnapshot.getChildrenCount() > 0) {
 //                            DO THIS IF THEY HAVE AN ACCOUNT
-                            Intent ShareWithUser = new Intent(Firebase.this, mysop.pia.com.Firebase.ShareWithUser.class);
-                            startActivity(ShareWithUser);
-                            finish();
-                            Toast.makeText(Firebase.this, "Already Signed In as " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
+                            if (getIntent().getIntExtra("signIn", 0) == 1) {
+                                Intent ShareWithUser = new Intent(Firebase.this, MainActivity.class);
+                                startActivity(ShareWithUser);
+                                finish();
+                            } else {
+                                Intent ShareWithUser = new Intent(Firebase.this, mysop.pia.com.Firebase.ShareWithUser.class);
+                                startActivity(ShareWithUser);
+                                finish();
+                                Toast.makeText(Firebase.this, "Already Signed In as " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
+                            }
                         }
                         else {
 //                            DO THIS IF THEY ARE NEW USERS
@@ -105,12 +113,6 @@ public class Firebase extends Activity {
                 finish();
             }
         }
-    }
-
-    private void onSignedOutCleanup() {
-//        mUsername = ANONYMOUS;
-//        mMessageAdapter.clear();
-//        detachDatabaseReadListener();
     }
 
     @Override

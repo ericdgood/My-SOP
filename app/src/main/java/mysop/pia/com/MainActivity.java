@@ -15,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,7 +41,6 @@ import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "test";
     public static List<MySOPs> sopList = new ArrayList<>();
     public static List<StepsRoomData> firebaseSteps = new ArrayList<>();
 
@@ -54,14 +52,13 @@ public class MainActivity extends AppCompatActivity {
     ImageView imageviewNoCategory;
     @BindView(R.id.textview_no_categories)
     TextView textviewNoCategory;
-    @BindView(R.id.progress_bar)
-    ProgressBar progressBar;
 
     CategoryRecyclerAdapter categoriesRecyclerAdapter;
     FirebaseUser user;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mSopStepsDatabaseReference;
     String firebaseShelfs;
+    private String TAG;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.sign_in) {
             Intent share = new Intent(this, Firebase.class);
+            share.putExtra("signIn", 1);
             startActivity(share);
             return true;
         }
@@ -159,7 +157,6 @@ public class MainActivity extends AppCompatActivity {
                         StepsRoomData stringValue = ds.getValue(StepsRoomData.class);
 
                         firebaseSteps.add(stringValue);
-                        progressBar.setVisibility(View.GONE);
 
                         assert stringValue != null;
                         if (stringValue.getSharedStatus() == 1 || stringValue.getSharedStatus() == 4 && stringValue.getStepNumber() == 1) {
@@ -192,7 +189,6 @@ public class MainActivity extends AppCompatActivity {
             });
         } else {
 //            DO THIS IS USER IS NULL
-            progressBar.setVisibility(View.GONE);
         }
     }
 
@@ -221,6 +217,15 @@ public class MainActivity extends AppCompatActivity {
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
     }
+
+//    private void hideProgress(){
+//        final Handler handler = new Handler();
+//        handler.postDelayed(() -> {
+//            //Do something after 5s
+//            progressBar.setVisibility(View.GONE);
+//            Toast.makeText(MainActivity.this, "Check Internet Connection", Toast.LENGTH_LONG).show();
+//        }, 5000);
+//    }
 
     private void addSharedShelfs(StepsRoomData sharedBook) {
         if (sharedBook.getStepNumber() == 1 && !sharedBook.getCategory().equals(firebaseShelfs)) {
