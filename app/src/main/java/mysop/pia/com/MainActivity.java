@@ -205,6 +205,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     if (sharedBook.getSharedStatus() == 4){
                         ds.getRef().child("sharedStatus").setValue(5);
+                        categoriesRecyclerAdapter.notifyDataSetChanged();
                     }
 
                 })
@@ -216,15 +217,6 @@ public class MainActivity extends AppCompatActivity {
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
     }
-
-//    private void hideProgress(){
-//        final Handler handler = new Handler();
-//        handler.postDelayed(() -> {
-//            //Do something after 5s
-//            progressBar.setVisibility(View.GONE);
-//            Toast.makeText(MainActivity.this, "Check Internet Connection", Toast.LENGTH_LONG).show();
-//        }, 5000);
-//    }
 
     private void addSharedShelfs(StepsRoomData sharedBook) {
         if (sharedBook.getStepNumber() == 1 && !sharedBook.getCategory().equals(firebaseShelfs)) {

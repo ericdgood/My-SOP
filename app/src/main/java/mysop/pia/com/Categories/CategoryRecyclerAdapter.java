@@ -87,7 +87,7 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
 
 
         if (sharedAuthor != (null) && sharedAuthor.equals("JonNyBgOoDeSHARED")) {
-//            THIS IS FOR BOOK MARKED SHELF
+//            THIS IS FOR SHARED SHELF
             params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
             viewholder.imageviewCategory.setImageResource(R.drawable.ic_action_share);
             viewholder.categoryTitle.setTextSize(21);
@@ -96,7 +96,7 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
         }
 
         if (sharedAuthor != (null) && sharedAuthor.equals("JonNyBgOoDeMARKED")) {
-//            THIS IS FOR SHARED BOOKS
+//            THIS IS FOR BOOKMARKED BOOKS
             params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
             viewholder.categoryTitle.setTextSize(21);
             viewholder.imageviewCategory.setImageResource(R.drawable.baseline_bookmarks_black_36dp);

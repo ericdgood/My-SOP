@@ -52,6 +52,7 @@ public class StepActivity extends AppCompatActivity {
     String stringStepTitle;
     String stringStepNumber;
     String StringSopTitle;
+    int sharedStat;
 
     FirebaseUser user;
     private FirebaseStorage mFirebaseStorage;
@@ -73,6 +74,7 @@ public class StepActivity extends AppCompatActivity {
         listOfSteps = ListOfSteps.listOfSteps;
         numberOfSteps = listOfSteps.size();
         stringStepNumber = String.valueOf(listOfSteps.get(position).getStepNumber());
+        sharedStat = listOfSteps.get(position).getSharedStatus();
 
         setTitleBar();
 //        GET AND SET TITLE
@@ -97,7 +99,6 @@ public class StepActivity extends AppCompatActivity {
 
     private void pictureVisibility() {
         stringPicture = listOfSteps.get(position).getImageURI();
-        int sharedStat = listOfSteps.get(position).getSharedStatus();
         if (sharedStat == 1 || sharedStat == 2 || sharedStat == 4 || sharedStat == 5) {
             StorageReference photoRef = mChatPhotosStorageReference.child(Uri.parse(stringPicture).getLastPathSegment());
             photoRef.getDownloadUrl().addOnCompleteListener(task -> {
@@ -155,7 +156,7 @@ public class StepActivity extends AppCompatActivity {
 
         @Override
         public boolean onCreateOptionsMenu (Menu menu){
-            if (listOfSteps.get(position).getSharedStatus() == 2 || listOfSteps.get(position).getSharedStatus() == 5) {
+            if (sharedStat == 1 || sharedStat == 2 || sharedStat == 4 || sharedStat == 5) {
                 return false;
             }
             getMenuInflater().inflate(R.menu.step_menu, menu);
