@@ -29,7 +29,7 @@ public interface Stepsinterface {
     List<StepsRoomData> getAllSavedBooks(int save);
 
     //    GET ALL BOOKs
-    @Query("SELECT * FROM steps WHERE sharedStatus = 1")
+    @Query("SELECT * FROM steps WHERE category = 'Shared Books' AND stepNumber = 1")
     List<StepsRoomData> getAllSharedBooks();
 
 //  INSERT NEW SOP
@@ -83,7 +83,7 @@ public interface Stepsinterface {
     void updateShelfSharing(String sharedAuthor, String shelf);
 
     //    UPDATE BOOK FOR SHARING
-    @Query("UPDATE steps SET sharedAuthor = :sharedAuthor, sharedStatus = 4, category = 'Shared Books' WHERE sopTitle = :bookTitle")
+    @Query("UPDATE steps SET sharedAuthor = :sharedAuthor, sharedStatus = 4 WHERE sopTitle = :bookTitle")
     void updateBookSharing(String sharedAuthor, String bookTitle);
 }
 

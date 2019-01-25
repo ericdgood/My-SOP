@@ -112,7 +112,7 @@ public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Vi
     }
 
     private void bookOptions(Viewholder viewholder, int position) {
-        if (listOfSOPS.get(position).getSharedStatus() == 2 || listOfSOPS.get(position).getSharedStatus() == 5) {
+        if (listOfSOPS.get(position).getSharedStatus() == 2 || listOfSOPS.get(position).getSharedStatus() == 5 || listOfSOPS.get(position).getSharedStatus() == 4) {
             viewholder.imgBookOptions.setVisibility(View.GONE);
             viewholder.imgBookSave.setVisibility(View.GONE);
             viewholder.imgBookShared.setVisibility(View.VISIBLE);

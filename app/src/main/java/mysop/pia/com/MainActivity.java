@@ -204,8 +204,8 @@ public class MainActivity extends AppCompatActivity {
                         addSharedShelfs(sharedBook);
                     }
                     if (sharedBook.getSharedStatus() == 4){
+                        ds.getRef().child("category").setValue("Shared Books");
                         ds.getRef().child("sharedStatus").setValue(5);
-                        categoriesRecyclerAdapter.notifyDataSetChanged();
                     }
 
                 })
@@ -226,6 +226,4 @@ public class MainActivity extends AppCompatActivity {
             categoriesRecyclerAdapter.notifyDataSetChanged();
         }
     }
-
-
 }

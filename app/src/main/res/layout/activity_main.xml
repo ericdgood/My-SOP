@@ -42,12 +42,6 @@
                 android:numColumns="2"/>
 
         </ScrollView>
-<!--TODO PRPGRESSBAR-->
-        <!--<ProgressBar-->
-            <!--android:id="@+id/progress_bar"-->
-            <!--style="@style/ConstraintCenter"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"/>-->
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"

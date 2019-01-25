@@ -101,7 +101,8 @@ public class ListofSOPs extends AppCompatActivity {
     private void getFirebaseBooks(){
         List<StepsRoomData> fbsteps = MainActivity.firebaseSteps;
         for (int i = 0; i < fbsteps.size(); i++) {
-            if (fbsteps.get(i).getCategory().equals(categoryName) && fbsteps.get(i).getStepNumber() == 1) {
+            if (fbsteps.get(i).getSharedStatus() == 4 && fbsteps.get(i).getStepNumber() == 1 ||
+                    fbsteps.get(i).getSharedStatus() == 5 && fbsteps.get(i).getStepNumber() == 1) {
                 listOfSOPs.add(fbsteps.get(i));
                 sharedBook = sharedBook + 1;
             }
