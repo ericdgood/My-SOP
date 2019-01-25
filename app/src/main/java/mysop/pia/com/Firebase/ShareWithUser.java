@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -50,6 +51,7 @@ public class ShareWithUser extends AppCompatActivity {
     FirebaseUser user;
     private FirebaseStorage mFirebaseStorage;
     private StorageReference mChatPhotosStorageReference;
+    private String TAG;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -114,6 +116,7 @@ public class ShareWithUser extends AppCompatActivity {
 
         for (int i = 0; i < book.size(); i++) {
             String photo = book.get(i).getImageURI();
+            Log.i(TAG, "sendPhotos: " + photo);
             if (photo != null) {
                 Uri photoUri = Uri.parse(photo);
 //                SEND PHOTO TO FIREBASE STORAGE IF BOOK CONTAINS PHOTO
