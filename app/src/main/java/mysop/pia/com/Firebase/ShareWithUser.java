@@ -121,13 +121,6 @@ public class ShareWithUser extends AppCompatActivity {
 
 //              Upload file to Firebase Storage
                 photoRef.putFile(photoUri);
-//                        .addOnSuccessListener(this, taskSnapshot -> {
-//                            Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl();
-//                            while (!urlTask.isSuccessful()) ;
-//                            Uri downloadUrl = urlTask.getResult();
-//                            FriendlyMessage friendlyMessage = new FriendlyMessage(null, mUsername, downloadUrl.toString());
-//                            mMessagesDatabaseReference.push().setValue(friendlyMessage);
-//                        });
             }
             }
 

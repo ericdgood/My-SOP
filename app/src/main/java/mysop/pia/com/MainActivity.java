@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mSopStepsDatabaseReference;
     String firebaseShelfs;
-    private String TAG;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
