@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -90,6 +89,7 @@ public class ShareWithUser extends AppCompatActivity {
 //                        SEND ALL BOOKS ON A BOOK SHELF TO USER
                             stepsRoomDatabase().listOfSteps().updateShelfSharing(user.getDisplayName(), CategoryRecyclerAdapter.categoryName);
                             List<StepsRoomData> book = stepsRoomDatabase().listOfSteps().getAllBooks(CategoryRecyclerAdapter.categoryName);
+                            sendPhotos(book);
                             mSopStepsDatabaseReference.child(searchUserName).push().setValue(book);
                             Toast.makeText(ShareWithUser.this, CategoryRecyclerAdapter.categoryName + " sent to " + searchUserName, Toast.LENGTH_LONG).show();
                         }
@@ -116,7 +116,7 @@ public class ShareWithUser extends AppCompatActivity {
 
         for (int i = 0; i < book.size(); i++) {
             String photo = book.get(i).getImageURI();
-            Log.i(TAG, "sendPhotos: " + photo);
+
             if (photo != null) {
                 Uri photoUri = Uri.parse(photo);
 //                SEND PHOTO TO FIREBASE STORAGE IF BOOK CONTAINS PHOTO

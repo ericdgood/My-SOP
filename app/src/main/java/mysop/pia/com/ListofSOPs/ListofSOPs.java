@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -24,6 +25,7 @@ import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
 
 public class ListofSOPs extends AppCompatActivity {
 
+    private static final String TAG = "testing";
     @BindView(R.id.recyclerview_list_of_sops)
     RecyclerView recyclerviewListofSOPs;
     @BindView(R.id.no_bookmarked)
@@ -101,10 +103,16 @@ public class ListofSOPs extends AppCompatActivity {
     private void getFirebaseBooks(){
         List<StepsRoomData> fbsteps = MainActivity.firebaseSteps;
         for (int i = 0; i < fbsteps.size(); i++) {
-            if (fbsteps.get(i).getSharedStatus() == 4 && fbsteps.get(i).getStepNumber() == 1 ||
-                    fbsteps.get(i).getSharedStatus() == 5 && fbsteps.get(i).getStepNumber() == 1) {
+            int sharedStat = fbsteps.get(i).getSharedStatus();
+            int pageNumber = fbsteps.get(i).getStepNumber();
+            if (categoryName.equals("Shared Books") && sharedStat == 4 && pageNumber == 1 ||
+                    categoryName.equals("Shared Books") && sharedStat == 5 && pageNumber == 1) {
                 listOfSOPs.add(fbsteps.get(i));
                 sharedBook = sharedBook + 1;
+            } else if (categoryName.equals(fbsteps.get(i).getCategory()) && sharedStat == 2 && pageNumber == 1){
+                listOfSOPs.add(fbsteps.get(i));
+                sharedBook = sharedBook + 1;
+                Log.i(TAG, "get shared self: " + listOfSOPs);
             }
         }
     }

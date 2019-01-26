@@ -25,7 +25,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.ButterKnife;
-import mysop.pia.com.MainActivity;
 import mysop.pia.com.R;
 
 public class Firebase extends Activity {
@@ -58,18 +57,12 @@ public class Firebase extends Activity {
                 newUserMatch.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.getChildrenCount() > 0) {
+                        if (dataSnapshot.getChildrenCount() > 0){
 //                            DO THIS IF THEY HAVE AN ACCOUNT
-                            if (getIntent().getIntExtra("signIn", 0) == 1) {
-                                Intent ShareWithUser = new Intent(Firebase.this, MainActivity.class);
-                                startActivity(ShareWithUser);
-                                finish();
-                            } else {
-                                Intent ShareWithUser = new Intent(Firebase.this, mysop.pia.com.Firebase.ShareWithUser.class);
-                                startActivity(ShareWithUser);
-                                finish();
-                                Toast.makeText(Firebase.this, "Already Signed In as " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
-                            }
+                            Intent ShareWithUser = new Intent(Firebase.this, mysop.pia.com.Firebase.ShareWithUser.class);
+                            startActivity(ShareWithUser);
+                            finish();
+                            Toast.makeText(Firebase.this, "Already Signed In as " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
                         }
                         else {
 //                            DO THIS IF THEY ARE NEW USERS

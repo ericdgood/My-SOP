@@ -16,7 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -41,6 +40,7 @@ import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "testing";
     public static List<MySOPs> sopList = new ArrayList<>();
     public static List<StepsRoomData> firebaseSteps = new ArrayList<>();
 
@@ -115,21 +115,7 @@ public class MainActivity extends AppCompatActivity {
                 .allowMainThreadQueries()
                 .build();
     }
-
-    public void checkForCategories() {
-        if (sopList.size() > 0 || user != null) {
-            arrangeCategoryTitles();
-            staticBookShelfs();
-            setupRecylerviewDBAndAdapter();
-        } else {
-            imageviewNoCategory.setVisibility(View.VISIBLE);
-            String creatBookShelf = "Create a book shelf \n to keep your handbooks organized";
-            textviewNoCategory.setText(creatBookShelf);
-            textviewNoCategory.setVisibility(View.VISIBLE);
-            staticBookShelfs();
-            setupRecylerviewDBAndAdapter();
-        }
-    }
+    StepsRoomData page;
 
 
     private void staticBookShelfs() {
@@ -147,21 +133,43 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void checkForCategories() {
+        if (sopList.size() > 0) {
+            arrangeCategoryTitles();
+            staticBookShelfs();
+            setupRecylerviewDBAndAdapter();
+        } else {
+            imageviewNoCategory.setVisibility(View.VISIBLE);
+            String creatBookShelf = "Create a book shelf \n to keep your handbooks organized";
+            textviewNoCategory.setText(creatBookShelf);
+            textviewNoCategory.setVisibility(View.VISIBLE);
+            staticBookShelfs();
+            setupRecylerviewDBAndAdapter();
+        }
+    }
+
     private void getFirebaseBooks() {
         if (user != null) {
             mSopStepsDatabaseReference.child(user.getDisplayName()).addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                        StepsRoomData stringValue = ds.getValue(StepsRoomData.class);
+                        page = ds.getValue(StepsRoomData.class);
 
-                        firebaseSteps.add(stringValue);
-
-                        assert stringValue != null;
-                        if (stringValue.getSharedStatus() == 1 || stringValue.getSharedStatus() == 4 && stringValue.getStepNumber() == 1) {
-                            alertSharedShelf(stringValue, ds);
-                        } else if (stringValue.getSharedStatus() == 2) {
-                            addSharedShelfs(stringValue);
+                        int key = Integer.parseInt(ds.getKey());
+                        assert page != null;
+                        if (page.getSharedStatus() == 1 && page.getStepNumber() == 1) {
+                            if (key == 0) {
+                                alertSharedShelf(page, dataSnapshot);
+                            }
+                        }
+                        if (page.getSharedStatus() == 4 && page.getStepNumber() == 1) {
+//                               DO THIS IF BOOK IS SHARED
+                            alertSharedShelf(page, dataSnapshot);
+                        }
+                        else if (page.getSharedStatus() == 2 ||
+                                page.getSharedStatus() == 5 ) {
+                            addSharedShelfs(page);
                         }
                     }
                 }
@@ -191,39 +199,54 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void alertSharedShelf(StepsRoomData sharedBook, DataSnapshot ds) {
+    private void alertSharedShelf(StepsRoomData sharedBook, DataSnapshot dataSnapshot) {
         AlertDialog.Builder builder;
-        builder = new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Dialog_Alert);
+        builder = new AlertDialog.Builder(MainActivity.this, android.R.style.Theme_DeviceDefault_Dialog_Alert);
         builder.setTitle("Shared Book")
                 .setMessage(" would you like to receive " + sharedBook.getSopTitle() + " Handbook from " + sharedBook.getSharedAuthor())
                 .setPositiveButton("Accept", (dialog, which) -> {
 //                    DO THIS WHEN RECEIVE A SHARED BOOK
 
-                    if (sharedBook.getSharedStatus() == 1) {
-                        ds.getRef().child("sharedStatus").setValue(2);
-                        addSharedShelfs(sharedBook);
-                    }
-                    if (sharedBook.getSharedStatus() == 4){
-                        ds.getRef().child("category").setValue("Shared Books");
-                        ds.getRef().child("sharedStatus").setValue(5);
-                    }
+                    sharedStat(dataSnapshot);
 
+                    Intent reload = new Intent(this, MainActivity.class);
+                    startActivity(reload);
+                    finish();
                 })
                 .setNegativeButton("Deny", (dialog, which) -> {
                     // do nothing
-                    ds.getRef().child("sharedStatus").setValue(3);
-                    Toast.makeText(MainActivity.this, "Item not accepted", Toast.LENGTH_SHORT).show();
+//                        ds.getRef().child("sharedStatus").setValue(3);
+//                        Toast.makeText(MainActivity.this, "Item not accepted", Toast.LENGTH_SHORT).show();
                 })
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
+                .setIcon(android.R.drawable.ic_dialog_alert);
+        if (!this.isFinishing()) {
+
+            builder.show();
+        }
     }
 
     private void addSharedShelfs(StepsRoomData sharedBook) {
-        if (sharedBook.getStepNumber() == 1 && !sharedBook.getCategory().equals(firebaseShelfs)) {
+        firebaseSteps.add(sharedBook);
+        if (sharedBook.getStepNumber() == 1 && !sharedBook.getCategory().equals(firebaseShelfs)
+                && !sharedBook.getCategory().equals("Shared Books")) {
             firebaseShelfs = sharedBook.getCategory();
             MySOPs book = new MySOPs(firebaseShelfs, sharedBook.getSharedAuthor());
             sopList.add(book);
             categoriesRecyclerAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private void sharedStat(DataSnapshot dataSnapshot) {
+        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+            page = ds.getValue(StepsRoomData.class);
+            assert page != null;
+            if (page.getSharedStatus() == 1) {
+                ds.getRef().child("sharedStatus").setValue(2);
+            }
+            if (page.getSharedStatus() == 4){
+                ds.getRef().child("category").setValue("Shared Books");
+                ds.getRef().child("sharedStatus").setValue(5);
+            }
         }
     }
 }
