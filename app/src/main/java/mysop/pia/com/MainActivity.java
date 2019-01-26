@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -115,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
                 .allowMainThreadQueries()
                 .build();
     }
+
     StepsRoomData page;
 
 
@@ -166,9 +168,8 @@ public class MainActivity extends AppCompatActivity {
                         if (page.getSharedStatus() == 4 && page.getStepNumber() == 1) {
 //                               DO THIS IF BOOK IS SHARED
                             alertSharedShelf(page, dataSnapshot);
-                        }
-                        else if (page.getSharedStatus() == 2 ||
-                                page.getSharedStatus() == 5 ) {
+                        } else if (page.getSharedStatus() == 2 ||
+                                page.getSharedStatus() == 5) {
                             addSharedShelfs(page);
                         }
                     }
@@ -207,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton("Accept", (dialog, which) -> {
 //                    DO THIS WHEN RECEIVE A SHARED BOOK
 
-                    sharedStat(dataSnapshot);
+                    sharedStat(dataSnapshot, true);
 
                     Intent reload = new Intent(this, MainActivity.class);
                     startActivity(reload);
@@ -215,8 +216,8 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .setNegativeButton("Deny", (dialog, which) -> {
                     // do nothing
-//                        ds.getRef().child("sharedStatus").setValue(3);
-//                        Toast.makeText(MainActivity.this, "Item not accepted", Toast.LENGTH_SHORT).show();
+                    sharedStat(dataSnapshot, false);
+                    Toast.makeText(MainActivity.this, "Item not accepted", Toast.LENGTH_SHORT).show();
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert);
         if (!this.isFinishing()) {
@@ -236,16 +237,20 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void sharedStat(DataSnapshot dataSnapshot) {
+    private void sharedStat(DataSnapshot dataSnapshot, boolean accept) {
         for (DataSnapshot ds : dataSnapshot.getChildren()) {
             page = ds.getValue(StepsRoomData.class);
-            assert page != null;
-            if (page.getSharedStatus() == 1) {
-                ds.getRef().child("sharedStatus").setValue(2);
-            }
-            if (page.getSharedStatus() == 4){
-                ds.getRef().child("category").setValue("Shared Books");
-                ds.getRef().child("sharedStatus").setValue(5);
+            if (accept) {
+                assert page != null;
+                if (page.getSharedStatus() == 1) {
+                    ds.getRef().child("sharedStatus").setValue(2);
+                }
+                if (page.getSharedStatus() == 4) {
+                    ds.getRef().child("category").setValue("Shared Books");
+                    ds.getRef().child("sharedStatus").setValue(5);
+                }
+            } else {
+                ds.getRef().removeValue();
             }
         }
     }

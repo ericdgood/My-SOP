@@ -8,7 +8,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -112,7 +111,6 @@ public class ListofSOPs extends AppCompatActivity {
             } else if (categoryName.equals(fbsteps.get(i).getCategory()) && sharedStat == 2 && pageNumber == 1){
                 listOfSOPs.add(fbsteps.get(i));
                 sharedBook = sharedBook + 1;
-                Log.i(TAG, "get shared self: " + listOfSOPs);
             }
         }
     }
