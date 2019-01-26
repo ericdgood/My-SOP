@@ -81,7 +81,7 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
             viewholder.imgCatOptions.setVisibility(View.INVISIBLE);
             viewholder.imgCatShared.setVisibility(View.VISIBLE);
             viewholder.imgCatShared.setOnClickListener(v -> {
-                Toast.makeText(context, categoryList.get(position).getCategoryTitle() + " was shred by " + sharedAuthor, Toast.LENGTH_LONG).show();
+                Toast.makeText(context, categoryList.get(position).getCategoryTitle() + " was shared by " + sharedAuthor, Toast.LENGTH_LONG).show();
             });
         }
 

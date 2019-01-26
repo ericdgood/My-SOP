@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,6 +42,7 @@ import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "testing";
     public static List<MySOPs> sopList = new ArrayList<>();
     public static List<StepsRoomData> firebaseSteps = new ArrayList<>();
 
@@ -160,14 +162,18 @@ public class MainActivity extends AppCompatActivity {
                         if (page.getSharedStatus() == 1 && page.getStepNumber() == 1) {
                             if (key == 0) {
                                 alertSharedShelf(page, dataSnapshot);
+                                Log.i(TAG, "shared stat 1 ");
                             }
                         }
                         if (page.getSharedStatus() == 4 && page.getStepNumber() == 1) {
 //                               DO THIS IF BOOK IS SHARED
                             alertSharedShelf(page, dataSnapshot);
-                        } else if (page.getSharedStatus() == 2 ||
+                            Log.i(TAG, "shared stat 4 ");
+                        }
+                        if (page.getSharedStatus() == 2 ||
                                 page.getSharedStatus() == 5) {
                             addSharedShelfs(page);
+                            Log.i(TAG, "shared stat 2 ");
                         }
                     }
                 }
@@ -208,6 +214,7 @@ public class MainActivity extends AppCompatActivity {
                     sharedStat(dataSnapshot, true);
 
                     Intent reload = new Intent(this, MainActivity.class);
+                    firebaseSteps.clear();
                     startActivity(reload);
                     finish();
                 })
