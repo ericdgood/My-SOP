@@ -99,7 +99,7 @@ public class StepActivity extends AppCompatActivity {
 
     private void pictureVisibility() {
         stringPicture = listOfSteps.get(position).getImageURI();
-        if (sharedStat == 1 || sharedStat == 2 || sharedStat == 4 || sharedStat == 5) {
+        if (sharedStat != 3 && stringPicture != null) {
             StorageReference photoRef = mChatPhotosStorageReference.child(Uri.parse(stringPicture).getLastPathSegment());
             photoRef.getDownloadUrl().addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {

@@ -41,7 +41,6 @@ import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "testing";
     public static List<MySOPs> sopList = new ArrayList<>();
     public static List<StepsRoomData> firebaseSteps = new ArrayList<>();
 
@@ -59,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mSopStepsDatabaseReference;
     String firebaseShelfs;
+    StepsRoomData page;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,9 +116,6 @@ public class MainActivity extends AppCompatActivity {
                 .allowMainThreadQueries()
                 .build();
     }
-
-    StepsRoomData page;
-
 
     private void staticBookShelfs() {
         MySOPs bookMarked = new MySOPs("Bookmarked", "JonNyBgOoDeMARKED");

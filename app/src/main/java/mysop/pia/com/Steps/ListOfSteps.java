@@ -107,7 +107,7 @@ public class ListOfSteps extends Activity {
         List<StepsRoomData> fbsteps = MainActivity.firebaseSteps;
         listOfSteps.clear();
         for (int i = 0; i < fbsteps.size(); i++) {
-            if (fbsteps.get(i).getSopTitle().equals(bookTitle)) {
+            if (fbsteps.get(i).getSopTitle().equals(bookTitle) && fbsteps.get(i).getSharedStatus() == 2) {
                 listOfSteps.add(fbsteps.get(i));
                 sharedBook = sharedBook + 1;
             }
