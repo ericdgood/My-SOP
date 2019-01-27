@@ -1,4 +1,4 @@
-package mysop.pia.com.ListofSOPs;
+package mysop.pia.com.ListofHandbooks;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -20,14 +20,14 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import mysop.pia.com.Firebase.Firebase;
+import mysop.pia.com.Pages.ListOfPages;
+import mysop.pia.com.Pages.PagesRoom.StepsAppDatabase;
+import mysop.pia.com.Pages.PagesRoom.StepsRoomData;
 import mysop.pia.com.R;
-import mysop.pia.com.Steps.ListOfSteps;
-import mysop.pia.com.Steps.StepsRoom.StepsAppDatabase;
-import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
 
 //import mysop.pia.com.Firebase.Firebase;
 
-public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Viewholder> {
+public class ListofHandbooksAdapter extends RecyclerView.Adapter<ListofHandbooksAdapter.Viewholder> {
 
     private final StepsAppDatabase db;
     private List<StepsRoomData> listOfSOPS;
@@ -36,20 +36,20 @@ public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Vi
     public static int bookShare = 0;
     public static String bookTitle;
 
-    ListofSOPsAdapter(Context context, List<StepsRoomData> listOfSOPs, StepsAppDatabase stepsAppDatabase) {
+    ListofHandbooksAdapter(Context context, List<StepsRoomData> listOfSOPs, StepsAppDatabase stepsAppDatabase) {
         this.context = context;
         this.listOfSOPS = listOfSOPs;
         this.db = stepsAppDatabase;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ListofSOPsAdapter.Viewholder viewholder, int position) {
+    public void onBindViewHolder(@NonNull ListofHandbooksAdapter.Viewholder viewholder, int position) {
         viewholder.tvBookTitle.setText(listOfSOPS.get(position).getSopTitle());
 
         viewholder.imgHandbook.setColorFilter(bookColor(position));
 
         viewholder.constrainBookList.setOnClickListener(v -> {
-            Intent listOfSteps = new Intent(context, ListOfSteps.class);
+            Intent listOfSteps = new Intent(context, ListOfPages.class);
             bookTitle = listOfSOPS.get(position).getSopTitle();
             context.startActivity(listOfSteps);
         });
@@ -87,7 +87,7 @@ public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Vi
 
     @NonNull
     @Override
-    public ListofSOPsAdapter.Viewholder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public ListofHandbooksAdapter.Viewholder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.books_list_layout, viewGroup, false);
         return new Viewholder(view);
     }
@@ -149,7 +149,7 @@ public class ListofSOPsAdapter extends RecyclerView.Adapter<ListofSOPsAdapter.Vi
     }
 
     private void editBook(String sopTitle, int id) {
-        Intent editSOP = new Intent(context, AddSOP.class);
+        Intent editSOP = new Intent(context, AddHandbook.class);
         editSOP.putExtra("editSop", 1);
         editSOP.putExtra("editSopTitle", sopTitle);
         editSOP.putExtra("editId", id);

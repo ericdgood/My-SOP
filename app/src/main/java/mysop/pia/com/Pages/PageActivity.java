@@ -1,4 +1,4 @@
-package mysop.pia.com.Steps;
+package mysop.pia.com.Pages;
 
 import android.app.AlertDialog;
 import android.arch.persistence.room.Room;
@@ -22,12 +22,12 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import mysop.pia.com.ListofSOPs.ListofSOPsAdapter;
+import mysop.pia.com.ListofHandbooks.ListofHandbooksAdapter;
+import mysop.pia.com.Pages.PagesRoom.StepsAppDatabase;
+import mysop.pia.com.Pages.PagesRoom.StepsRoomData;
 import mysop.pia.com.R;
-import mysop.pia.com.Steps.StepsRoom.StepsAppDatabase;
-import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
 
-public class StepActivity extends AppCompatActivity {
+public class PageActivity extends AppCompatActivity {
 
 
     @BindView(R.id.textview_step_title)
@@ -62,10 +62,10 @@ public class StepActivity extends AppCompatActivity {
         FirebaseStorage mFirebaseStorage = FirebaseStorage.getInstance();
         mChatPhotosStorageReference = mFirebaseStorage.getReference().child("page_photo");
 
-        StringSopTitle = ListofSOPsAdapter.bookTitle;
+        StringSopTitle = ListofHandbooksAdapter.bookTitle;
         position = getIntent().getIntExtra("position", 0);
 
-        listOfSteps = ListOfSteps.listOfSteps;
+        listOfSteps = ListOfPages.listOfSteps;
         numberOfSteps = listOfSteps.size();
         stringStepNumber = String.valueOf(listOfSteps.get(position).getStepNumber());
         sharedStat = listOfSteps.get(position).getSharedStatus();
@@ -123,7 +123,7 @@ public class StepActivity extends AppCompatActivity {
 
             if (stepNum <= numberOfSteps) {
                 btnPageNext.setOnClickListener(v -> {
-                    Intent nextStep = new Intent(this, StepActivity.class);
+                    Intent nextStep = new Intent(this, PageActivity.class);
                     nextStep.putExtra("sopTitle", StringSopTitle);
                     nextStep.putExtra("position", position + 1);
                     startActivity(nextStep);
@@ -131,7 +131,7 @@ public class StepActivity extends AppCompatActivity {
                 });
 
                 btnPagePrev.setOnClickListener(v -> {
-                    Intent nextStep = new Intent(this, StepActivity.class);
+                    Intent nextStep = new Intent(this, PageActivity.class);
                     nextStep.putExtra("sopTitle", StringSopTitle);
                     nextStep.putExtra("position", position - 1);
                     startActivity(nextStep);
@@ -161,7 +161,7 @@ public class StepActivity extends AppCompatActivity {
         public boolean onOptionsItemSelected (MenuItem item){
             int id = item.getItemId();
             if (id == R.id.menu_step_edit_step) {
-                Intent editStep = new Intent(this, AddStep.class);
+                Intent editStep = new Intent(this, AddPage.class);
                 editStep.putExtra("editStep", true);
                 editStep.putExtra("stepNumber", Integer.valueOf(stringStepNumber));
                 editStep.putExtra("stepTitle", stringStepTitle);
@@ -190,7 +190,7 @@ public class StepActivity extends AppCompatActivity {
                         stepsRoomDatabase().listOfSteps().DeletePAGE(stringStepTitle);
                         stepsRoomDatabase().listOfSteps().updatePageNumber(Integer.parseInt(stringStepNumber), StringSopTitle);
                         Toast.makeText(this, stringStepTitle + " is Deleted from book", Toast.LENGTH_SHORT).show();
-                        Intent returnToPageList = new Intent(this, ListOfSteps.class);
+                        Intent returnToPageList = new Intent(this, ListOfPages.class);
                         returnToPageList.putExtra("sopTitle", StringSopTitle);
                         startActivity(returnToPageList);
                         finish();
@@ -213,7 +213,7 @@ public class StepActivity extends AppCompatActivity {
         @Override
         public void onBackPressed () {
             super.onBackPressed();
-            Intent returnToListSteps = new Intent(this, ListOfSteps.class);
+            Intent returnToListSteps = new Intent(this, ListOfPages.class);
             returnToListSteps.putExtra("sopTitle", listOfSteps.get(position).getSopTitle());
             startActivity(returnToListSteps);
         }

@@ -11,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,16 +33,15 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import mysop.pia.com.Categories.AddCategory;
-import mysop.pia.com.Categories.CategoryRecyclerAdapter;
-import mysop.pia.com.Categories.CatergoryRoom.AppDatabase;
-import mysop.pia.com.Categories.CatergoryRoom.MySOPs;
+import mysop.pia.com.Categories.AddShelf;
+import mysop.pia.com.Categories.ShelfRecyclerAdapter;
+import mysop.pia.com.Categories.ShelfRoom.AppDatabase;
+import mysop.pia.com.Categories.ShelfRoom.MySOPs;
 import mysop.pia.com.Firebase.Firebase;
-import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
+import mysop.pia.com.Pages.PagesRoom.StepsRoomData;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "testing";
     public static List<MySOPs> sopList = new ArrayList<>();
     public static List<StepsRoomData> firebaseSteps = new ArrayList<>();
 
@@ -56,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.textview_no_categories)
     TextView textviewNoCategory;
 
-    CategoryRecyclerAdapter categoriesRecyclerAdapter;
+    ShelfRecyclerAdapter categoriesRecyclerAdapter;
     FirebaseUser user;
     private DatabaseReference mSopStepsDatabaseReference;
     String firebaseShelfs;
@@ -79,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         checkForCategories();
 
         fab.setOnClickListener(view -> {
-            Intent addCategory = new Intent(MainActivity.this, AddCategory.class);
+            Intent addCategory = new Intent(MainActivity.this, AddShelf.class);
             startActivity(addCategory);
             finish();
         });
@@ -107,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupRecylerviewDBAndAdapter() {
 //      SETUP RECYCLERVIEW AND ADAPTER
-        categoriesRecyclerAdapter = new CategoryRecyclerAdapter(sopList, this, roomDatabase());
+        categoriesRecyclerAdapter = new ShelfRecyclerAdapter(sopList, this, roomDatabase());
         recyclerViewCategories.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerViewCategories.setAdapter(categoriesRecyclerAdapter);
     }
@@ -162,18 +160,15 @@ public class MainActivity extends AppCompatActivity {
                         if (page.getSharedStatus() == 1 && page.getStepNumber() == 1) {
                             if (key == 0) {
                                 alertSharedShelf(page, dataSnapshot);
-                                Log.i(TAG, "shared stat 1 ");
                             }
                         }
                         if (page.getSharedStatus() == 4 && page.getStepNumber() == 1) {
 //                               DO THIS IF BOOK IS SHARED
                             alertSharedShelf(page, dataSnapshot);
-                            Log.i(TAG, "shared stat 4 ");
                         }
                         if (page.getSharedStatus() == 2 ||
                                 page.getSharedStatus() == 5) {
                             addSharedShelfs(page);
-                            Log.i(TAG, "shared stat 2 ");
                         }
                     }
                 }

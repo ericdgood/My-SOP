@@ -13,13 +13,13 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import mysop.pia.com.Categories.CatergoryRoom.AppDatabase;
-import mysop.pia.com.Categories.CatergoryRoom.MySOPs;
+import mysop.pia.com.Categories.ShelfRoom.AppDatabase;
+import mysop.pia.com.Categories.ShelfRoom.MySOPs;
 import mysop.pia.com.MainActivity;
+import mysop.pia.com.Pages.PagesRoom.StepsAppDatabase;
 import mysop.pia.com.R;
-import mysop.pia.com.Steps.StepsRoom.StepsAppDatabase;
 
-public class AddCategory extends Activity {
+public class AddShelf extends Activity {
 
     @BindView(R.id.editText_category_name)
     EditText editTextCategoryName;
@@ -50,7 +50,7 @@ public class AddCategory extends Activity {
                     MySOPs category = new MySOPs(categoryTitle, null);
                     roomDatabase().mysopDao().insertAll(category);
 
-                    Intent returnHome = new Intent(AddCategory.this, MainActivity.class);
+                    Intent returnHome = new Intent(AddShelf.this, MainActivity.class);
                     startActivity(returnHome);
                     finish();
                 }
@@ -69,7 +69,7 @@ public class AddCategory extends Activity {
                 roomDatabase().mysopDao().updateShelf(categoryTitle,id);
                 pagesRoom().listOfSteps().updatePagesShelf(categoryTitle, getIntent().getStringExtra("shelfTitle"));
 
-                Intent returnHome = new Intent(AddCategory.this, MainActivity.class);
+                Intent returnHome = new Intent(AddShelf.this, MainActivity.class);
                 startActivity(returnHome);
                 finish();
             }

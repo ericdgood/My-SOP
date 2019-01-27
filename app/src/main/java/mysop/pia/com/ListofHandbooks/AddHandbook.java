@@ -1,4 +1,4 @@
-package mysop.pia.com.ListofSOPs;
+package mysop.pia.com.ListofHandbooks;
 
 import android.arch.persistence.room.Room;
 import android.content.Intent;
@@ -16,14 +16,14 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import mysop.pia.com.Pages.AddPage;
+import mysop.pia.com.Pages.PagesRoom.StepsAppDatabase;
+import mysop.pia.com.Pages.PagesRoom.StepsRoomData;
 import mysop.pia.com.R;
-import mysop.pia.com.Steps.AddStep;
-import mysop.pia.com.Steps.StepsRoom.StepsAppDatabase;
-import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
 
-import static mysop.pia.com.Categories.CategoryRecyclerAdapter.categoryName;
+import static mysop.pia.com.Categories.ShelfRecyclerAdapter.categoryName;
 
-public class AddSOP extends AppCompatActivity {
+public class AddHandbook extends AppCompatActivity {
 
     @BindView(R.id.edittext_add_sop_title)
     EditText editTextAddSopTitle;
@@ -66,7 +66,7 @@ public class AddSOP extends AppCompatActivity {
                 addSopTitle = editTextAddSopTitle.getText().toString();
 
                 if (checkDuplicateSOP()) {
-                    Intent addStep = new Intent(AddSOP.this, AddStep.class);
+                    Intent addStep = new Intent(AddHandbook.this, AddPage.class);
                     addStep.putExtra("sopTitle", addSopTitle);
                     addStep.putExtra("sopCategory", categoryName);
                     addStep.putExtra("bookColor", bookColor);
@@ -133,7 +133,7 @@ public class AddSOP extends AppCompatActivity {
 
                 stepsRoomDatabase().listOfSteps().updateSop(addSopTitle, getIntent().getStringExtra("editSopTitle"));
                 stepsRoomDatabase().listOfSteps().updateBookColor(bookColor,getIntent().getIntExtra("editId",0));
-                Intent returnToSOP = new Intent(this, ListofSOPs.class);
+                Intent returnToSOP = new Intent(this, ListofHandbooks.class);
                 startActivity(returnToSOP);
                 finish();
         });

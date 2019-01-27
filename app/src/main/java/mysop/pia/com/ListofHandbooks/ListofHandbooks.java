@@ -1,4 +1,4 @@
-package mysop.pia.com.ListofSOPs;
+package mysop.pia.com.ListofHandbooks;
 
 import android.annotation.SuppressLint;
 import android.arch.persistence.room.Room;
@@ -16,13 +16,13 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import mysop.pia.com.Categories.CategoryRecyclerAdapter;
+import mysop.pia.com.Categories.ShelfRecyclerAdapter;
 import mysop.pia.com.MainActivity;
+import mysop.pia.com.Pages.PagesRoom.StepsAppDatabase;
+import mysop.pia.com.Pages.PagesRoom.StepsRoomData;
 import mysop.pia.com.R;
-import mysop.pia.com.Steps.StepsRoom.StepsAppDatabase;
-import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
 
-public class ListofSOPs extends AppCompatActivity {
+public class ListofHandbooks extends AppCompatActivity {
 
     @BindView(R.id.recyclerview_list_of_sops)
     RecyclerView recyclerviewListofSOPs;
@@ -32,7 +32,7 @@ public class ListofSOPs extends AppCompatActivity {
     FloatingActionButton fabAddSOP;
 
     List<StepsRoomData> listOfSOPs = new ArrayList<>();
-    ListofSOPsAdapter SOPsRecyclerAdapter;
+    ListofHandbooksAdapter SOPsRecyclerAdapter;
     String categoryName;
     int sharedBook = 0;
 
@@ -43,14 +43,14 @@ public class ListofSOPs extends AppCompatActivity {
         ButterKnife.bind(this);
 
 
-        categoryName = CategoryRecyclerAdapter.categoryName;
+        categoryName = ShelfRecyclerAdapter.categoryName;
 
         setTitle(categoryName + " Handbooks");
 
         setupRecyclerviewAndAdapter();
 
         fabAddSOP.setOnClickListener(v -> {
-            Intent addNewSOP = new Intent(this, AddSOP.class);
+            Intent addNewSOP = new Intent(this, AddHandbook.class);
             startActivity(addNewSOP);
             finish();
         });
@@ -87,7 +87,7 @@ public class ListofSOPs extends AppCompatActivity {
         getFirebaseBooks();
         getBooks();
         noBooks();
-        SOPsRecyclerAdapter = new ListofSOPsAdapter(this, listOfSOPs, stepsRoomDatabase());
+        SOPsRecyclerAdapter = new ListofHandbooksAdapter(this, listOfSOPs, stepsRoomDatabase());
         recyclerviewListofSOPs.setLayoutManager(new LinearLayoutManager(this));
         recyclerviewListofSOPs.setAdapter(SOPsRecyclerAdapter);
     }

@@ -10,8 +10,8 @@ import android.widget.RemoteViews;
 
 import java.util.List;
 
+import mysop.pia.com.Pages.PagesRoom.StepsRoomData;
 import mysop.pia.com.R;
-import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
 
 
 public class HandbookWidgetProvider extends AppWidgetProvider {

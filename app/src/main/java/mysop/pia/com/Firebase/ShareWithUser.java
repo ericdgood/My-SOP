@@ -26,12 +26,12 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import mysop.pia.com.Categories.CategoryRecyclerAdapter;
-import mysop.pia.com.ListofSOPs.ListofSOPsAdapter;
+import mysop.pia.com.Categories.ShelfRecyclerAdapter;
+import mysop.pia.com.ListofHandbooks.ListofHandbooksAdapter;
 import mysop.pia.com.MainActivity;
+import mysop.pia.com.Pages.PagesRoom.StepsAppDatabase;
+import mysop.pia.com.Pages.PagesRoom.StepsRoomData;
 import mysop.pia.com.R;
-import mysop.pia.com.Steps.StepsRoom.StepsAppDatabase;
-import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
 
 public class ShareWithUser extends AppCompatActivity {
 
@@ -76,19 +76,19 @@ public class ShareWithUser extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (dataSnapshot.getChildrenCount() > 0) {
 //                        SEND 1 HANDBOOK
-                        if (ListofSOPsAdapter.bookShare == 1) {
-                            stepsRoomDatabase().listOfSteps().updateBookSharing(user.getDisplayName(), ListofSOPsAdapter.bookTitle);
-                            List<StepsRoomData> book = stepsRoomDatabase().listOfSteps().getAllSteps(ListofSOPsAdapter.bookTitle);
+                        if (ListofHandbooksAdapter.bookShare == 1) {
+                            stepsRoomDatabase().listOfSteps().updateBookSharing(user.getDisplayName(), ListofHandbooksAdapter.bookTitle);
+                            List<StepsRoomData> book = stepsRoomDatabase().listOfSteps().getAllSteps(ListofHandbooksAdapter.bookTitle);
                             sendPhotos(book);
                             mSopStepsDatabaseReference.child(searchUserName).push().setValue(book);
-                            Toast.makeText(ShareWithUser.this,  ListofSOPsAdapter.bookTitle + " sent to " + searchUserName, Toast.LENGTH_LONG).show();
+                            Toast.makeText(ShareWithUser.this,  ListofHandbooksAdapter.bookTitle + " sent to " + searchUserName, Toast.LENGTH_LONG).show();
                         } else {
 //                        SEND ALL BOOKS ON A BOOK SHELF TO USER
-                            stepsRoomDatabase().listOfSteps().updateShelfSharing(user.getDisplayName(), CategoryRecyclerAdapter.categoryName);
-                            List<StepsRoomData> book = stepsRoomDatabase().listOfSteps().getAllBooks(CategoryRecyclerAdapter.categoryName);
+                            stepsRoomDatabase().listOfSteps().updateShelfSharing(user.getDisplayName(), ShelfRecyclerAdapter.categoryName);
+                            List<StepsRoomData> book = stepsRoomDatabase().listOfSteps().getAllBooks(ShelfRecyclerAdapter.categoryName);
                             sendPhotos(book);
                             mSopStepsDatabaseReference.child(searchUserName).push().setValue(book);
-                            Toast.makeText(ShareWithUser.this, CategoryRecyclerAdapter.categoryName + " sent to " + searchUserName, Toast.LENGTH_LONG).show();
+                            Toast.makeText(ShareWithUser.this, ShelfRecyclerAdapter.categoryName + " sent to " + searchUserName, Toast.LENGTH_LONG).show();
                         }
 
                         Intent goToBooks = new Intent(ShareWithUser.this, MainActivity.class);

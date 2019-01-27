@@ -7,9 +7,9 @@ import android.widget.RemoteViewsService;
 
 import java.util.List;
 
+import mysop.pia.com.Pages.ListOfPages;
+import mysop.pia.com.Pages.PagesRoom.StepsRoomData;
 import mysop.pia.com.R;
-import mysop.pia.com.Steps.ListOfSteps;
-import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
 
 
 public class listViewsService extends RemoteViewsService
@@ -24,9 +24,9 @@ public class listViewsService extends RemoteViewsService
 class ListViewsFactory implements RemoteViewsService.RemoteViewsFactory
 {
     private final Context mContext;
-    private List<StepsRoomData> mIngredients = ListOfSteps.listOfSteps;
+    private List<StepsRoomData> mIngredients = ListOfPages.listOfSteps;
 
-    public ListViewsFactory(Context mContext)
+    ListViewsFactory(Context mContext)
     {
         this.mContext = mContext;
     }

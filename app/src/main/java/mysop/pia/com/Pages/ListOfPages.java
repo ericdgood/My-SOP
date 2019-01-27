@@ -1,4 +1,4 @@
-package mysop.pia.com.Steps;
+package mysop.pia.com.Pages;
 
 import android.app.Activity;
 import android.arch.persistence.room.Room;
@@ -17,14 +17,14 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import mysop.pia.com.ListofSOPs.ListofSOPsAdapter;
+import mysop.pia.com.ListofHandbooks.ListofHandbooksAdapter;
 import mysop.pia.com.MainActivity;
+import mysop.pia.com.Pages.PagesRoom.StepsAppDatabase;
+import mysop.pia.com.Pages.PagesRoom.StepsRoomData;
 import mysop.pia.com.R;
-import mysop.pia.com.Steps.StepsRoom.StepsAppDatabase;
-import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
 import mysop.pia.com.widget.WidgetUpdateService;
 
-public class ListOfSteps extends Activity {
+public class ListOfPages extends Activity {
 
     @BindView(R.id.textview_list_steps_title)
     TextView textviewTitle;
@@ -36,7 +36,7 @@ public class ListOfSteps extends Activity {
     ImageView imgBookPagesOption;
 
     public static List<StepsRoomData> listOfSteps = new ArrayList<>();
-    ListOfStepsAdapter StepsRecyclerAdapter;
+    ListOfPagesAdapter StepsRecyclerAdapter;
     String bookTitle;
     int sharedBook = 0;
 
@@ -47,7 +47,7 @@ public class ListOfSteps extends Activity {
         setContentView(R.layout.list_of_steps);
         ButterKnife.bind(this);
 
-        bookTitle = ListofSOPsAdapter.bookTitle;
+        bookTitle = ListofHandbooksAdapter.bookTitle;
 
         pageListOption();
         getBookPages();
@@ -79,7 +79,7 @@ public class ListOfSteps extends Activity {
     }
 
     private void setupRecyclerviewAndAdapter() {
-        StepsRecyclerAdapter = new ListOfStepsAdapter(this, listOfSteps);
+        StepsRecyclerAdapter = new ListOfPagesAdapter(this, listOfSteps);
         recyclerviewListOfSteps.setLayoutManager(new LinearLayoutManager(this));
         recyclerviewListOfSteps.setAdapter(StepsRecyclerAdapter);
     }
@@ -94,7 +94,7 @@ public class ListOfSteps extends Activity {
     private void fabAddStep() {
         fabAddStep.setOnClickListener(v -> {
             int listOfStepsSize = listOfSteps.size();
-            Intent addStep = new Intent(this, AddStep.class);
+            Intent addStep = new Intent(this, AddPage.class);
             addStep.putExtra("sopTitle", bookTitle);
             addStep.putExtra("stepNumber", listOfStepsSize + 1);
             startActivity(addStep);

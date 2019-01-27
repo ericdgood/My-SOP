@@ -20,29 +20,29 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import mysop.pia.com.Categories.CatergoryRoom.AppDatabase;
-import mysop.pia.com.Categories.CatergoryRoom.MySOPs;
+import mysop.pia.com.Categories.ShelfRoom.AppDatabase;
+import mysop.pia.com.Categories.ShelfRoom.MySOPs;
 import mysop.pia.com.Firebase.Firebase;
-import mysop.pia.com.ListofSOPs.ListofSOPs;
-import mysop.pia.com.ListofSOPs.ListofSOPsAdapter;
+import mysop.pia.com.ListofHandbooks.ListofHandbooks;
+import mysop.pia.com.ListofHandbooks.ListofHandbooksAdapter;
+import mysop.pia.com.Pages.PagesRoom.StepsAppDatabase;
 import mysop.pia.com.R;
-import mysop.pia.com.Steps.StepsRoom.StepsAppDatabase;
 
-public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecyclerAdapter.Viewholder> {
+public class ShelfRecyclerAdapter extends RecyclerView.Adapter<ShelfRecyclerAdapter.Viewholder> {
 
     private final AppDatabase db;
     private List<MySOPs> categoryList;
     private Context context;
     public static String categoryName;
 
-    public CategoryRecyclerAdapter(List<MySOPs> sopCategories, Context context, AppDatabase appDatabase) {
+    public ShelfRecyclerAdapter(List<MySOPs> sopCategories, Context context, AppDatabase appDatabase) {
         this.context = context;
         this.categoryList = sopCategories;
         this.db = appDatabase;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CategoryRecyclerAdapter.Viewholder viewholder, int position) {
+    public void onBindViewHolder(@NonNull ShelfRecyclerAdapter.Viewholder viewholder, int position) {
         String sharedAuthor = categoryList.get(position).getSharedAuthor();
         ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) viewholder.imageviewCategory.getLayoutParams();
 
@@ -63,7 +63,7 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
                             return true;
                         case R.id.book_shelf_share:
                             Intent shareFirebase = new Intent(context, Firebase.class);
-                            ListofSOPsAdapter.bookShare = 0;
+                            ListofHandbooksAdapter.bookShare = 0;
                             categoryName = categoryList.get(position).getCategoryTitle();
                             context.startActivity(shareFirebase);
                             return true;
@@ -105,14 +105,14 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
 
 //        DO THIS ON PRESS
         viewholder.categoryLayout.setOnClickListener((View view) -> {
-            Intent categorySops = new Intent(context, ListofSOPs.class);
+            Intent categorySops = new Intent(context, ListofHandbooks.class);
             categoryName = categoryList.get(position).getCategoryTitle();
             context.startActivity(categorySops);
         });
     }
 
     private void editCategory(String categoryTitle, int id) {
-        Intent editShelf = new Intent(context, AddCategory.class);
+        Intent editShelf = new Intent(context, AddShelf.class);
         editShelf.putExtra("shelfTitle", categoryTitle);
         editShelf.putExtra("id", id);
         editShelf.putExtra("edit", false);
@@ -122,7 +122,7 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
 
     @NonNull
     @Override
-    public CategoryRecyclerAdapter.Viewholder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public ShelfRecyclerAdapter.Viewholder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.categories_layout, viewGroup, false);
         return new Viewholder(view);
     }

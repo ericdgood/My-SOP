@@ -1,4 +1,4 @@
-package mysop.pia.com.Steps;
+package mysop.pia.com.Pages;
 
 import android.annotation.SuppressLint;
 import android.arch.persistence.room.Room;
@@ -28,12 +28,12 @@ import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import mysop.pia.com.ListofSOPs.ListofSOPs;
+import mysop.pia.com.ListofHandbooks.ListofHandbooks;
+import mysop.pia.com.Pages.PagesRoom.StepsAppDatabase;
+import mysop.pia.com.Pages.PagesRoom.StepsRoomData;
 import mysop.pia.com.R;
-import mysop.pia.com.Steps.StepsRoom.StepsAppDatabase;
-import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
 
-public class AddStep extends AppCompatActivity {
+public class AddPage extends AppCompatActivity {
 
     @BindView(R.id.textview_add_sop_step_count)
     TextView textviewStepCount;
@@ -94,7 +94,7 @@ public class AddStep extends AppCompatActivity {
 //      DO THIS IF SOP IS COMPLETED
         buttonCompleteSOP.setOnClickListener(v -> {
             if (AddStepToRoomDatabase()) {
-                Intent goToNewSOP = new Intent(this, ListofSOPs.class);
+                Intent goToNewSOP = new Intent(this, ListofHandbooks.class);
                 goToNewSOP.putExtra("sopTitle", sopTitle);
                 startActivity(goToNewSOP);
                 finish();
@@ -103,7 +103,7 @@ public class AddStep extends AppCompatActivity {
 //        DO THIS IF ANOTHER STEP IS ADDED
         buttonAddAnotherStep.setOnClickListener((View v) -> {
             if (AddStepToRoomDatabase()) {
-                Intent nextStep = new Intent(this, AddStep.class);
+                Intent nextStep = new Intent(this, AddPage.class);
                 int nextStepNum = stepNumber + 1;
                 nextStep.putExtra("stepNumber", nextStepNum);
                 nextStep.putExtra("sopTitle", sopTitle);
@@ -139,7 +139,7 @@ public class AddStep extends AppCompatActivity {
                 stepsRoomDatabase().listOfSteps().insertSteps(newStep);
                 return true;
             } else {
-                newStep.setId(ListOfStepsAdapter.stepId);
+                newStep.setId(ListOfPagesAdapter.stepId);
                 stepsRoomDatabase().listOfSteps().updateStep(newStep);
                 Toast.makeText(this, "Edits were saved", Toast.LENGTH_SHORT).show();
                 return true;
@@ -183,7 +183,7 @@ public class AddStep extends AppCompatActivity {
 
             buttonEditStepSave.setOnClickListener(v -> {
                 if (AddStepToRoomDatabase()) {
-                    Intent goToNewSOP = new Intent(this, ListOfSteps.class);
+                    Intent goToNewSOP = new Intent(this, ListOfPages.class);
                     goToNewSOP.putExtra("sopTitle", sopTitle);
                     startActivity(goToNewSOP);
                     finish();

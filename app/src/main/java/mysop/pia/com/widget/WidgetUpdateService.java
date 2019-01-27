@@ -8,11 +8,11 @@ import android.support.annotation.Nullable;
 
 import java.util.List;
 
-import mysop.pia.com.Steps.ListOfSteps;
-import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
+import mysop.pia.com.Pages.ListOfPages;
+import mysop.pia.com.Pages.PagesRoom.StepsRoomData;
 
 public class WidgetUpdateService extends IntentService {
-    private final List<StepsRoomData> mIngredients = ListOfSteps.listOfSteps;
+    private final List<StepsRoomData> mIngredients = ListOfPages.listOfSteps;
 
     public WidgetUpdateService() {
         super("WidgetServiceUpdate");

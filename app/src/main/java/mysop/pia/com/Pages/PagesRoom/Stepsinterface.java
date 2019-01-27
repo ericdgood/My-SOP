@@ -1,4 +1,4 @@
-package mysop.pia.com.Steps.StepsRoom;
+package mysop.pia.com.Pages.PagesRoom;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;

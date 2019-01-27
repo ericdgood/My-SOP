@@ -1,4 +1,4 @@
-package mysop.pia.com.Steps;
+package mysop.pia.com.Pages;
 
 import android.app.Activity;
 import android.content.Context;
@@ -16,23 +16,23 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import mysop.pia.com.Pages.PagesRoom.StepsRoomData;
 import mysop.pia.com.R;
-import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
 
-public class ListOfStepsAdapter extends RecyclerView.Adapter<ListOfStepsAdapter.Viewholder> {
+public class ListOfPagesAdapter extends RecyclerView.Adapter<ListOfPagesAdapter.Viewholder> {
 
     private List<StepsRoomData> listOfSteps;
-    Context context;
+    private Context context;
     public static int stepId;
 
 
-    ListOfStepsAdapter(Context context, List<StepsRoomData> listOfSteps) {
+    ListOfPagesAdapter(Context context, List<StepsRoomData> listOfSteps) {
         this.context = context;
         this.listOfSteps = listOfSteps;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ListOfStepsAdapter.Viewholder viewholder, int position) {
+    public void onBindViewHolder(@NonNull ListOfPagesAdapter.Viewholder viewholder, int position) {
 //        SHOWS STEP NUMBERS
         String pageNumber = String.valueOf(listOfSteps.get(position).getStepNumber()) + "..";
         viewholder.textviewStepNumber.setText(pageNumber);
@@ -42,7 +42,7 @@ public class ListOfStepsAdapter extends RecyclerView.Adapter<ListOfStepsAdapter.
         attachments(position, viewholder);
 
         viewholder.constraintListOfSteps.setOnClickListener(v -> {
-            Intent goToStep = new Intent(context, StepActivity.class);
+            Intent goToStep = new Intent(context, PageActivity.class);
             goToStep.putExtra("position", position);
             stepId = listOfSteps.get(position).getId();
             context.startActivity(goToStep);
@@ -58,7 +58,7 @@ public class ListOfStepsAdapter extends RecyclerView.Adapter<ListOfStepsAdapter.
 
     @NonNull
     @Override
-    public ListOfStepsAdapter.Viewholder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public ListOfPagesAdapter.Viewholder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_of_steps_layout, viewGroup, false);
         return new Viewholder(view);
     }

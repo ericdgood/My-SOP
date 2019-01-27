@@ -24,17 +24,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Categories.AddCategory"
+            android:name=".Categories.AddShelf"
             android:label="@string/title_activity_add_category" />
         <activity
-            android:name=".ListofSOPs.ListofSOPs"
+            android:name=".ListofHandbooks.ListofHandbooks"
             android:label="@string/title_list_of_sops" />
-        <activity android:name=".ListofSOPs.AddSOP" />
-        <activity android:name=".Steps.AddStep" />
+        <activity android:name=".ListofHandbooks.AddHandbook" />
+        <activity android:name=".Pages.AddPage" />
         <activity
-            android:name=".Steps.ListOfSteps"
+            android:name=".Pages.ListOfPages"
             android:label="@string/title_list_of_steps" />
-        <activity android:name=".Steps.StepActivity" />
+        <activity android:name=".Pages.PageActivity" />
         <activity android:name=".Firebase.Firebase" />
         <activity android:name=".Firebase.ShareWithUser" />
 

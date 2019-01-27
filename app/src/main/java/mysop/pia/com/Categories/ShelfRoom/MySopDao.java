@@ -1,4 +1,4 @@
-package mysop.pia.com.Categories.CatergoryRoom;
+package mysop.pia.com.Categories.ShelfRoom;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
