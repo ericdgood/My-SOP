@@ -30,6 +30,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
 
     CategoryRecyclerAdapter categoriesRecyclerAdapter;
     FirebaseUser user;
-    private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mSopStepsDatabaseReference;
     String firebaseShelfs;
     StepsRoomData page;
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ButterKnife.bind(this);
 
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
         mSopStepsDatabaseReference = mFirebaseDatabase.getReference().child("sop");
         user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void getFirebaseBooks() {
         if (user != null) {
-            mSopStepsDatabaseReference.child(user.getDisplayName()).addChildEventListener(new ChildEventListener() {
+            mSopStepsDatabaseReference.child(Objects.requireNonNull(user.getDisplayName())).addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
@@ -198,9 +198,8 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             });
-        } else {
-//            DO THIS IS USER IS NULL
-        }
+        }  //            DO THIS IS USER IS NULL
+
     }
 
     private void alertSharedShelf(StepsRoomData sharedBook, DataSnapshot dataSnapshot) {

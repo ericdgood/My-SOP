@@ -3,14 +3,14 @@
 
     <item
         android:id="@+id/book_shelf_edit"
-        android:title="Edit" />
+        android:title="@string/edit" />
 
     <item
         android:id="@+id/book_shelf_share"
-        android:title="Share" />
+        android:title="@string/share" />
 
     <item
         android:id="@+id/book_shelf_delete"
-        android:title="Delete" />
+        android:title="@string/delete" />
 
 </menu>

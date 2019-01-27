@@ -1,5 +1,6 @@
 package mysop.pia.com.Steps;
 
+import android.annotation.SuppressLint;
 import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -34,7 +35,6 @@ import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
 
 public class AddStep extends AppCompatActivity {
 
-    private static final String TAG = "Testing";
     @BindView(R.id.textview_add_sop_step_count)
     TextView textviewStepCount;
     @BindView(R.id.edittext_add_step_title)
@@ -194,16 +194,12 @@ public class AddStep extends AppCompatActivity {
 
     //  THIS CREATES THE IMAGE AS A BUTTON TO OPEN GALLERY OR CAMERA
     public void pickImageFromGallery() {
-        imageviewGallery.setOnClickListener(v -> {
-            ActivityCompat.requestPermissions(this,
-                    GALLERY_PERMISSIONS,
-                    PERMISSION_GALLERY);
-        });
-        imageviewCamera.setOnClickListener(v -> {
-            ActivityCompat.requestPermissions(this,
-                    CAMERA_PERMISSIONS,
-                    PERMISSION_CAMERA);
-        });
+        imageviewGallery.setOnClickListener(v -> ActivityCompat.requestPermissions(this,
+                GALLERY_PERMISSIONS,
+                PERMISSION_GALLERY));
+        imageviewCamera.setOnClickListener(v -> ActivityCompat.requestPermissions(this,
+                CAMERA_PERMISSIONS,
+                PERMISSION_CAMERA));
     }
 
     //    THIS ASKS FOR PERMISSION FOR GALLER AND CAMERA AND CREATES INTENT
@@ -236,10 +232,10 @@ public class AddStep extends AppCompatActivity {
                     intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
 
                     Date date = new Date();
-                    DateFormat df = new SimpleDateFormat("-mm-ss");
+                    @SuppressLint("SimpleDateFormat") DateFormat df = new SimpleDateFormat("-mm-ss");
 
                     String newPicFile = df.format(date) + ".jpg";
-                    String outPath = "/sdcard/" + newPicFile;
+                    String outPath = getString(R.string.sdcard) + newPicFile;
                     File outFile = new File(outPath);
 
                     mCameraFileName = outFile.toString();

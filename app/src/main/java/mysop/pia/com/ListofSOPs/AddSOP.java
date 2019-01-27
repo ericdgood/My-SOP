@@ -25,7 +25,6 @@ import static mysop.pia.com.Categories.CategoryRecyclerAdapter.categoryName;
 
 public class AddSOP extends AppCompatActivity {
 
-    private static final String TAG = "hello";
     @BindView(R.id.edittext_add_sop_title)
     EditText editTextAddSopTitle;
     @BindView(R.id.button_edit_sop)
@@ -126,7 +125,7 @@ public class AddSOP extends AppCompatActivity {
     private void editSop() {
         buttonAddStep.setVisibility(View.GONE);
         buttonEditSOP.setVisibility(View.VISIBLE);
-        tvAddBookLabel.setText("Edit Book info");
+        tvAddBookLabel.setText(R.string.book_info);
         editTextAddSopTitle.setText(getIntent().getStringExtra("editSopTitle"));
         bookColor();
         buttonEditSOP.setOnClickListener(v -> {

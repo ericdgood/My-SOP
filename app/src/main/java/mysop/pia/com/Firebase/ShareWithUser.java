@@ -45,12 +45,9 @@ public class ShareWithUser extends AppCompatActivity {
     String searchUserName;
 
     private DatabaseReference mUsersDatabaseReference;
-    private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mSopStepsDatabaseReference;
     FirebaseUser user;
-    private FirebaseStorage mFirebaseStorage;
     private StorageReference mChatPhotosStorageReference;
-    private String TAG;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,11 +55,11 @@ public class ShareWithUser extends AppCompatActivity {
         setContentView(R.layout.share_with_users);
         ButterKnife.bind(this);
 
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
         mUsersDatabaseReference = mFirebaseDatabase.getReference().child("Users");
         mSopStepsDatabaseReference = mFirebaseDatabase.getReference().child("sop");
         user = FirebaseAuth.getInstance().getCurrentUser();
-        mFirebaseStorage = FirebaseStorage.getInstance();
+        FirebaseStorage mFirebaseStorage = FirebaseStorage.getInstance();
         mChatPhotosStorageReference = mFirebaseStorage.getReference().child("page_photo");
 
         assert user != null;

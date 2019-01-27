@@ -20,11 +20,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="This is a sample of a step title"
-        android:layout_marginLeft="8dp"
+        style="@style/ConstraintCenterVertical"
         app:layout_constraintLeft_toRightOf="@id/textview_step_list_number"
-        android:paddingLeft="8dp"
+        android:layout_marginStart="8dp"
         android:textSize="21sp"
-        style="@style/ConstraintCenterVertical"/>
+        android:paddingStart="8dp"
+        tools:ignore="RtlSymmetry" />
 
     <ImageView
         android:id="@+id/imageView_step_list_attachment"
@@ -33,7 +34,8 @@
         android:src="@drawable/ic_action_attachment_2"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        android:contentDescription="@string/page_attachments"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <View
         android:layout_width="0dp"

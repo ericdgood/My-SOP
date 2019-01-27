@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_alignParentBottom="true">
@@ -27,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:hint="Step Title"
+        android:hint="@string/step_title"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,10 +38,11 @@
         android:id="@+id/textview_add_step_add_image_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingRight="12dp"
-        android:text="Add Image"
+        android:paddingEnd="12dp"
+        android:text="@string/add_image"
         android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@id/edittext_add_step_title" />
+        app:layout_constraintTop_toBottomOf="@id/edittext_add_step_title"
+        tools:ignore="RtlSymmetry" />
 
     <ImageView
         android:id="@+id/imageview_add_step_camera"
@@ -49,6 +51,7 @@
         android:padding="8dp"
         android:src="@drawable/ic_photo_camera"
         app:layout_constraintLeft_toRightOf="@id/textview_add_step_add_image_label"
+        android:contentDescription="@string/camera"
         app:layout_constraintTop_toBottomOf="@id/edittext_add_step_title" />
 
     <ImageView
@@ -58,6 +61,7 @@
         android:padding="8dp"
         android:src="@drawable/ic_image"
         app:layout_constraintLeft_toRightOf="@id/imageview_add_step_camera"
+        android:contentDescription="@string/gallery"
         app:layout_constraintTop_toTopOf="@id/imageview_add_step_camera" />
 
     <ImageView
@@ -67,6 +71,7 @@
         android:layout_height="200dp"
         android:layout_margin="6dp"
         android:visibility="gone"
+        android:contentDescription="@string/picture_preview"
         app:layout_constraintTop_toBottomOf="@id/imageview_add_step_gallery" />
 
     <EditText
@@ -75,8 +80,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="@drawable/description_border"
-        android:gravity="top|left"
-        android:hint="Add description of step"
+        android:gravity="top|start"
+        android:hint="@string/add_description_of_step"
         android:inputType="textMultiLine"
         android:maxLines="10"
         android:padding="6dp"
@@ -95,7 +100,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="6dp"
             android:layout_weight="1"
-            android:text="Complete SOP"/>
+            android:text="@string/complete_sop"
+            tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/button_add_sop_another_step"
@@ -103,7 +109,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="6dp"
             android:layout_weight="1"
-            android:text="add another step"/>
+            android:text="@string/add_another_step"
+            tools:ignore="ButtonStyle" />
 
     </LinearLayout>
 
@@ -112,7 +119,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:text="Save step"
+        android:text="@string/save_step"
         android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/edittext_add_step_description" />
 

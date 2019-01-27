@@ -28,11 +28,7 @@ public interface Stepsinterface {
     @Query("SELECT * FROM steps WHERE :save = savedBook")
     List<StepsRoomData> getAllSavedBooks(int save);
 
-    //    GET ALL BOOKs
-    @Query("SELECT * FROM steps WHERE category = 'Shared Books' AND stepNumber = 1")
-    List<StepsRoomData> getAllSharedBooks();
-
-//  INSERT NEW SOP
+    //  INSERT NEW SOP
     @Insert
     void insertSteps(StepsRoomData... steps);
 
@@ -47,14 +43,7 @@ public interface Stepsinterface {
     @Query("UPDATE steps SET bookColor = :bookColor WHERE id = :id")
     void updateBookColor(String bookColor, int id);
 
-//    UPDATE STEP NUMBERS WHEN MOVE IN RECYCLERVIEW
-    @Query("UPDATE steps SET stepNumber = :newN WHERE :dragged = id")
-    void updateOnMove(int newN ,int dragged);
-
-    @Query("UPDATE steps SET stepNumber = :newN WHERE :dragged = id")
-    void updateTarget(int newN ,int dragged);
-
-//    DELETE SOP
+    //    DELETE SOP
     @Query("DELETE FROM steps WHERE :sopTitle = sopTitle")
     void DeleteSOP(String sopTitle);
 

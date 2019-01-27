@@ -3,6 +3,6 @@
 
     <item
         android:id="@+id/book_pages_widget"
-        android:title="Show pages on Widget" />
+        android:title="@string/show_pages_on_widget" />
 
 </menu>

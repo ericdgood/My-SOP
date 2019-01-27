@@ -9,7 +9,6 @@
 
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/tool"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
@@ -60,7 +59,8 @@
             android:src="@drawable/bookshelfedit"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/recycl"/>
+            android:contentDescription="@string/no_shelfs"
+            app:layout_constraintTop_toBottomOf="@id/recycl" />
 
         <TextView
             android:id="@+id/textview_no_categories"

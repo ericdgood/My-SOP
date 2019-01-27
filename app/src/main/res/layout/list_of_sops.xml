@@ -19,7 +19,7 @@
         style="@style/ConstraintCenter"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:text="No Handbooks bookmarked"
+        android:text="@string/no_handbooks_bookmarked"
         android:textSize="21sp"
         android:visibility="gone"/>
 

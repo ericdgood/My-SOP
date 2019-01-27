@@ -4,11 +4,11 @@
     <item
         android:id="@+id/menu_step_edit_step"
         android:orderInCategory="100"
-        android:title="Edit Step" />
+        android:title="@string/edit_step" />
     <item
         android:id="@+id/menu_step_delete"
         android:orderInCategory="100"
-        android:title="Delete Step" />
+        android:title="@string/delete_step" />
 
 
 </menu>

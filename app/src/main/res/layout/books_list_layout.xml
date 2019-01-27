@@ -17,14 +17,16 @@
             android:id="@+id/imageview_handbook"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/handbook"/>
+            android:contentDescription="@string/handbook"
+            android:src="@drawable/handbook" />
 
         <ImageView
             android:id="@+id/image_booklist_saved"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="40dp"
+            android:contentDescription="@string/bookmark"
             android:src="@drawable/baseline_bookmark_border_black_36dp" />
 
         <TextView
@@ -33,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
-            android:text="Shared BY:"
+            android:text="@string/shared_by"
             android:textColor="@color/text"
             android:textStyle="bold"
             android:visibility="gone"/>
@@ -54,21 +56,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_marginBottom="10dp"
-            android:layout_marginRight="25dp"
-            android:src="@drawable/ic_action_overflow"/>
+            android:layout_marginEnd="25dp"
+            android:contentDescription="@string/book_options"
+            android:src="@drawable/ic_action_overflow" />
 
         <ImageView
             android:id="@+id/image_booklist_shared"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_marginBottom="10dp"
-            android:layout_marginRight="35dp"
+            android:layout_marginEnd="35dp"
             android:src="@drawable/ic_action_share"
-            android:visibility="gone"/>
+            android:contentDescription="@string/book_shared"
+            android:visibility="gone" />
 
     </RelativeLayout>
 
@@ -76,7 +80,7 @@
         android:id="@+id/text_booklist_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="30dp"
         android:textColor="@color/text"
         android:textSize="21sp"

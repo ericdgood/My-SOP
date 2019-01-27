@@ -21,14 +21,15 @@
         android:id="@+id/edittext_share_search_users"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Search Users"
-        app:layout_constraintTop_toBottomOf="@id/tv_share_display_name"/>
+        android:hint="@string/search_users"
+        android:inputType="text"
+        app:layout_constraintTop_toBottomOf="@id/tv_share_display_name" />
 
     <Button
         android:id="@+id/button_share_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="search"
+        android:text="@string/search"
         app:layout_constraintTop_toBottomOf="@id/edittext_share_search_users"/>
 
 </android.support.constraint.ConstraintLayout>

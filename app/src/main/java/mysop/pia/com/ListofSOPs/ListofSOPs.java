@@ -24,7 +24,6 @@ import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
 
 public class ListofSOPs extends AppCompatActivity {
 
-    private static final String TAG = "testing";
     @BindView(R.id.recyclerview_list_of_sops)
     RecyclerView recyclerviewListofSOPs;
     @BindView(R.id.no_bookmarked)
@@ -69,7 +68,7 @@ public class ListofSOPs extends AppCompatActivity {
             fabAddSOP.setVisibility(View.GONE);
             if (listOfSOPs.size() == 0){
                 tvNoBookmarks.setVisibility(View.VISIBLE);
-                tvNoBookmarks.setText("No shared Handbooks");
+                tvNoBookmarks.setText(R.string.sharedbooks);
             }
         } else if (sharedBook == 0) {
             listOfSOPs = stepsRoomDatabase().listOfSteps().getAllSOPs(categoryName, 1);
@@ -79,7 +78,8 @@ public class ListofSOPs extends AppCompatActivity {
     public void noBooks(){
         if (listOfSOPs.size() == 0) {
             tvNoBookmarks.setVisibility(View.VISIBLE);
-            tvNoBookmarks.setText("Add a Handbook to " + categoryName);
+            String addBook = getString(R.string.add_book_to_shelf) + categoryName;
+            tvNoBookmarks.setText(addBook);
         }
     }
 

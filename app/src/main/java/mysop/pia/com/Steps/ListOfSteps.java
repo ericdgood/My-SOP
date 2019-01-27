@@ -26,7 +26,6 @@ import mysop.pia.com.widget.WidgetUpdateService;
 
 public class ListOfSteps extends Activity {
 
-    private static final String TAG = "List of Steps";
     @BindView(R.id.textview_list_steps_title)
     TextView textviewTitle;
     @BindView(R.id.recyclerview_list_of_steps)

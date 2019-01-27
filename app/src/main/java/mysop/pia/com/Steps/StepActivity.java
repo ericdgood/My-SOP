@@ -15,8 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -32,7 +30,6 @@ import mysop.pia.com.Steps.StepsRoom.StepsRoomData;
 public class StepActivity extends AppCompatActivity {
 
 
-    private static final String TAG = "stepActivity";
     @BindView(R.id.textview_step_title)
     TextView textviewStepTitle;
     @BindView(R.id.imageview_step_picture)
@@ -54,8 +51,6 @@ public class StepActivity extends AppCompatActivity {
     String StringSopTitle;
     int sharedStat;
 
-    FirebaseUser user;
-    private FirebaseStorage mFirebaseStorage;
     private StorageReference mChatPhotosStorageReference;
 
     @Override
@@ -64,8 +59,7 @@ public class StepActivity extends AppCompatActivity {
         setContentView(R.layout.activity_step);
         ButterKnife.bind(this);
 
-        user = FirebaseAuth.getInstance().getCurrentUser();
-        mFirebaseStorage = FirebaseStorage.getInstance();
+        FirebaseStorage mFirebaseStorage = FirebaseStorage.getInstance();
         mChatPhotosStorageReference = mFirebaseStorage.getReference().child("page_photo");
 
         StringSopTitle = ListofSOPsAdapter.bookTitle;
@@ -120,7 +114,7 @@ public class StepActivity extends AppCompatActivity {
             if (!stringDescription.equals("")) {
                 textviewStepDescription.setText(stringDescription);
             } else {
-                textviewStepDescription.setText("No Description");
+                textviewStepDescription.setText(R.string.no_dexcrip);
             }
         }
 

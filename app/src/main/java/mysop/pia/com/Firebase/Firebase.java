@@ -23,6 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import butterknife.ButterKnife;
 import mysop.pia.com.R;
@@ -149,7 +150,7 @@ public class Firebase extends Activity {
                                         .setDisplayName(username)
                                         .build();
 
-                                user.updateProfile(profileUpdates)
+                                Objects.requireNonNull(user).updateProfile(profileUpdates)
                                         .addOnCompleteListener(task -> {
                                             if (task.isSuccessful()) {
                                                 Log.d(TAG, "User nickname is set!");

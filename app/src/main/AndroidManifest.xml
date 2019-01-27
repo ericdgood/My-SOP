@@ -34,7 +34,7 @@
         <activity
             android:name=".Steps.ListOfSteps"
             android:label="@string/title_list_of_steps" />
-        <activity android:name=".Steps.StepActivity"></activity>
+        <activity android:name=".Steps.StepActivity" />
         <activity android:name=".Firebase.Firebase" />
         <activity android:name=".Firebase.ShareWithUser" />
 

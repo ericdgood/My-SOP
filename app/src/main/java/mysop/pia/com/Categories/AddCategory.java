@@ -60,8 +60,8 @@ public class AddCategory extends Activity {
             int id = getIntent().getIntExtra("id",0);
             setTitle("Edit Shelf");
             editTextCategoryName.setText(categoryTitle);
-            tvShelfLabel.setText("Edit the shelf name");
-            buttonSave.setText("Edit");
+            tvShelfLabel.setText(R.string.edit_shelfName);
+            buttonSave.setText(R.string.edit);
 
             buttonSave.setOnClickListener(v -> {
                 categoryTitle = editTextCategoryName.getText().toString();

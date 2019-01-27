@@ -10,7 +10,7 @@
         style="@style/ConstraintCenterHorizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="FireBase"
+        android:text="@string/firebase"
         android:textSize="32sp"/>
 
     <TextView
@@ -19,22 +19,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="12dp"
-        android:text="Create a unique username. Must be one word."
+        android:text="@string/create_a_unique_username_must_be_one_word"
         app:layout_constraintTop_toBottomOf="@id/label"/>
 
     <EditText
         android:id="@+id/edittext_firebase_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="User Name"
-        app:layout_constraintTop_toBottomOf="@id/firebase_username_label"/>
+        android:hint="@string/user_name"
+        android:inputType="text"
+        app:layout_constraintTop_toBottomOf="@id/firebase_username_label" />
 
 
     <Button
         android:id="@+id/button_share"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Create User name"
+        android:text="@string/create_user_name"
         app:layout_constraintTop_toBottomOf="@id/edittext_firebase_username"/>
 
 </android.support.constraint.ConstraintLayout>
