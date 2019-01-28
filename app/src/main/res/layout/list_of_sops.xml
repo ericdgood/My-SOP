@@ -31,6 +31,6 @@
         app:srcCompat="@drawable/ic_book"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        />
+        android:contentDescription="@string/add_handbook"/>
 
 </android.support.constraint.ConstraintLayout>

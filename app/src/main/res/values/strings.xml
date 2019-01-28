@@ -60,5 +60,8 @@
     <string name="shelf_image">shelf image</string>
     <string name="shelf_options">shelf options</string>
     <string name="shelf_share">shelf share</string>
+    <string name="add_book_shelf">Add Book Shelf</string>
+    <string name="add_handbook">Add Handbook</string>
+    <string name="add_page">Add Page</string>
 
 </resources>
