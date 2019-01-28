@@ -27,6 +27,8 @@ import mysop.pia.com.Pages.PagesRoom.StepsAppDatabase;
 import mysop.pia.com.Pages.PagesRoom.StepsRoomData;
 import mysop.pia.com.R;
 
+import static maes.tech.intentanim.CustomIntent.customType;
+
 public class PageActivity extends AppCompatActivity {
 
 
@@ -127,6 +129,7 @@ public class PageActivity extends AppCompatActivity {
                     nextStep.putExtra(getString(R.string.booktitle), StringSopTitle);
                     nextStep.putExtra(getString(R.string.position), position + 1);
                     startActivity(nextStep);
+                    customType(this,"left-to-right");
                     finish();
                 });
 
@@ -135,6 +138,7 @@ public class PageActivity extends AppCompatActivity {
                     nextStep.putExtra(getString(R.string.booktitle), StringSopTitle);
                     nextStep.putExtra(getString(R.string.position), position - 1);
                     startActivity(nextStep);
+                    customType(this,"right-to-left");
                     finish();
                 });
 

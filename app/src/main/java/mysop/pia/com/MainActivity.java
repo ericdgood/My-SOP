@@ -40,6 +40,8 @@ import mysop.pia.com.Categories.ShelfRoom.MySOPs;
 import mysop.pia.com.Firebase.Firebase;
 import mysop.pia.com.Pages.PagesRoom.StepsRoomData;
 
+import static maes.tech.intentanim.CustomIntent.customType;
+
 public class MainActivity extends AppCompatActivity {
 
     public static List<MySOPs> sopList = new ArrayList<>();
@@ -79,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(view -> {
             Intent addCategory = new Intent(MainActivity.this, AddShelf.class);
             startActivity(addCategory);
+            customType(MainActivity.this,"left-to-right");
             finish();
         });
     }
