@@ -5,7 +5,7 @@ android {
         config {
             keyAlias 'PureImaginationApps'
             keyPassword 'And2018!'
-            storeFile file('C:/Users/Edgoo/Desktop/The Handbook.jks')
+            storeFile file('MySOP/app/The Handbook.jks')
             storePassword 'Thb2019!'
         }
     }
@@ -59,7 +59,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:16.0.5'
     implementation 'com.google.firebase:firebase-core:16.0.5'
     implementation 'com.google.firebase:firebase-storage:16.0.5'
-//    ANIMATION LIBRARY
+    //    ANIMATION LIBRARY
     implementation 'com.github.hajiyevelnur92:intentanimation:1.0'
 }
 
