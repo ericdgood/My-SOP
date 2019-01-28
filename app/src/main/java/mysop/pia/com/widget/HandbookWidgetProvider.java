@@ -30,7 +30,7 @@ public class HandbookWidgetProvider extends AppWidgetProvider {
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
             views.setViewVisibility(R.id.widget_no_book_selected, View.GONE);
 //                GET BOOK TITLE TO SHOW IN WIDGET
-            String widgetTitle = mIngredients.get(0).getSopTitle() + " Handbook";
+            String widgetTitle = mIngredients.get(0).getSopTitle() + context.getString(R.string.handbookspace);
             views.setTextViewText(R.id.widget_book_title, widgetTitle);
 
             views.setRemoteAdapter(R.id.widget_recycler, intent);

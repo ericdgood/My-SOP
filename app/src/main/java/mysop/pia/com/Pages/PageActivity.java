@@ -60,10 +60,10 @@ public class PageActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         FirebaseStorage mFirebaseStorage = FirebaseStorage.getInstance();
-        mChatPhotosStorageReference = mFirebaseStorage.getReference().child("page_photo");
+        mChatPhotosStorageReference = mFirebaseStorage.getReference().child(getString(R.string.pagehoto));
 
         StringSopTitle = ListofHandbooksAdapter.bookTitle;
-        position = getIntent().getIntExtra("position", 0);
+        position = getIntent().getIntExtra(getString(R.string.position), 0);
 
         listOfSteps = ListOfPages.listOfSteps;
         numberOfSteps = listOfSteps.size();
@@ -82,7 +82,7 @@ public class PageActivity extends AppCompatActivity {
     }
 
     private void setTitleBar() {
-        String stepNumberConCat = "Step " + stringStepNumber + " out of " + numberOfSteps;
+        String stepNumberConCat = getString(R.string.spacestep) + stringStepNumber + getString(R.string.outof) + numberOfSteps;
         setTitle(stepNumberConCat);
     }
 
@@ -124,16 +124,16 @@ public class PageActivity extends AppCompatActivity {
             if (stepNum <= numberOfSteps) {
                 btnPageNext.setOnClickListener(v -> {
                     Intent nextStep = new Intent(this, PageActivity.class);
-                    nextStep.putExtra("sopTitle", StringSopTitle);
-                    nextStep.putExtra("position", position + 1);
+                    nextStep.putExtra(getString(R.string.booktitle), StringSopTitle);
+                    nextStep.putExtra(getString(R.string.position), position + 1);
                     startActivity(nextStep);
                     finish();
                 });
 
                 btnPagePrev.setOnClickListener(v -> {
                     Intent nextStep = new Intent(this, PageActivity.class);
-                    nextStep.putExtra("sopTitle", StringSopTitle);
-                    nextStep.putExtra("position", position - 1);
+                    nextStep.putExtra(getString(R.string.booktitle), StringSopTitle);
+                    nextStep.putExtra(getString(R.string.position), position - 1);
                     startActivity(nextStep);
                     finish();
                 });
@@ -162,12 +162,12 @@ public class PageActivity extends AppCompatActivity {
             int id = item.getItemId();
             if (id == R.id.menu_step_edit_step) {
                 Intent editStep = new Intent(this, AddPage.class);
-                editStep.putExtra("editStep", true);
-                editStep.putExtra("stepNumber", Integer.valueOf(stringStepNumber));
-                editStep.putExtra("stepTitle", stringStepTitle);
-                editStep.putExtra("stepDescription", stringDescription);
-                editStep.putExtra("editImage", stringPicture);
-                editStep.putExtra("sopTitle", StringSopTitle);
+                editStep.putExtra(getString(R.string.editpage1), true);
+                editStep.putExtra(getString(R.string.pagenum), Integer.valueOf(stringStepNumber));
+                editStep.putExtra(getString(R.string.pagetitle), stringStepTitle);
+                editStep.putExtra(getString(R.string.pagedescrip), stringDescription);
+                editStep.putExtra(getString(R.string.pagepic), stringPicture);
+                editStep.putExtra(getString(R.string.booktitle), StringSopTitle);
                 startActivity(editStep);
                 finish();
                 return true;
@@ -183,15 +183,15 @@ public class PageActivity extends AppCompatActivity {
         private void alertToDelete () {
             AlertDialog.Builder builder;
             builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Light_Dialog_Alert);
-            builder.setTitle("Delete step")
-                    .setMessage("Are you sure you want to delete this step?")
+            builder.setTitle(R.string.deletestep)
+                    .setMessage(R.string.rusuredele)
                     .setPositiveButton(android.R.string.yes, (dialog, which) -> {
                         // continue with delete
                         stepsRoomDatabase().listOfSteps().DeletePAGE(stringStepTitle);
                         stepsRoomDatabase().listOfSteps().updatePageNumber(Integer.parseInt(stringStepNumber), StringSopTitle);
-                        Toast.makeText(this, stringStepTitle + " is Deleted from book", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, stringStepTitle + getString(R.string.isdeletednow), Toast.LENGTH_SHORT).show();
                         Intent returnToPageList = new Intent(this, ListOfPages.class);
-                        returnToPageList.putExtra("sopTitle", StringSopTitle);
+                        returnToPageList.putExtra(getString(R.string.booktitle), StringSopTitle);
                         startActivity(returnToPageList);
                         finish();
                     })
@@ -204,7 +204,7 @@ public class PageActivity extends AppCompatActivity {
         }
 
         public StepsAppDatabase stepsRoomDatabase () {
-            return Room.databaseBuilder(getApplicationContext(), StepsAppDatabase.class, "steps")
+            return Room.databaseBuilder(getApplicationContext(), StepsAppDatabase.class, getString(R.string.steps))
                     .fallbackToDestructiveMigration()
                     .allowMainThreadQueries()
                     .build();
@@ -214,7 +214,7 @@ public class PageActivity extends AppCompatActivity {
         public void onBackPressed () {
             super.onBackPressed();
             Intent returnToListSteps = new Intent(this, ListOfPages.class);
-            returnToListSteps.putExtra("sopTitle", listOfSteps.get(position).getSopTitle());
+            returnToListSteps.putExtra(getString(R.string.booktitle), listOfSteps.get(position).getSopTitle());
             startActivity(returnToListSteps);
         }
     }

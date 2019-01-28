@@ -46,14 +46,14 @@ public class Firebase extends Activity {
 
         // Initialize Firebase components
         FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mUsersDatabaseReference = mFirebaseDatabase.getReference().child("Users");
+        mUsersDatabaseReference = mFirebaseDatabase.getReference().child(getString(R.string.user));
         mFirebaseAuth = FirebaseAuth.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
 
 //        FIREBASE SIGN IN
         mAuthStateListener = firebaseAuth -> {
             if (user != null) {
-                com.google.firebase.database.Query newUserMatch = mUsersDatabaseReference.orderByChild("userName").equalTo(user.getDisplayName());
+                com.google.firebase.database.Query newUserMatch = mUsersDatabaseReference.orderByChild(getString(R.string.username)).equalTo(user.getDisplayName());
 
                 newUserMatch.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -63,7 +63,7 @@ public class Firebase extends Activity {
                             Intent ShareWithUser = new Intent(Firebase.this, mysop.pia.com.Firebase.ShareWithUser.class);
                             startActivity(ShareWithUser);
                             finish();
-                            Toast.makeText(Firebase.this, "Already Signed In as " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Firebase.this, getString(R.string.alreadysignedin) + user.getDisplayName(), Toast.LENGTH_SHORT).show();
                         }
                         else {
 //                            DO THIS IF THEY ARE NEW USERS
@@ -100,10 +100,10 @@ public class Firebase extends Activity {
         if (requestCode == RC_SIGN_IN) {
             if (resultCode == RESULT_OK) {
                 // Sign-in succeeded, set up the UI
-                    Toast.makeText(this, "Signed in!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.signedin, Toast.LENGTH_SHORT).show();
             } else if (resultCode == RESULT_CANCELED) {
                 // Sign in was canceled by the user, finish the activity
-                Toast.makeText(this, "Sign in canceled", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.signincanceled, Toast.LENGTH_SHORT).show();
                 finish();
             }
         }
@@ -134,14 +134,14 @@ public class Firebase extends Activity {
 
                 if (!username.contains(" ") || username.equals("")) {
 
-                    com.google.firebase.database.Query userNameQuery = mUsersDatabaseReference.orderByChild("userName").equalTo(username);
+                    com.google.firebase.database.Query userNameQuery = mUsersDatabaseReference.orderByChild(getString(R.string.username)).equalTo(username);
 
                     userNameQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 //                            IF A USERNAME MATCHES ANOTHER IT IS GREATER THAN 0
                             if (dataSnapshot.getChildrenCount() > 0) {
-                                Toast.makeText(Firebase.this, "Choose a different user name", Toast.LENGTH_LONG).show();
+                                Toast.makeText(Firebase.this, R.string.differentname, Toast.LENGTH_LONG).show();
                             } else {
 
                                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -153,16 +153,16 @@ public class Firebase extends Activity {
                                 Objects.requireNonNull(user).updateProfile(profileUpdates)
                                         .addOnCompleteListener(task -> {
                                             if (task.isSuccessful()) {
-                                                Log.d(TAG, "User nickname is set!");
+                                                Log.d(TAG, getString(R.string.usernameset));
                                             }
                                         });
 
                                 Map neuUser = new HashMap();
-                                neuUser.put("userName", username);
-                                neuUser.put("email", user.getEmail());
+                                neuUser.put(getString(R.string.username), username);
+                                neuUser.put(getString(R.string.email), user.getEmail());
                                 mUsersDatabaseReference.push().setValue(neuUser);
 
-                                Toast.makeText(Firebase.this, "User name updated", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Firebase.this, R.string.userupdated, Toast.LENGTH_SHORT).show();
 
                                 Intent ShareWithUser = new Intent(Firebase.this, mysop.pia.com.Firebase.ShareWithUser.class);
                                 startActivity(ShareWithUser);
@@ -176,7 +176,7 @@ public class Firebase extends Activity {
                         }
                     });
                 } else {
-                    Toast.makeText(this, "No spaces allowed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.nospaces, Toast.LENGTH_SHORT).show();
                 }
             });
     }

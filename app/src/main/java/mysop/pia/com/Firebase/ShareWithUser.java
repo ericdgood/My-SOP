@@ -56,20 +56,20 @@ public class ShareWithUser extends AppCompatActivity {
         ButterKnife.bind(this);
 
         FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mUsersDatabaseReference = mFirebaseDatabase.getReference().child("Users");
-        mSopStepsDatabaseReference = mFirebaseDatabase.getReference().child("sop");
+        mUsersDatabaseReference = mFirebaseDatabase.getReference().child(getString(R.string.users));
+        mSopStepsDatabaseReference = mFirebaseDatabase.getReference().child(getString(R.string.sop));
         user = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseStorage mFirebaseStorage = FirebaseStorage.getInstance();
-        mChatPhotosStorageReference = mFirebaseStorage.getReference().child("page_photo");
+        mChatPhotosStorageReference = mFirebaseStorage.getReference().child(getString(R.string.pagephoto));
 
         assert user != null;
-        String displayName = "User name is " + user.getDisplayName();
+        String displayName = getString(R.string.usernameis) + user.getDisplayName();
         tvDisplayUsername.setText(displayName);
 
         btnSearch.setOnClickListener(v -> {
             searchUserName = etSearchUsers.getText().toString().toLowerCase();
 
-            com.google.firebase.database.Query userNameQuery = mUsersDatabaseReference.orderByChild("userName").equalTo(searchUserName);
+            com.google.firebase.database.Query userNameQuery = mUsersDatabaseReference.orderByChild(getString(R.string.username)).equalTo(searchUserName);
 
             userNameQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -81,21 +81,21 @@ public class ShareWithUser extends AppCompatActivity {
                             List<StepsRoomData> book = stepsRoomDatabase().listOfSteps().getAllSteps(ListofHandbooksAdapter.bookTitle);
                             sendPhotos(book);
                             mSopStepsDatabaseReference.child(searchUserName).push().setValue(book);
-                            Toast.makeText(ShareWithUser.this,  ListofHandbooksAdapter.bookTitle + " sent to " + searchUserName, Toast.LENGTH_LONG).show();
+                            Toast.makeText(ShareWithUser.this,  ListofHandbooksAdapter.bookTitle + getString(R.string.sent_to) + searchUserName, Toast.LENGTH_LONG).show();
                         } else {
 //                        SEND ALL BOOKS ON A BOOK SHELF TO USER
                             stepsRoomDatabase().listOfSteps().updateShelfSharing(user.getDisplayName(), ShelfRecyclerAdapter.categoryName);
                             List<StepsRoomData> book = stepsRoomDatabase().listOfSteps().getAllBooks(ShelfRecyclerAdapter.categoryName);
                             sendPhotos(book);
                             mSopStepsDatabaseReference.child(searchUserName).push().setValue(book);
-                            Toast.makeText(ShareWithUser.this, ShelfRecyclerAdapter.categoryName + " sent to " + searchUserName, Toast.LENGTH_LONG).show();
+                            Toast.makeText(ShareWithUser.this, ShelfRecyclerAdapter.categoryName + getString(R.string.sent_to) + searchUserName, Toast.LENGTH_LONG).show();
                         }
 
                         Intent goToBooks = new Intent(ShareWithUser.this, MainActivity.class);
                         startActivity(goToBooks);
 
                     } else {
-                        Toast.makeText(ShareWithUser.this, "No user by that name.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ShareWithUser.this, R.string.no_user, Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -127,7 +127,7 @@ public class ShareWithUser extends AppCompatActivity {
         }
 
     public StepsAppDatabase stepsRoomDatabase() {
-        return Room.databaseBuilder(getApplicationContext(), StepsAppDatabase.class, "steps")
+        return Room.databaseBuilder(getApplicationContext(), StepsAppDatabase.class, getString(R.string.steps))
                 .fallbackToDestructiveMigration()
                 .allowMainThreadQueries()
                 .build();

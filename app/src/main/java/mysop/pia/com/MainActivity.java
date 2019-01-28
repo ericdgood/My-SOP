@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mSopStepsDatabaseReference = mFirebaseDatabase.getReference().child("sop");
+        mSopStepsDatabaseReference = mFirebaseDatabase.getReference().child(getString(R.string.sop));
         user = FirebaseAuth.getInstance().getCurrentUser();
 
         sopList = roomDatabase().mysopDao().getAllSOPs();
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.sign_in) {
             Intent share = new Intent(this, Firebase.class);
-            share.putExtra("signIn", 1);
+            share.putExtra(getString(R.string.signin), 1);
             startActivity(share);
             return true;
         }
@@ -111,15 +111,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public AppDatabase roomDatabase() {
-        return Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "mysop")
+        return Room.databaseBuilder(getApplicationContext(), AppDatabase.class, getString(R.string.mysop))
                 .fallbackToDestructiveMigration()
                 .allowMainThreadQueries()
                 .build();
     }
 
     private void staticBookShelfs() {
-        MySOPs bookMarked = new MySOPs("Bookmarked", "JonNyBgOoDeMARKED");
-        MySOPs shared = new MySOPs("Shared Books", "JonNyBgOoDeSHARED");
+        MySOPs bookMarked = new MySOPs(getString(R.string.bookmarked), getString(R.string.bookmarkpass));
+        MySOPs shared = new MySOPs(getString(R.string.sharedbooks1), getString(R.string.sharedpass));
         sopList.add(0, shared);
         sopList.add(1, bookMarked);
     }
@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
             setupRecylerviewDBAndAdapter();
         } else {
             imageviewNoCategory.setVisibility(View.VISIBLE);
-            String creatBookShelf = "Create a book shelf \n to keep your handbooks organized";
+            String creatBookShelf = getString(R.string.new_bookshelf);
             textviewNoCategory.setText(creatBookShelf);
             textviewNoCategory.setVisibility(View.VISIBLE);
             staticBookShelfs();
@@ -200,8 +200,8 @@ public class MainActivity extends AppCompatActivity {
     private void alertSharedShelf(StepsRoomData sharedBook, DataSnapshot dataSnapshot) {
         AlertDialog.Builder builder;
         builder = new AlertDialog.Builder(MainActivity.this, android.R.style.Theme_DeviceDefault_Dialog_Alert);
-        builder.setTitle("Shared Book")
-                .setMessage(" would you like to receive " + sharedBook.getSopTitle() + " Handbook from " + sharedBook.getSharedAuthor())
+        builder.setTitle(R.string.sharedbook)
+                .setMessage(getString(R.string.receive) + sharedBook.getSopTitle() + getString(R.string.bookfrom) + sharedBook.getSharedAuthor())
                 .setPositiveButton("Accept", (dialog, which) -> {
 //                    DO THIS WHEN RECEIVE A SHARED BOOK
 
@@ -215,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
                 .setNegativeButton("Deny", (dialog, which) -> {
                     // do nothing
                     sharedStat(dataSnapshot, false);
-                    Toast.makeText(MainActivity.this, "Item not accepted", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, R.string.not_accepted, Toast.LENGTH_SHORT).show();
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert);
         if (!this.isFinishing()) {
@@ -227,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
     private void addSharedShelfs(StepsRoomData sharedBook) {
         firebaseSteps.add(sharedBook);
         if (sharedBook.getStepNumber() == 1 && !sharedBook.getCategory().equals(firebaseShelfs)
-                && !sharedBook.getCategory().equals("Shared Books")) {
+                && !sharedBook.getCategory().equals(getString(R.string.sharedbooks2))) {
             firebaseShelfs = sharedBook.getCategory();
             MySOPs book = new MySOPs(firebaseShelfs, sharedBook.getSharedAuthor());
             sopList.add(book);
@@ -241,11 +241,11 @@ public class MainActivity extends AppCompatActivity {
             if (accept) {
                 assert page != null;
                 if (page.getSharedStatus() == 1) {
-                    ds.getRef().child("sharedStatus").setValue(2);
+                    ds.getRef().child(getString(R.string.sharedstatus)).setValue(2);
                 }
                 if (page.getSharedStatus() == 4) {
-                    ds.getRef().child("category").setValue("Shared Books");
-                    ds.getRef().child("sharedStatus").setValue(5);
+                    ds.getRef().child(getString(R.string.category)).setValue(getString(R.string.sharedbooks2));
+                    ds.getRef().child(getString(R.string.sharedstatus)).setValue(5);
                 }
             } else {
                 ds.getRef().removeValue();

@@ -82,10 +82,10 @@ public class AddPage extends AppCompatActivity {
         setContentView(R.layout.add_step);
         ButterKnife.bind(this);
 //      GETS SOPTITLE FROM ADD SOP INTENT
-        sopTitle = getIntent().getStringExtra("sopTitle");
-        categoryName = getIntent().getStringExtra("sopCategory");
-        bookColor = getIntent().getStringExtra("bookColor");
-        stepNumber = getIntent().getIntExtra("stepNumber", 1);
+        sopTitle = getIntent().getStringExtra(getString(R.string.booktitle));
+        categoryName = getIntent().getStringExtra(getString(R.string.shelftitle1));
+        bookColor = getIntent().getStringExtra(getString(R.string.bookcolor));
+        stepNumber = getIntent().getIntExtra(getString(R.string.pagenum), 1);
         setStepText();
         pickImageFromGallery();
         editStep();
@@ -95,7 +95,7 @@ public class AddPage extends AppCompatActivity {
         buttonCompleteSOP.setOnClickListener(v -> {
             if (AddStepToRoomDatabase()) {
                 Intent goToNewSOP = new Intent(this, ListofHandbooks.class);
-                goToNewSOP.putExtra("sopTitle", sopTitle);
+                goToNewSOP.putExtra(getString(R.string.booktitle), sopTitle);
                 startActivity(goToNewSOP);
                 finish();
             }
@@ -105,9 +105,9 @@ public class AddPage extends AppCompatActivity {
             if (AddStepToRoomDatabase()) {
                 Intent nextStep = new Intent(this, AddPage.class);
                 int nextStepNum = stepNumber + 1;
-                nextStep.putExtra("stepNumber", nextStepNum);
-                nextStep.putExtra("sopTitle", sopTitle);
-                nextStep.putExtra("sopCategory", categoryName);
+                nextStep.putExtra(getString(R.string.pagenum), nextStepNum);
+                nextStep.putExtra(getString(R.string.booktitle), sopTitle);
+                nextStep.putExtra(getString(R.string.shelftitle1), categoryName);
                 startActivity(nextStep);
                 finish();
             }
@@ -116,9 +116,9 @@ public class AddPage extends AppCompatActivity {
 
     private void setStepTitle() {
         if (!editStep) {
-            setTitle("Add Step");
+            setTitle(getString(R.string.addpage));
         } else {
-            setTitle("Edit Step");
+            setTitle(getString(R.string.editpage));
         }
     }
 
@@ -141,33 +141,33 @@ public class AddPage extends AppCompatActivity {
             } else {
                 newStep.setId(ListOfPagesAdapter.stepId);
                 stepsRoomDatabase().listOfSteps().updateStep(newStep);
-                Toast.makeText(this, "Edits were saved", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.editssaved, Toast.LENGTH_SHORT).show();
                 return true;
             }
         } else {
-            Toast.makeText(this, "Please enter a title for the step", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.entertitle, Toast.LENGTH_SHORT).show();
             return false;
         }
     }
 
     public StepsAppDatabase stepsRoomDatabase() {
-        return Room.databaseBuilder(getApplicationContext(), StepsAppDatabase.class, "steps")
+        return Room.databaseBuilder(getApplicationContext(), StepsAppDatabase.class, getString(R.string.steps))
                 .fallbackToDestructiveMigration()
                 .allowMainThreadQueries()
                 .build();
     }
 
     public void setStepText() {
-        String stepConcat = "Step " + stepNumber;
+        String stepConcat = getString(R.string.stepsspace) + stepNumber;
         textviewStepCount.setText(stepConcat);
     }
 
     private void editStep() {
 //        INFO PASSED FROM STEP ACTIVITY
-        editStep = getIntent().getBooleanExtra("editStep", false);
-        stepTitle = getIntent().getStringExtra("stepTitle");
-        stepDescription = getIntent().getStringExtra("stepDescription");
-        image = getIntent().getStringExtra("editImage");
+        editStep = getIntent().getBooleanExtra(getString(R.string.editpage1), false);
+        stepTitle = getIntent().getStringExtra(getString(R.string.pagetitle));
+        stepDescription = getIntent().getStringExtra(getString(R.string.pagedescrip));
+        image = getIntent().getStringExtra(getString(R.string.pagepic));
 
         if (editStep) {
 //            DO THIS IF MENU EDIT TEXT WAS SELECTED
@@ -184,7 +184,7 @@ public class AddPage extends AppCompatActivity {
             buttonEditStepSave.setOnClickListener(v -> {
                 if (AddStepToRoomDatabase()) {
                     Intent goToNewSOP = new Intent(this, ListOfPages.class);
-                    goToNewSOP.putExtra("sopTitle", sopTitle);
+                    goToNewSOP.putExtra(getString(R.string.booktitle), sopTitle);
                     startActivity(goToNewSOP);
                     finish();
                 }
@@ -214,11 +214,11 @@ public class AddPage extends AppCompatActivity {
                     // GALLERY PERMISSION GRANTED. THIS OPENS GALLERY CHOOSER
                     Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                     intent.addCategory(Intent.CATEGORY_OPENABLE);
-                    intent.setType("image/*");
+                    intent.setType(getString(R.string.image));
                     startActivityForResult(intent, 2);
                 } else {
                     // permission denied, boo!
-                    Toast.makeText(this, "Permission denied to read your External storage", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.permisdenied, Toast.LENGTH_SHORT).show();
                 }
                 return;
             }
@@ -234,7 +234,7 @@ public class AddPage extends AppCompatActivity {
                     Date date = new Date();
                     @SuppressLint("SimpleDateFormat") DateFormat df = new SimpleDateFormat("-mm-ss");
 
-                    String newPicFile = df.format(date) + ".jpg";
+                    String newPicFile = df.format(date) + getString(R.string.jpg);
                     String outPath = getString(R.string.sdcard) + newPicFile;
                     File outFile = new File(outPath);
 
@@ -243,7 +243,7 @@ public class AddPage extends AppCompatActivity {
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, outuri);
                     startActivityForResult(intent, 2);
                 } else {
-                    Toast.makeText(this, "Permission denied to ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.premisden, Toast.LENGTH_SHORT).show();
                 }
             }
 

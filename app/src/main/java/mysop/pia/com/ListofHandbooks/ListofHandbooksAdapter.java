@@ -100,13 +100,13 @@ public class ListofHandbooksAdapter extends RecyclerView.Adapter<ListofHandbooks
                 savedBook = 0;
                 viewholder.imgBookSave.setImageResource(R.drawable.baseline_bookmark_border_black_36dp);
                 db.listOfSteps().updateBookSaved(0, id);
-                Toast.makeText(context, sopTitle + " Un-Bookmarked", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, sopTitle + context.getString(R.string.unbookmarked), Toast.LENGTH_SHORT).show();
             } else if (savedBook == 0) {
 //            SAVE BOOK
                 savedBook = 1;
                 viewholder.imgBookSave.setImageResource(R.drawable.ic_bookmark);
                 db.listOfSteps().updateBookSaved(1, id);
-                Toast.makeText(context, sopTitle + " Bookmarked", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, sopTitle + context.getString(R.string.bookmarked), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -150,9 +150,9 @@ public class ListofHandbooksAdapter extends RecyclerView.Adapter<ListofHandbooks
 
     private void editBook(String sopTitle, int id) {
         Intent editSOP = new Intent(context, AddHandbook.class);
-        editSOP.putExtra("editSop", 1);
-        editSOP.putExtra("editSopTitle", sopTitle);
-        editSOP.putExtra("editId", id);
+        editSOP.putExtra(context.getString(R.string.editbook), 1);
+        editSOP.putExtra(context.getString(R.string.editbooktitle), sopTitle);
+        editSOP.putExtra(context.getString(R.string.editbookid), id);
         context.startActivity(editSOP);
         ((Activity) context).finish();
     }
@@ -160,12 +160,12 @@ public class ListofHandbooksAdapter extends RecyclerView.Adapter<ListofHandbooks
     private void alertToDelete(String bookTitle, int position) {
         AlertDialog.Builder builder;
         builder = new AlertDialog.Builder(context, android.R.style.Theme_Material_Light_Dialog_Alert);
-        builder.setTitle("Delete entry")
-                .setMessage("Are you sure you want to delete " + bookTitle + "?")
+        builder.setTitle(R.string.deletedentry)
+                .setMessage(context.getString(R.string.rusuredelete) + bookTitle + context.getString(R.string.quesionmark))
                 .setPositiveButton(android.R.string.yes, (dialog, which) -> {
                     // continue with delete
                     db.listOfSteps().DeleteSOP(bookTitle);
-                    Toast.makeText(context, bookTitle + " is Deleted", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, bookTitle + context.getString(R.string.isdeleted), Toast.LENGTH_SHORT).show();
                     listOfSOPS.remove(position);
                     notifyDataSetChanged();
                 })

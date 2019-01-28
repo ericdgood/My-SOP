@@ -85,7 +85,7 @@ public class ListOfPages extends Activity {
     }
 
     public StepsAppDatabase stepsRoomDatabase() {
-        return Room.databaseBuilder(getApplicationContext(), StepsAppDatabase.class, "steps")
+        return Room.databaseBuilder(getApplicationContext(), StepsAppDatabase.class, getString(R.string.steps))
                 .fallbackToDestructiveMigration()
                 .allowMainThreadQueries()
                 .build();
@@ -95,8 +95,8 @@ public class ListOfPages extends Activity {
         fabAddStep.setOnClickListener(v -> {
             int listOfStepsSize = listOfSteps.size();
             Intent addStep = new Intent(this, AddPage.class);
-            addStep.putExtra("sopTitle", bookTitle);
-            addStep.putExtra("stepNumber", listOfStepsSize + 1);
+            addStep.putExtra(getString(R.string.booktitle), bookTitle);
+            addStep.putExtra(getString(R.string.pagenum), listOfStepsSize + 1);
             startActivity(addStep);
             finish();
         });
@@ -119,7 +119,7 @@ public class ListOfPages extends Activity {
     private void startWidgetService() {
         Intent i = new Intent(this, WidgetUpdateService.class);
         startService(i);
-        Toast.makeText(this, "Pages added to widget", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, R.string.widgetpage, Toast.LENGTH_LONG).show();
     }
 
 }

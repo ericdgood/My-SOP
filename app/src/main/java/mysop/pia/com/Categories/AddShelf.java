@@ -38,7 +38,7 @@ public class AddShelf extends Activity {
         setContentView(R.layout.add_shelf);
         ButterKnife.bind(this);
 
-        edit = getIntent().getBooleanExtra("edit", true);
+        edit = getIntent().getBooleanExtra(getString(R.string.edit1), true);
 
         if (edit) {
             buttonSave.setOnClickListener(v -> {
@@ -56,9 +56,9 @@ public class AddShelf extends Activity {
                 }
             });
         } else {
-            categoryTitle = getIntent().getStringExtra("shelfTitle");
-            int id = getIntent().getIntExtra("id",0);
-            setTitle("Edit Shelf");
+            categoryTitle = getIntent().getStringExtra(getString(R.string.shelftitle));
+            int id = getIntent().getIntExtra(getString(R.string.id),0);
+            setTitle(getString(R.string.editshelf));
             editTextCategoryName.setText(categoryTitle);
             tvShelfLabel.setText(R.string.edit_shelfName);
             buttonSave.setText(R.string.edit);
@@ -67,7 +67,7 @@ public class AddShelf extends Activity {
                 categoryTitle = editTextCategoryName.getText().toString();
             if (checkDuplicateCategory()){
                 roomDatabase().mysopDao().updateShelf(categoryTitle,id);
-                pagesRoom().listOfSteps().updatePagesShelf(categoryTitle, getIntent().getStringExtra("shelfTitle"));
+                pagesRoom().listOfSteps().updatePagesShelf(categoryTitle, getIntent().getStringExtra(getString(R.string.shelftitle)));
 
                 Intent returnHome = new Intent(AddShelf.this, MainActivity.class);
                 startActivity(returnHome);
@@ -78,14 +78,14 @@ public class AddShelf extends Activity {
     }
 
     public AppDatabase roomDatabase() {
-        return Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "mysop")
+        return Room.databaseBuilder(getApplicationContext(), AppDatabase.class, getString(R.string.mysop))
                 .fallbackToDestructiveMigration()
                 .allowMainThreadQueries()
                 .build();
     }
 
     public StepsAppDatabase pagesRoom() {
-        return Room.databaseBuilder(getApplicationContext(), StepsAppDatabase.class, "steps")
+        return Room.databaseBuilder(getApplicationContext(), StepsAppDatabase.class, getString(R.string.steps))
                 .fallbackToDestructiveMigration()
                 .allowMainThreadQueries()
                 .build();
@@ -98,10 +98,10 @@ public class AddShelf extends Activity {
             catTitlesCheck = String.valueOf(categories.get(i).getCategoryTitle().toUpperCase());
 
             if (catTitlesCheck.equals(categoryTitle.toUpperCase())) {
-                Toast.makeText(this, "This category already exists", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.catexsits, Toast.LENGTH_LONG).show();
                 return false;
             } else if (categoryTitle.equals("")){
-                Toast.makeText(this, "Please enter a category name", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.newcat, Toast.LENGTH_SHORT).show();
                 return false;
             }
         }

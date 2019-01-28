@@ -55,7 +55,7 @@ public class AddHandbook extends AppCompatActivity {
         setContentView(R.layout.add_sop);
         ButterKnife.bind(this);
 
-        EDITSOP = getIntent().getIntExtra("editSop", 0);
+        EDITSOP = getIntent().getIntExtra(getString(R.string.editbook), 0);
 
         if (EDITSOP == 1) {
             editSop();
@@ -67,9 +67,9 @@ public class AddHandbook extends AppCompatActivity {
 
                 if (checkDuplicateSOP()) {
                     Intent addStep = new Intent(AddHandbook.this, AddPage.class);
-                    addStep.putExtra("sopTitle", addSopTitle);
-                    addStep.putExtra("sopCategory", categoryName);
-                    addStep.putExtra("bookColor", bookColor);
+                    addStep.putExtra(getString(R.string.booktitle), addSopTitle);
+                    addStep.putExtra(getString(R.string.bookshelf), categoryName);
+                    addStep.putExtra(getString(R.string.bookcolor), bookColor);
                     startActivity(addStep);
                     finish();
                 }
@@ -87,31 +87,31 @@ public class AddHandbook extends AppCompatActivity {
 
     public void bookColor() {
         viewBookRed.setOnClickListener(v -> {
-            bookColor = "Red";
+            bookColor = getString(R.string.red);
             clearColorBorder();
             viewBookRed.setImageResource(R.drawable.description_border);
             toastColor();
         });
         viewBookBlue.setOnClickListener(v -> {
-            bookColor = "Blue";
+            bookColor = getString(R.string.blue);
             clearColorBorder();
             viewBookBlue.setImageResource(R.drawable.description_border);
             toastColor();
         });
         viewBookGreen.setOnClickListener(v -> {
-            bookColor = "Green";
+            bookColor = getString(R.string.green);
             clearColorBorder();
             viewBookGreen.setImageResource(R.drawable.description_border);
             toastColor();
         });
         viewBookYellow.setOnClickListener(v -> {
-            bookColor = "Yellow";
+            bookColor = getString(R.string.yellow);
             clearColorBorder();
             viewBookYellow.setImageResource(R.drawable.description_border);
             toastColor();
         });
         viewBookOrange.setOnClickListener(v -> {
-            bookColor = "Orange";
+            bookColor = getString(R.string.orange);
             clearColorBorder();
             viewBookOrange.setImageResource(R.drawable.description_border);
             toastColor();
@@ -119,20 +119,20 @@ public class AddHandbook extends AppCompatActivity {
     }
 
     private void toastColor(){
-        Toast.makeText(this, bookColor + " was selected", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, bookColor + getString(R.string.wasselected), Toast.LENGTH_SHORT).show();
     }
 
     private void editSop() {
         buttonAddStep.setVisibility(View.GONE);
         buttonEditSOP.setVisibility(View.VISIBLE);
         tvAddBookLabel.setText(R.string.book_info);
-        editTextAddSopTitle.setText(getIntent().getStringExtra("editSopTitle"));
+        editTextAddSopTitle.setText(getIntent().getStringExtra(getString(R.string.editbooktitle)));
         bookColor();
         buttonEditSOP.setOnClickListener(v -> {
             addSopTitle = editTextAddSopTitle.getText().toString();
 
-                stepsRoomDatabase().listOfSteps().updateSop(addSopTitle, getIntent().getStringExtra("editSopTitle"));
-                stepsRoomDatabase().listOfSteps().updateBookColor(bookColor,getIntent().getIntExtra("editId",0));
+                stepsRoomDatabase().listOfSteps().updateSop(addSopTitle, getIntent().getStringExtra(getString(R.string.editbooktitle)));
+                stepsRoomDatabase().listOfSteps().updateBookColor(bookColor,getIntent().getIntExtra(getString(R.string.editid),0));
                 Intent returnToSOP = new Intent(this, ListofHandbooks.class);
                 startActivity(returnToSOP);
                 finish();
@@ -148,10 +148,10 @@ public class AddHandbook extends AppCompatActivity {
 
             if (SOPTitlesCheck.equals(addSopTitle.toUpperCase())) {
                 String sopCategory = SOPs.get(i).getCategory();
-                Toast.makeText(this, "This SOP already exists in " + sopCategory + " category", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getString(R.string.bookexsits) + sopCategory + getString(R.string.shelf), Toast.LENGTH_LONG).show();
                 return false;
             } else if (addSopTitle.equals("")) {
-                Toast.makeText(this, "Please enter a SOP name", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.bookname, Toast.LENGTH_SHORT).show();
                 return false;
             }
         }
@@ -160,7 +160,7 @@ public class AddHandbook extends AppCompatActivity {
 
 
     public StepsAppDatabase stepsRoomDatabase() {
-        return Room.databaseBuilder(getApplicationContext(), StepsAppDatabase.class, "steps")
+        return Room.databaseBuilder(getApplicationContext(), StepsAppDatabase.class, getString(R.string.steps))
                 .fallbackToDestructiveMigration()
                 .allowMainThreadQueries()
                 .build();

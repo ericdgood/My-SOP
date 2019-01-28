@@ -80,11 +80,11 @@ public class ShelfRecyclerAdapter extends RecyclerView.Adapter<ShelfRecyclerAdap
         } else {
             viewholder.imgCatOptions.setVisibility(View.INVISIBLE);
             viewholder.imgCatShared.setVisibility(View.VISIBLE);
-            viewholder.imgCatShared.setOnClickListener(v -> Toast.makeText(context, categoryList.get(position).getCategoryTitle() + " was shared by " + sharedAuthor, Toast.LENGTH_LONG).show());
+            viewholder.imgCatShared.setOnClickListener(v -> Toast.makeText(context, categoryList.get(position).getCategoryTitle() + context.getString(R.string.sharedBy) + sharedAuthor, Toast.LENGTH_LONG).show());
         }
 
 
-        if (sharedAuthor != (null) && sharedAuthor.equals("JonNyBgOoDeSHARED")) {
+        if (sharedAuthor != (null) && sharedAuthor.equals(context.getString(R.string.sharedpass))) {
 //            THIS IS FOR SHARED SHELF
             params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
             viewholder.imageviewCategory.setImageResource(R.drawable.ic_action_share);
@@ -93,7 +93,7 @@ public class ShelfRecyclerAdapter extends RecyclerView.Adapter<ShelfRecyclerAdap
             viewholder.imgCatShared.setVisibility(View.GONE);
         }
 
-        if (sharedAuthor != (null) && sharedAuthor.equals("JonNyBgOoDeMARKED")) {
+        if (sharedAuthor != (null) && sharedAuthor.equals(context.getString(R.string.bookmarkpass))) {
 //            THIS IS FOR BOOKMARKED BOOKS
             params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
             viewholder.categoryTitle.setTextSize(21);
@@ -113,9 +113,9 @@ public class ShelfRecyclerAdapter extends RecyclerView.Adapter<ShelfRecyclerAdap
 
     private void editCategory(String categoryTitle, int id) {
         Intent editShelf = new Intent(context, AddShelf.class);
-        editShelf.putExtra("shelfTitle", categoryTitle);
-        editShelf.putExtra("id", id);
-        editShelf.putExtra("edit", false);
+        editShelf.putExtra(context.getString(R.string.shelftitle), categoryTitle);
+        editShelf.putExtra(context.getString(R.string.d), id);
+        editShelf.putExtra(context.getString(R.string.edit1), false);
         context.startActivity(editShelf);
         ((Activity) context).finish();
     }
@@ -153,16 +153,16 @@ public class ShelfRecyclerAdapter extends RecyclerView.Adapter<ShelfRecyclerAdap
     private void alertToDelete(String categoryName, int position) {
         AlertDialog.Builder builder;
         builder = new AlertDialog.Builder(context, android.R.style.Theme_Material_Light_Dialog_Alert);
-        builder.setTitle("Delete entry")
-                .setMessage("Are you sure you want to delete " + categoryName + "?")
+        builder.setTitle(R.string.deleteentry)
+                .setMessage(context.getString(R.string.rusuredelete) + categoryName + context.getString(R.string.questionmark))
                 .setPositiveButton(android.R.string.yes, (dialog, which) -> {
                     // continue with delete
                     db.mysopDao().deleteCategory(categoryName);
                     stepsRoomDatabase().listOfSteps().DeleteShelfBooks(categoryName);
-                    Toast.makeText(context, categoryName + " is Deleted", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, categoryName + context.getString(R.string.isdeleted), Toast.LENGTH_SHORT).show();
                     categoryList.remove(position);
                     notifyDataSetChanged();
-                    Toast.makeText(context, categoryName + " Deleted", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, categoryName + context.getString(R.string.deleted), Toast.LENGTH_SHORT).show();
                 })
                 .setNegativeButton(android.R.string.no, (dialog, which) -> {
                     // do nothing
@@ -173,7 +173,7 @@ public class ShelfRecyclerAdapter extends RecyclerView.Adapter<ShelfRecyclerAdap
     }
 
     private StepsAppDatabase stepsRoomDatabase() {
-        return Room.databaseBuilder(context, StepsAppDatabase.class, "steps")
+        return Room.databaseBuilder(context, StepsAppDatabase.class, context.getString(R.string.steps))
                 .fallbackToDestructiveMigration()
                 .allowMainThreadQueries()
                 .build();

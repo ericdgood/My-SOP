@@ -45,7 +45,7 @@ public class ListofHandbooks extends AppCompatActivity {
 
         categoryName = ShelfRecyclerAdapter.categoryName;
 
-        setTitle(categoryName + " Handbooks");
+        setTitle(categoryName + getString(R.string.handbook1));
 
         setupRecyclerviewAndAdapter();
 
@@ -58,13 +58,13 @@ public class ListofHandbooks extends AppCompatActivity {
 
     @SuppressLint("RestrictedApi")
     public void getBooks() {
-        if (categoryName.equals("Bookmarked")) {
+        if (categoryName.equals(getString(R.string.bookmarked))) {
             fabAddSOP.setVisibility(View.GONE);
             listOfSOPs = stepsRoomDatabase().listOfSteps().getAllSavedBooks(1);
             if (listOfSOPs.size() == 0) {
                 tvNoBookmarks.setVisibility(View.VISIBLE);
             }
-        } else if (categoryName.equals("Shared Books")) {
+        } else if (categoryName.equals(getString(R.string.sharedbooks2))) {
             fabAddSOP.setVisibility(View.GONE);
             if (listOfSOPs.size() == 0){
                 tvNoBookmarks.setVisibility(View.VISIBLE);
@@ -93,7 +93,7 @@ public class ListofHandbooks extends AppCompatActivity {
     }
 
     public StepsAppDatabase stepsRoomDatabase() {
-        return Room.databaseBuilder(getApplicationContext(), StepsAppDatabase.class, "steps")
+        return Room.databaseBuilder(getApplicationContext(), StepsAppDatabase.class, getString(R.string.steps))
                 .fallbackToDestructiveMigration()
                 .allowMainThreadQueries()
                 .build();
@@ -104,8 +104,8 @@ public class ListofHandbooks extends AppCompatActivity {
         for (int i = 0; i < fbsteps.size(); i++) {
             int sharedStat = fbsteps.get(i).getSharedStatus();
             int pageNumber = fbsteps.get(i).getStepNumber();
-            if (categoryName.equals("Shared Books") && sharedStat == 4 && pageNumber == 1 ||
-                    categoryName.equals("Shared Books") && sharedStat == 5 && pageNumber == 1) {
+            if (categoryName.equals(getString(R.string.sharedbooks2)) && sharedStat == 4 && pageNumber == 1 ||
+                    categoryName.equals(getString(R.string.sharedbooks2)) && sharedStat == 5 && pageNumber == 1) {
                 listOfSOPs.add(fbsteps.get(i));
                 sharedBook = sharedBook + 1;
             } else if (categoryName.equals(fbsteps.get(i).getCategory()) && sharedStat == 2 && pageNumber == 1){
