@@ -5,7 +5,7 @@ android {
         config {
             keyAlias 'PureImaginationApps'
             keyPassword 'And2018!'
-            storeFile file('MySOP/app/The Handbook.jks')
+            storeFile file('/The Handbook.jks')
             storePassword 'Thb2019!'
         }
     }
