@@ -49,7 +49,7 @@ public class Firebase extends Activity {
         mUsersDatabaseReference = mFirebaseDatabase.getReference().child(getString(R.string.user));
         mFirebaseAuth = FirebaseAuth.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
-
+//TODO: SIGN IN ISSUE WHEN A RETURNING USER SIGNS IN
 //        FIREBASE SIGN IN
         mAuthStateListener = firebaseAuth -> {
             if (user != null) {
