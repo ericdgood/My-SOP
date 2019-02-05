@@ -32,6 +32,7 @@ import static maes.tech.intentanim.CustomIntent.customType;
 public class PageActivity extends AppCompatActivity {
 
 
+    private static final String TAG = "testing";
     @BindView(R.id.textview_step_title)
     TextView textviewStepTitle;
     @BindView(R.id.imageview_step_picture)
@@ -95,7 +96,7 @@ public class PageActivity extends AppCompatActivity {
 
     private void pictureVisibility() {
         stringPicture = listOfSteps.get(position).getImageURI();
-        if (sharedStat != 3 && stringPicture != null) {
+        if (sharedStat != 0 && stringPicture != null) {
             StorageReference photoRef = mChatPhotosStorageReference.child(Uri.parse(stringPicture).getLastPathSegment());
             photoRef.getDownloadUrl().addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
