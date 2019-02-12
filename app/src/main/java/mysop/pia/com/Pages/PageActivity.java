@@ -42,6 +42,8 @@ public class PageActivity extends AppCompatActivity {
     Button btnPagePrev;
     @BindView(R.id.button_page_next)
     Button btnPageNext;
+    @BindView(R.id.no_image)
+    TextView tvNoImage;
 
     List<StepsRoomData> listOfSteps;
     int position;
@@ -107,7 +109,8 @@ public class PageActivity extends AppCompatActivity {
         } else if (stringPicture != null) {
             Glide.with(this).load(stringPicture).into(imageviewStepPicture);
         } else {
-            Glide.with(this).load(R.drawable.mysop_logo).into(imageviewStepPicture);
+            Glide.with(this).load(R.drawable.handbook).into(imageviewStepPicture);
+            tvNoImage.setVisibility(View.VISIBLE);
         }
     }
 
@@ -116,7 +119,7 @@ public class PageActivity extends AppCompatActivity {
             if (!stringDescription.equals("")) {
                 textviewStepDescription.setText(stringDescription);
             } else {
-                textviewStepDescription.setText(R.string.no_dexcrip);
+                textviewStepDescription.setVisibility(View.GONE);
             }
         }
 
