@@ -24,22 +24,17 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.13" />
 
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="1dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.15" />
-
     <TextView
         android:id="@+id/textview_list_steps_title"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        tools:text="Check air pressure"
-        app:layout_constraintBottom_toBottomOf="@id/guideline2"
+        android:layout_marginStart="12dp"
         app:layout_constraintLeft_toRightOf="@id/guideline"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center"
+        android:maxLines="2"
+        app:layout_constraintRight_toLeftOf="@id/imageview_book_pages_option"
+        app:layout_constraintTop_toBottomOf="@id/imageview_book_pages_option"
+        tools:text="Check air ddddddddddddddddddddddd"
         android:textSize="28sp"/>
 
     <android.support.v7.widget.RecyclerView
@@ -50,7 +45,7 @@
         android:layout_marginTop="8dp"
         app:layout_constraintLeft_toRightOf="@id/guideline"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guideline2"/>
+        app:layout_constraintTop_toBottomOf="@id/textview_list_steps_title"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_list_steps_add_step"
