@@ -32,7 +32,6 @@ import static maes.tech.intentanim.CustomIntent.customType;
 public class PageActivity extends AppCompatActivity {
 
 
-    private static final String TAG = "testing";
     @BindView(R.id.textview_step_title)
     TextView textviewStepTitle;
     @BindView(R.id.imageview_step_picture)
