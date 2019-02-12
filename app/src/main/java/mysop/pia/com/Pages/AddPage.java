@@ -28,6 +28,7 @@ import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import mysop.pia.com.Categories.ShelfRecyclerAdapter;
 import mysop.pia.com.ListofHandbooks.ListofHandbooks;
 import mysop.pia.com.Pages.PagesRoom.StepsAppDatabase;
 import mysop.pia.com.Pages.PagesRoom.StepsRoomData;
@@ -129,8 +130,6 @@ public class AddPage extends AppCompatActivity {
 
             if (imageUri != null) {
                 image = imageUri.toString();
-            } else {
-                image = null;
             }
 
 //            SAVE STEPS FOR SOP
@@ -168,6 +167,8 @@ public class AddPage extends AppCompatActivity {
         stepTitle = getIntent().getStringExtra(getString(R.string.pagetitle));
         stepDescription = getIntent().getStringExtra(getString(R.string.pagedescrip));
         image = getIntent().getStringExtra(getString(R.string.pagepic));
+        sopTitle = getIntent().getStringExtra(getString(R.string.booktitle));
+        categoryName = ShelfRecyclerAdapter.categoryName;
 
         if (editStep) {
 //            DO THIS IF MENU EDIT TEXT WAS SELECTED
