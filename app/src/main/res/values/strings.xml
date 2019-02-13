@@ -36,7 +36,7 @@
     <string name="search_users">Search Users</string>
     <string name="search">search</string>
     <string name="sharedbooks">No shared Handbooks</string>
-    <string name="add_book_to_shelf">Add a Handbook to </string>
+    <string name="add_book_to_shelf">Add a Handbook to \</string>
     <string name="no_dexcrip">No Description</string>
     <string name="edit_shelfName">Edit the shelf name</string>
     <string name="book_info">Edit Book info</string>

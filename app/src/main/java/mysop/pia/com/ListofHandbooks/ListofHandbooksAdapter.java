@@ -32,7 +32,8 @@ public class ListofHandbooksAdapter extends RecyclerView.Adapter<ListofHandbooks
     private final StepsAppDatabase db;
     private List<StepsRoomData> listOfSOPS;
     private Context context;
-    private int savedBook;
+    public static int savedBook;
+    public static String bookColor;
     public static int bookShare = 0;
     public static String bookTitle;
 
@@ -66,7 +67,7 @@ public class ListofHandbooksAdapter extends RecyclerView.Adapter<ListofHandbooks
     }
 
     private int bookColor(int position) {
-        String bookColor = listOfSOPS.get(position).getBookColor();
+        bookColor = listOfSOPS.get(position).getBookColor();
         if (bookColor != null) {
             switch (bookColor) {
                 case "Red":

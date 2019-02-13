@@ -30,12 +30,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import mysop.pia.com.Categories.ShelfRecyclerAdapter;
 import mysop.pia.com.ListofHandbooks.ListofHandbooks;
+import mysop.pia.com.ListofHandbooks.ListofHandbooksAdapter;
 import mysop.pia.com.Pages.PagesRoom.StepsAppDatabase;
 import mysop.pia.com.Pages.PagesRoom.StepsRoomData;
 import mysop.pia.com.R;
 
 public class AddPage extends AppCompatActivity {
 
+    private static final String TAG = "testing";
     @BindView(R.id.textview_add_sop_step_count)
     TextView textviewStepCount;
     @BindView(R.id.edittext_add_step_title)
@@ -61,6 +63,7 @@ public class AddPage extends AppCompatActivity {
     String stepTitle;
     String sopTitle;
     String categoryName;
+    int savedBook = 0;
     int stepNumber;
     String stepDescription;
     String bookColor;
@@ -133,7 +136,7 @@ public class AddPage extends AppCompatActivity {
             }
 
 //            SAVE STEPS FOR SOP
-            StepsRoomData newStep = new StepsRoomData(categoryName ,sopTitle, stepTitle, stepNumber, stepDescription, image, 0, bookColor, null, 0);
+            StepsRoomData newStep = new StepsRoomData(categoryName ,sopTitle, stepTitle, stepNumber, stepDescription, image, savedBook, bookColor, null, 0);
             if (!editStep) {
                 stepsRoomDatabase().listOfSteps().insertSteps(newStep);
                 return true;
@@ -169,6 +172,8 @@ public class AddPage extends AppCompatActivity {
         image = getIntent().getStringExtra(getString(R.string.pagepic));
         sopTitle = getIntent().getStringExtra(getString(R.string.booktitle));
         categoryName = ShelfRecyclerAdapter.categoryName;
+        savedBook = ListofHandbooksAdapter.savedBook;
+        bookColor = ListofHandbooksAdapter.bookColor;
 
         if (editStep) {
 //            DO THIS IF MENU EDIT TEXT WAS SELECTED
