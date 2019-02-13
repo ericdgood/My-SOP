@@ -82,7 +82,7 @@
         android:background="@drawable/description_border"
         android:gravity="top|start"
         android:hint="@string/add_description_of_step"
-        android:inputType="textMultiLine"
+        android:inputType="textCapSentences"
         android:maxLines="10"
         android:padding="6dp"
         android:scrollbars="vertical"

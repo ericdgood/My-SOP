@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -55,6 +57,9 @@ public class ListOfPages extends Activity {
         textviewTitle.setText(bookTitle);
         setupRecyclerviewAndAdapter();
         fabAddStep();
+
+//        DRAG AND DROP ITEMS TO REARRANGE
+        rearrangeItems();
 
     }
 
@@ -120,6 +125,31 @@ public class ListOfPages extends Activity {
         Intent i = new Intent(this, WidgetUpdateService.class);
         startService(i);
         Toast.makeText(this, R.string.widgetpage, Toast.LENGTH_LONG).show();
+    }
+
+    public void rearrangeItems(){
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN,0) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder dragged, @NonNull RecyclerView.ViewHolder target) {
+//
+                int position_dragged = dragged.getAdapterPosition();
+                int position_target = target.getAdapterPosition();
+
+                StepsRoomData selectedItem = stepsRoomDatabase().listOfSteps().getAllSteps(bookTitle).get(position_dragged);
+                StepsRoomData targetItem = stepsRoomDatabase().listOfSteps().getAllSteps(bookTitle).get(position_target);
+//
+                stepsRoomDatabase().listOfSteps().updateSelectedItem(targetItem.getStepNumber(), selectedItem.getId());
+                stepsRoomDatabase().listOfSteps().updateSelectedItem(selectedItem.getStepNumber(), targetItem.getId());
+//
+                StepsRecyclerAdapter.notifyItemMoved(position_dragged, position_target);
+                return true;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+
+            }
+        }).attachToRecyclerView(recyclerviewListOfSteps);
     }
 
 }

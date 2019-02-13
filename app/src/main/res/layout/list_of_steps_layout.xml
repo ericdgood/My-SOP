@@ -9,22 +9,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
-        android:id="@+id/textview_step_list_number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="32sp"
-        tools:text="1.."/>
-
-    <TextView
         android:id="@+id/textview_step_list_title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="This is a sample of a step title"
         style="@style/ConstraintCenterVertical"
-        app:layout_constraintLeft_toRightOf="@id/textview_step_list_number"
         android:layout_marginStart="8dp"
         android:textSize="21sp"
-        android:paddingStart="8dp"
+        android:padding="8dp"
         tools:ignore="RtlSymmetry" />
 
     <ImageView

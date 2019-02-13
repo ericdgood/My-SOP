@@ -33,9 +33,6 @@ public class ListOfPagesAdapter extends RecyclerView.Adapter<ListOfPagesAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ListOfPagesAdapter.Viewholder viewholder, int position) {
-//        SHOWS STEP NUMBERS
-        String pageNumber = String.valueOf(listOfSteps.get(position).getStepNumber()) + "..";
-        viewholder.textviewStepNumber.setText(pageNumber);
 
 //        SHOWS STEP TITLE
         viewholder.textviewStepTitle.setText(listOfSteps.get(position).getStepTitle());
@@ -69,8 +66,6 @@ public class ListOfPagesAdapter extends RecyclerView.Adapter<ListOfPagesAdapter.
     }
 
     public class Viewholder extends RecyclerView.ViewHolder {
-        @BindView(R.id.textview_step_list_number)
-        TextView textviewStepNumber;
         @BindView(R.id.textview_step_list_title)
         TextView textviewStepTitle;
         @BindView(R.id.constrain_layout_list_step)
