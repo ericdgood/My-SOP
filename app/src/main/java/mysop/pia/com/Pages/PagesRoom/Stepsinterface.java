@@ -25,7 +25,7 @@ public interface Stepsinterface {
     List<StepsRoomData> getAllBooks(String category);
 
     //    GET ALL SAVED BOOK
-    @Query("SELECT * FROM steps WHERE :save = savedBook")
+    @Query("SELECT * FROM steps WHERE :save = savedBook AND stepNumber = 1")
     List<StepsRoomData> getAllSavedBooks(int save);
 
     //  INSERT NEW SOP

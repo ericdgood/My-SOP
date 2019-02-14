@@ -90,6 +90,7 @@ public class AddPage extends AppCompatActivity {
         categoryName = getIntent().getStringExtra(getString(R.string.shelftitle1));
         bookColor = getIntent().getStringExtra(getString(R.string.bookcolor));
         stepNumber = getIntent().getIntExtra(getString(R.string.pagenum), 1);
+        savedBook = ListofHandbooksAdapter.savedBook;
         setStepText();
         pickImageFromGallery();
         editStep();
@@ -111,6 +112,8 @@ public class AddPage extends AppCompatActivity {
                 int nextStepNum = stepNumber + 1;
                 nextStep.putExtra(getString(R.string.pagenum), nextStepNum);
                 nextStep.putExtra(getString(R.string.booktitle), sopTitle);
+                nextStep.putExtra(getString(R.string.bookcolor), bookColor);
+                nextStep.putExtra(getString(R.string.save), savedBook);
                 nextStep.putExtra(getString(R.string.shelftitle1), categoryName);
                 startActivity(nextStep);
                 finish();
@@ -172,7 +175,6 @@ public class AddPage extends AppCompatActivity {
         image = getIntent().getStringExtra(getString(R.string.pagepic));
         sopTitle = getIntent().getStringExtra(getString(R.string.booktitle));
         categoryName = ShelfRecyclerAdapter.categoryName;
-        savedBook = ListofHandbooksAdapter.savedBook;
         bookColor = ListofHandbooksAdapter.bookColor;
 
         if (editStep) {

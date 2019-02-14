@@ -37,8 +37,8 @@
         android:padding="6dp"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageview_step_picture_layout"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         tools:text="This is a sample of step title xcedcdecdc" />
 
@@ -47,9 +47,9 @@
         android:layout_width="0dp"
         android:layout_height="200dp"
         android:layout_margin="12dp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@id/textview_step_title">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
     <ImageView
         android:id="@+id/imageview_step_picture"
         android:layout_width="match_parent"
@@ -72,13 +72,13 @@
         android:id="@+id/textview_step_description"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
         android:padding="8dp"
         android:textSize="21sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@id/imageview_step_picture_layout"
+        app:layout_constraintTop_toBottomOf="@id/textview_step_title"
         tools:text="hjedjfweckjwlenclkfwnknknknknknknknknknnknnnkknnknknknknknknknk" />
 
     <LinearLayout
