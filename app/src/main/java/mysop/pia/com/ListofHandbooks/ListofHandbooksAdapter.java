@@ -100,13 +100,13 @@ public class ListofHandbooksAdapter extends RecyclerView.Adapter<ListofHandbooks
 //            UNSAVE BOOK
                 savedBook = 0;
                 viewholder.imgBookSave.setImageResource(R.drawable.baseline_bookmark_border_black_36dp);
-                db.listOfSteps().updateBookSaved(0, id);
+                db.listOfSteps().updateBookSaved(0, bookTitle);
                 Toast.makeText(context, sopTitle + context.getString(R.string.unbookmarked), Toast.LENGTH_SHORT).show();
             } else if (savedBook == 0) {
 //            SAVE BOOK
                 savedBook = 1;
                 viewholder.imgBookSave.setImageResource(R.drawable.ic_bookmark);
-                db.listOfSteps().updateBookSaved(1, id);
+                db.listOfSteps().updateBookSaved(1, bookTitle);
                 Toast.makeText(context, sopTitle + context.getString(R.string.bookmarked), Toast.LENGTH_SHORT).show();
             }
         });

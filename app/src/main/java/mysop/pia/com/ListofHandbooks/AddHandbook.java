@@ -131,8 +131,8 @@ public class AddHandbook extends AppCompatActivity {
         buttonEditSOP.setOnClickListener(v -> {
             addSopTitle = editTextAddSopTitle.getText().toString();
 
+            stepsRoomDatabase().listOfSteps().updateBookColor(bookColor,getIntent().getStringExtra(getString(R.string.editbooktitle)));
                 stepsRoomDatabase().listOfSteps().updateSop(addSopTitle, getIntent().getStringExtra(getString(R.string.editbooktitle)));
-                stepsRoomDatabase().listOfSteps().updateBookColor(bookColor,getIntent().getIntExtra(getString(R.string.editid),0));
                 Intent returnToSOP = new Intent(this, ListofHandbooks.class);
                 startActivity(returnToSOP);
                 finish();

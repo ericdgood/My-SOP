@@ -40,8 +40,8 @@ public interface Stepsinterface {
     void updateSop(String newTitle ,String oldTitle);
 
     //    UPDATE SOP TITLE
-    @Query("UPDATE steps SET bookColor = :bookColor WHERE id = :id")
-    void updateBookColor(String bookColor, int id);
+    @Query("UPDATE steps SET bookColor = :bookColor WHERE sopTitle = :bookTitle")
+    void updateBookColor(String bookColor, String bookTitle);
 
     //    UPDATE SOP TITLE
     @Query("UPDATE steps SET stepNumber = :targetPageNum WHERE id = :id")
@@ -68,8 +68,8 @@ public interface Stepsinterface {
     void updatePagesShelf(String newShelf ,String oldShelf);
 
     //    UPDATE PAGES WHEN SHELF IS EDITED
-    @Query("UPDATE steps SET savedBook = :save WHERE id = :id")
-    void updateBookSaved(int save, int id);
+    @Query("UPDATE steps SET savedBook = :save WHERE sopTitle = :bookTitle")
+    void updateBookSaved(int save, String bookTitle);
 
     //    UPDATE SHELF FOR SHARING
     @Query("UPDATE steps SET sharedAuthor = :sharedAuthor, sharedStatus = 1 WHERE category = :shelf")
