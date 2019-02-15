@@ -231,16 +231,18 @@ public class PageActivity extends AppCompatActivity {
             startActivity(returnToListSteps);
         }
 
-        public void imageZoom(){
-        imageviewStepPicture.setOnClickListener(v -> {
+        public void imageZoom() {
+            if (stringPicture != null) {
+                imageviewStepPicture.setOnClickListener(v -> {
 
-            frameImageFrage.setVisibility(View.VISIBLE);
-            imageFrag imgfrag = new imageFrag();
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            imgfrag.getImageZoom(stringPicture);
-            fragmentManager.beginTransaction()
-                    .replace(R.id.imagefrag_frame, imgfrag)
-                    .commit();
-        });
+                    frameImageFrage.setVisibility(View.VISIBLE);
+                    imageFrag imgfrag = new imageFrag();
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    imgfrag.getImageZoom(stringPicture);
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.imagefrag_frame, imgfrag)
+                            .commit();
+                });
+            }
         }
     }
