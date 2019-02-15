@@ -101,6 +101,7 @@ public class ListOfPages extends Activity {
             int listOfStepsSize = listOfSteps.size();
             Intent addStep = new Intent(this, AddPage.class);
             addStep.putExtra(getString(R.string.booktitle), bookTitle);
+            addStep.putExtra(getString(R.string.bookcolor),ListofHandbooksAdapter.bookColor);
             addStep.putExtra(getString(R.string.pagenum), listOfStepsSize + 1);
             startActivity(addStep);
             finish();

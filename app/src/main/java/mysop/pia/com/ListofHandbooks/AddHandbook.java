@@ -116,6 +116,10 @@ public class AddHandbook extends AppCompatActivity {
             viewBookOrange.setImageResource(R.drawable.description_border);
             toastColor();
         });
+
+        if (bookColor == null){
+            bookColor = getString(R.string.blue);
+        }
     }
 
     private void toastColor(){

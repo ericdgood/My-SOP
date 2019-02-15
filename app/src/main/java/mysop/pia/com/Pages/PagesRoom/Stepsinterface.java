@@ -17,7 +17,7 @@ public interface Stepsinterface {
     List<StepsRoomData> getAllSteps(String sopTitle);
 
 //    GET ALL SOPS FOR CATEGORY
-    @Query("SELECT * FROM steps WHERE :category = category AND :pageNum = stepNumber")
+    @Query("SELECT * FROM steps WHERE :category = category AND :pageNum = stepNumber ORDER BY bookColor, sopTitle ASC")
     List<StepsRoomData> getAllSOPs(String category, int pageNum);
 
     //    GET ALL SOPS FOR CATEGORY

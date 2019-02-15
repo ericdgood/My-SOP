@@ -163,9 +163,9 @@ public class PageActivity extends AppCompatActivity {
 
         @Override
         public boolean onCreateOptionsMenu (Menu menu){
-            if (sharedStat == 1 || sharedStat == 2 || sharedStat == 4 || sharedStat == 5) {
-                return false;
-            }
+//            if (sharedStat == 1 || sharedStat == 2 || sharedStat == 4 || sharedStat == 5) {
+//                return false;
+//            }
             getMenuInflater().inflate(R.menu.step_menu, menu);
             return true;
         }
@@ -181,6 +181,7 @@ public class PageActivity extends AppCompatActivity {
                 editStep.putExtra(getString(R.string.pagedescrip), stringDescription);
                 editStep.putExtra(getString(R.string.pagepic), stringPicture);
                 editStep.putExtra(getString(R.string.booktitle), StringSopTitle);
+                editStep.putExtra(getString(R.string.bookcolor), ListofHandbooksAdapter.bookColor);
                 startActivity(editStep);
                 finish();
                 return true;

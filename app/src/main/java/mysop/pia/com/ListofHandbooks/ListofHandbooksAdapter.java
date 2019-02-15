@@ -94,7 +94,6 @@ public class ListofHandbooksAdapter extends RecyclerView.Adapter<ListofHandbooks
     }
 
     private void saveBook(Viewholder viewholder, int position, String sopTitle) {
-        int id = listOfSOPS.get(position).getId();
         viewholder.imgBookSave.setOnClickListener(v -> {
             if (savedBook == 1) {
 //            UNSAVE BOOK
