@@ -5,11 +5,13 @@ import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,6 +46,8 @@ public class PageActivity extends AppCompatActivity {
     Button btnPageNext;
     @BindView(R.id.no_image)
     TextView tvNoImage;
+    @BindView(R.id.imagefrag_frame)
+    FrameLayout frameImageFrage;
 
     List<StepsRoomData> listOfSteps;
     int position;
@@ -83,6 +87,8 @@ public class PageActivity extends AppCompatActivity {
         descriptionVisibility();
 //        NEXT OR PREVIOUS PAGES
         nextPrev();
+//        ZOOM IMAGE IF CLIKCED
+        imageZoom();
     }
 
     private void setTitleBar() {
@@ -223,5 +229,18 @@ public class PageActivity extends AppCompatActivity {
             Intent returnToListSteps = new Intent(this, ListOfPages.class);
             returnToListSteps.putExtra(getString(R.string.booktitle), listOfSteps.get(position).getSopTitle());
             startActivity(returnToListSteps);
+        }
+
+        public void imageZoom(){
+        imageviewStepPicture.setOnClickListener(v -> {
+
+            frameImageFrage.setVisibility(View.VISIBLE);
+            imageFrag imgfrag = new imageFrag();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            imgfrag.getImageZoom(stringPicture);
+            fragmentManager.beginTransaction()
+                    .replace(R.id.imagefrag_frame, imgfrag)
+                    .commit();
+        });
         }
     }

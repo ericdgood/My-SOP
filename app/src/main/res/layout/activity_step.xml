@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+<ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/pagebkg">
@@ -14,9 +19,6 @@
     android:layout_height="wrap_content"
     tools:context=".Pages.PageActivity"
     android:padding="8dp">
-
-    <!--THINGS I WANT TO SHOW (STEP TITLE, PICTURE, DESCRIPTION, STEP NUMBER-->
-
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline"
@@ -82,6 +84,7 @@
         tools:text="hjedjfweckjwlenclkfwnknknknknknknknknknnknnnkknnknknknknknknknk" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="12dp"
@@ -90,14 +93,14 @@
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@id/textview_step_description">
 
-    <Button
-        android:id="@+id/button_page_prev"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:layout_weight="1"
-        android:text="@string/prev"
-        tools:ignore="ButtonStyle" />
+        <Button
+            android:id="@+id/button_page_prev"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:text="@string/prev"
+            tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/button_page_next"
@@ -110,5 +113,17 @@
 
     </LinearLayout>
 
+
 </android.support.constraint.ConstraintLayout>
     </ScrollView>
+    <FrameLayout
+        android:id="@+id/imagefrag_frame"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:background="@color/colorAccent"/>
+</android.support.constraint.ConstraintLayout>

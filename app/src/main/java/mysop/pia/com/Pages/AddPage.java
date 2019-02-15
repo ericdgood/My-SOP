@@ -90,7 +90,6 @@ public class AddPage extends AppCompatActivity {
         categoryName = getIntent().getStringExtra(getString(R.string.shelftitle1));
         bookColor = getIntent().getStringExtra(getString(R.string.bookcolor));
         stepNumber = getIntent().getIntExtra(getString(R.string.pagenum), 1);
-        savedBook = ListofHandbooksAdapter.savedBook;
         setStepText();
         pickImageFromGallery();
         editStep();
@@ -175,7 +174,7 @@ public class AddPage extends AppCompatActivity {
         image = getIntent().getStringExtra(getString(R.string.pagepic));
         sopTitle = getIntent().getStringExtra(getString(R.string.booktitle));
         categoryName = ShelfRecyclerAdapter.categoryName;
-        bookColor = ListofHandbooksAdapter.bookColor;
+        savedBook = ListofHandbooksAdapter.savedBook;
 
         if (editStep) {
 //            DO THIS IF MENU EDIT TEXT WAS SELECTED
