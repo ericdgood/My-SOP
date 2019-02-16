@@ -19,6 +19,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import mysop.pia.com.Categories.ShelfRecyclerAdapter;
 import mysop.pia.com.ListofHandbooks.ListofHandbooksAdapter;
 import mysop.pia.com.MainActivity;
 import mysop.pia.com.Pages.PagesRoom.StepsAppDatabase;
@@ -102,6 +103,7 @@ public class ListOfPages extends Activity {
             Intent addStep = new Intent(this, AddPage.class);
             addStep.putExtra(getString(R.string.booktitle), bookTitle);
             addStep.putExtra(getString(R.string.bookcolor),ListofHandbooksAdapter.bookColor);
+            addStep.putExtra(getString(R.string.shelftitle1), ShelfRecyclerAdapter.categoryName);
             addStep.putExtra(getString(R.string.pagenum), listOfStepsSize + 1);
             startActivity(addStep);
             finish();

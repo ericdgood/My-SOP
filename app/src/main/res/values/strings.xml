@@ -106,7 +106,7 @@
     <string name="nospaces">No spaces allowed</string>
     <string name="users">Users</string>
     <string name="pagephoto">page_photo</string>
-    <string name="usernameis">User name is</string>
+    <string name="usernameis">User name is /</string>
     <string name="editbook">editSop</string>
     <string name="booktitle">sopTitle</string>
     <string name="bookshelf">sopCategory</string>

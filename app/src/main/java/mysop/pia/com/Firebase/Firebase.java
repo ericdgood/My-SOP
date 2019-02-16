@@ -63,8 +63,7 @@ public class Firebase extends Activity {
                             Intent ShareWithUser = new Intent(Firebase.this, mysop.pia.com.Firebase.ShareWithUser.class);
                             startActivity(ShareWithUser);
                             finish();
-                            Toast.makeText(Firebase.this, getString(R.string.alreadysignedin) + user.getDisplayName(), Toast.LENGTH_SHORT).show();
-                        }
+                           }
                         else {
 //                            DO THIS IF THEY ARE NEW USERS
                             chooseUserName();
