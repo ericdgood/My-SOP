@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -30,9 +29,6 @@ import mysop.pia.com.R;
 
 public class Firebase extends Activity {
 
-
-    private static final String TAG = "firebase";
-
     public static final int RC_SIGN_IN = 1;
     private DatabaseReference mUsersDatabaseReference;
     private FirebaseAuth mFirebaseAuth;
@@ -49,7 +45,7 @@ public class Firebase extends Activity {
         mUsersDatabaseReference = mFirebaseDatabase.getReference().child(getString(R.string.user));
         mFirebaseAuth = FirebaseAuth.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
-//TODO: SIGN IN ISSUE WHEN A RETURNING USER SIGNS IN
+
 //        FIREBASE SIGN IN
         mAuthStateListener = firebaseAuth -> {
             if (user != null) {
@@ -76,13 +72,12 @@ public class Firebase extends Activity {
                     }
                 });
             } else {
-//                    USER IS SIGNED OUT
-//                onSignedOutCleanup();
 
 //                FIREBASE CREATE ACCOUNT
                 startActivityForResult(
                         AuthUI.getInstance()
                                 .createSignInIntentBuilder()
+                                .setLogo(R.drawable.handbook)
                                 .setIsSmartLockEnabled(false)
                                 .setAvailableProviders(Arrays.asList(
                                         new AuthUI.IdpConfig.GoogleBuilder().build(),
@@ -152,7 +147,6 @@ public class Firebase extends Activity {
                                 Objects.requireNonNull(user).updateProfile(profileUpdates)
                                         .addOnCompleteListener(task -> {
                                             if (task.isSuccessful()) {
-                                                Log.d(TAG, getString(R.string.usernameset));
                                             }
                                         });
 

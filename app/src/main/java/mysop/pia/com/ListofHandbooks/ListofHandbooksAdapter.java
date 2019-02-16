@@ -129,7 +129,7 @@ public class ListofHandbooksAdapter extends RecyclerView.Adapter<ListofHandbooks
                         case R.id.book_shelf_edit:
                             editBook(listOfSOPS.get(position).getSopTitle(), listOfSOPS.get(position).getId());
                             return true;
-                        case R.id.book_shelf_share:
+                        case R.id.book_shelf_collab:
                             Intent shareBook = new Intent(context, Firebase.class);
                             bookShare = 1;
                             bookTitle = listOfSOPS.get(position).getSopTitle();

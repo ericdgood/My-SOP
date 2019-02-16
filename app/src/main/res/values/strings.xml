@@ -106,7 +106,7 @@
     <string name="nospaces">No spaces allowed</string>
     <string name="users">Users</string>
     <string name="pagephoto">page_photo</string>
-    <string name="usernameis">User name is /</string>
+    <string name="usernameis">User name is \</string>
     <string name="editbook">editSop</string>
     <string name="booktitle">sopTitle</string>
     <string name="bookshelf">sopCategory</string>
@@ -155,5 +155,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="collaborate">Collaborate</string>
+    <string name="sign_out">Sign out</string>
 
 </resources>

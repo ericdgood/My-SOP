@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -101,6 +102,9 @@ public class MainActivity extends AppCompatActivity {
             share.putExtra(getString(R.string.signin), 1);
             startActivity(share);
             return true;
+        }
+        if (id == R.id.sign_out){
+            AuthUI.getInstance().signOut(this);
         }
 
         return super.onOptionsItemSelected(item);

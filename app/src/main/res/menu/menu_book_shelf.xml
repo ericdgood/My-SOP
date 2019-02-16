@@ -6,8 +6,8 @@
         android:title="@string/edit" />
 
     <item
-        android:id="@+id/book_shelf_share"
-        android:title="@string/share" />
+        android:id="@+id/book_shelf_collab"
+        android:title="@string/collaborate" />
 
     <item
         android:id="@+id/book_shelf_delete"

@@ -61,7 +61,7 @@ public class ShelfRecyclerAdapter extends RecyclerView.Adapter<ShelfRecyclerAdap
                         case R.id.book_shelf_edit:
                             editCategory(categoryList.get(position).getCategoryTitle(), categoryList.get(position).getId());
                             return true;
-                        case R.id.book_shelf_share:
+                        case R.id.book_shelf_collab:
                             Intent shareFirebase = new Intent(context, Firebase.class);
                             ListofHandbooksAdapter.bookShare = 0;
                             categoryName = categoryList.get(position).getCategoryTitle();
