@@ -63,7 +63,7 @@
     <string name="add_book_shelf">Add Book Shelf</string>
     <string name="add_handbook">Add Handbook</string>
     <string name="add_page">Add Page</string>
-    <string name="sent_to">sent to</string>
+    <string name="sent_to">\ sent to \</string>
     <string name="no_user">No user by that name.</string>
     <string name="sop">sop</string>
     <string name="signin">signIn</string>

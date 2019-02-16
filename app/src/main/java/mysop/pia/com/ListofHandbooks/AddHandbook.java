@@ -25,6 +25,7 @@ import static mysop.pia.com.Categories.ShelfRecyclerAdapter.categoryName;
 
 public class AddHandbook extends AppCompatActivity {
 
+    private static final String TAG = "testing";
     @BindView(R.id.edittext_add_sop_title)
     EditText editTextAddSopTitle;
     @BindView(R.id.button_edit_sop)
@@ -132,6 +133,7 @@ public class AddHandbook extends AppCompatActivity {
         tvAddBookLabel.setText(R.string.book_info);
         editTextAddSopTitle.setText(getIntent().getStringExtra(getString(R.string.editbooktitle)));
         bookColor();
+        showBookColor(getIntent().getStringExtra("bookColor"));
         buttonEditSOP.setOnClickListener(v -> {
             addSopTitle = editTextAddSopTitle.getText().toString();
 
@@ -168,5 +170,26 @@ public class AddHandbook extends AppCompatActivity {
                 .fallbackToDestructiveMigration()
                 .allowMainThreadQueries()
                 .build();
+    }
+
+    public void showBookColor(String bookColor){
+        switch (bookColor) {
+            case "Red":
+                viewBookRed.setImageResource(R.drawable.description_border);
+                break;
+            case "Blue":
+                viewBookBlue.setImageResource(R.drawable.description_border);
+                break;
+            case "Green":
+                viewBookGreen.setImageResource(R.drawable.description_border);
+                break;
+            case "Yellow":
+                viewBookYellow.setImageResource(R.drawable.description_border);
+                break;
+            case "Orange":
+                viewBookOrange.setImageResource(R.drawable.description_border);
+                break;
+            default:
+        }
     }
 }

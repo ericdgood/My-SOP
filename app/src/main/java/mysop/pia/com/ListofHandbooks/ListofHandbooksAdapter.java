@@ -127,7 +127,8 @@ public class ListofHandbooksAdapter extends RecyclerView.Adapter<ListofHandbooks
                 popup.setOnMenuItemClickListener(item -> {
                     switch (item.getItemId()) {
                         case R.id.book_shelf_edit:
-                            editBook(listOfSOPS.get(position).getSopTitle(), listOfSOPS.get(position).getId());
+                            editBook(listOfSOPS.get(position).getSopTitle(), listOfSOPS.get(position).getId(),
+                                    listOfSOPS.get(position).getBookColor());
                             return true;
                         case R.id.book_shelf_collab:
                             Intent shareBook = new Intent(context, Firebase.class);
@@ -148,11 +149,12 @@ public class ListofHandbooksAdapter extends RecyclerView.Adapter<ListofHandbooks
         }
     }
 
-    private void editBook(String sopTitle, int id) {
+    private void editBook(String sopTitle, int id, String bookColor) {
         Intent editSOP = new Intent(context, AddHandbook.class);
         editSOP.putExtra(context.getString(R.string.editbook), 1);
         editSOP.putExtra(context.getString(R.string.editbooktitle), sopTitle);
         editSOP.putExtra(context.getString(R.string.editbookid), id);
+        editSOP.putExtra("bookColor", bookColor);
         context.startActivity(editSOP);
         ((Activity) context).finish();
     }

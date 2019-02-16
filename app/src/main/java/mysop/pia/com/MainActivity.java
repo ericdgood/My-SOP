@@ -105,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
         }
         if (id == R.id.sign_out){
             AuthUI.getInstance().signOut(this);
+            Toast.makeText(this, "Signed Out Completd", Toast.LENGTH_SHORT).show();
         }
 
         return super.onOptionsItemSelected(item);
