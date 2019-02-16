@@ -157,5 +157,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="collaborate">Collaborate</string>
     <string name="sign_out">Sign out</string>
+    <string name="create_account">Create account</string>
 
 </resources>

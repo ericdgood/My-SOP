@@ -30,6 +30,7 @@ import mysop.pia.com.R;
 public class Firebase extends Activity {
 
     public static final int RC_SIGN_IN = 1;
+    private static final String TAG = "testing";
     private DatabaseReference mUsersDatabaseReference;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
@@ -48,6 +49,8 @@ public class Firebase extends Activity {
 
 //        FIREBASE SIGN IN
         mAuthStateListener = firebaseAuth -> {
+
+            user = FirebaseAuth.getInstance().getCurrentUser();
             if (user != null) {
                 com.google.firebase.database.Query newUserMatch = mUsersDatabaseReference.orderByChild(getString(R.string.username)).equalTo(user.getDisplayName());
 
