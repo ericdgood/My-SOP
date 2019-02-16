@@ -74,8 +74,8 @@
     <string name="sharedpass">JonNyBgOoDeSHARED</string>
     <string name="new_bookshelf">Create a book shelf   to keep your handbooks organized</string>
     <string name="sharedbook">Shared Book</string>
-    <string name="bookfrom">Handbook from</string>
-    <string name="receive">would you like to receive</string>
+    <string name="bookfrom">Handbook from /</string>
+    <string name="receive">would you like to receive /</string>
     <string name="not_accepted">Item not accepted</string>
     <string name="sharedbooks2">Shared Books</string>
     <string name="sharedstatus">sharedStatus</string>
@@ -85,13 +85,13 @@
     <string name="editshelf">Edit Shelf</string>
     <string name="catexsits">This category already exists</string>
     <string name="newcat">Please enter a category name</string>
-    <string name="sharedBy">was shared by</string>
+    <string name="sharedBy">/ was shared by</string>
     <string name="d">id</string>
     <string name="edit1">edit</string>
     <string name="deleteentry">Delete entry</string>
     <string name="rusuredelete">Are you sure you want to delete \</string>
     <string name="questionmark">\?</string>
-    <string name="isdeleted">is Deleted</string>
+    <string name="isdeleted">/ is Deleted</string>
     <string name="deleted">Deleted</string>
     <string name="steps">steps</string>
     <string name="usernameset">User nickname is set!</string>
@@ -116,7 +116,7 @@
     <string name="green">Green</string>
     <string name="yellow">Yellow</string>
     <string name="orange">Orange</string>
-    <string name="wasselected">was selected</string>
+    <string name="wasselected">/ was selected</string>
     <string name="editbooktitle">editSopTitle</string>
     <string name="editid">editId</string>
     <string name="bookexsits">This SOP already exists in</string>

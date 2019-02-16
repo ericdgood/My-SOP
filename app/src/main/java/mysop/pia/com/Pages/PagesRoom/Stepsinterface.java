@@ -47,6 +47,10 @@ public interface Stepsinterface {
     @Query("UPDATE steps SET stepNumber = :targetPageNum WHERE id = :id")
     void updateSelectedItem(int targetPageNum, int id);
 
+    //    UPDATE SOP TITLE
+    @Query("SELECT bookColor FROM steps WHERE sopTitle = :bookTitle")
+    String getBookColor(String bookTitle);
+
     //    DELETE SOP
     @Query("DELETE FROM steps WHERE :sopTitle = sopTitle")
     void DeleteSOP(String sopTitle);

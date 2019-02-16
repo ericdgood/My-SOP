@@ -181,7 +181,6 @@ public class PageActivity extends AppCompatActivity {
                 editStep.putExtra(getString(R.string.pagedescrip), stringDescription);
                 editStep.putExtra(getString(R.string.pagepic), stringPicture);
                 editStep.putExtra(getString(R.string.booktitle), StringSopTitle);
-                editStep.putExtra(getString(R.string.bookcolor), ListofHandbooksAdapter.bookColor);
                 startActivity(editStep);
                 finish();
                 return true;

@@ -89,11 +89,15 @@ public class AddPage extends AppCompatActivity {
         sopTitle = getIntent().getStringExtra(getString(R.string.booktitle));
         categoryName = getIntent().getStringExtra(getString(R.string.shelftitle1));
         bookColor = getIntent().getStringExtra(getString(R.string.bookcolor));
+        editStep = getIntent().getBooleanExtra(getString(R.string.editpage1),false);
         stepNumber = getIntent().getIntExtra(getString(R.string.pagenum), 1);
         setStepText();
         pickImageFromGallery();
-        editStep();
         setStepTitle();
+
+        if (editStep){
+            editStep();
+        }
 
 //      DO THIS IF SOP IS COMPLETED
         buttonCompleteSOP.setOnClickListener(v -> {
@@ -175,6 +179,7 @@ public class AddPage extends AppCompatActivity {
         sopTitle = getIntent().getStringExtra(getString(R.string.booktitle));
         categoryName = ShelfRecyclerAdapter.categoryName;
         savedBook = ListofHandbooksAdapter.savedBook;
+        bookColor = stepsRoomDatabase().listOfSteps().getBookColor(sopTitle);
 
         if (editStep) {
 //            DO THIS IF MENU EDIT TEXT WAS SELECTED

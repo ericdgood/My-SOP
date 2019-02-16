@@ -61,21 +61,25 @@ public class AddHandbook extends AppCompatActivity {
             editSop();
         } else {
             bookColor();
-            buttonAddStep.setOnClickListener(v -> {
+                buttonAddStep.setOnClickListener(v -> {
+                    if (bookColor != null) {
 //          SAVE SOP INFO
-                addSopTitle = editTextAddSopTitle.getText().toString();
+                        addSopTitle = editTextAddSopTitle.getText().toString();
 
-                if (checkDuplicateSOP()) {
-                    Intent addStep = new Intent(AddHandbook.this, AddPage.class);
-                    addStep.putExtra(getString(R.string.booktitle), addSopTitle);
-                    addStep.putExtra(getString(R.string.bookshelf), categoryName);
-                    addStep.putExtra(getString(R.string.bookcolor), bookColor);
-                    startActivity(addStep);
-                    finish();
-                }
-            });
+                        if (checkDuplicateSOP()) {
+                            Intent addStep = new Intent(AddHandbook.this, AddPage.class);
+                            addStep.putExtra(getString(R.string.booktitle), addSopTitle);
+                            addStep.putExtra(getString(R.string.bookshelf), categoryName);
+                            addStep.putExtra(getString(R.string.bookcolor), bookColor);
+                            startActivity(addStep);
+                            finish();
+                        }
+                    }else {
+                        Toast.makeText(this, "Please select a book color", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
         }
-    }
 
     private void clearColorBorder(){
         viewBookRed.setImageResource(0);
@@ -116,10 +120,6 @@ public class AddHandbook extends AppCompatActivity {
             viewBookOrange.setImageResource(R.drawable.description_border);
             toastColor();
         });
-
-        if (bookColor == null){
-            bookColor = getString(R.string.blue);
-        }
     }
 
     private void toastColor(){
