@@ -62,6 +62,7 @@ public class AddPage extends AppCompatActivity {
     String image;
     String stepTitle;
     String sopTitle;
+    int stepId;
     String categoryName;
     int savedBook = 0;
     int stepNumber;
@@ -147,7 +148,7 @@ public class AddPage extends AppCompatActivity {
                 stepsRoomDatabase().listOfSteps().insertSteps(newStep);
                 return true;
             } else {
-                newStep.setId(ListOfPagesAdapter.stepId);
+                newStep.setId(stepId);
                 stepsRoomDatabase().listOfSteps().updateStep(newStep);
                 Toast.makeText(this, R.string.editssaved, Toast.LENGTH_SHORT).show();
                 return true;
@@ -179,6 +180,7 @@ public class AddPage extends AppCompatActivity {
         sopTitle = getIntent().getStringExtra(getString(R.string.booktitle));
         categoryName = ShelfRecyclerAdapter.categoryName;
         savedBook = ListofHandbooksAdapter.savedBook;
+        stepId = getIntent().getIntExtra("id",0);
         bookColor = stepsRoomDatabase().listOfSteps().getBookColor(sopTitle);
 
         if (editStep) {

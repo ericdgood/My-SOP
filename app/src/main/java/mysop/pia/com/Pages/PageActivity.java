@@ -34,6 +34,7 @@ import static maes.tech.intentanim.CustomIntent.customType;
 public class PageActivity extends AppCompatActivity {
 
 
+    private static final String TAG = "testing";
     @BindView(R.id.textview_step_title)
     TextView textviewStepTitle;
     @BindView(R.id.imageview_step_picture)
@@ -176,6 +177,7 @@ public class PageActivity extends AppCompatActivity {
             if (id == R.id.menu_step_edit_step) {
                 Intent editStep = new Intent(this, AddPage.class);
                 editStep.putExtra(getString(R.string.editpage1), true);
+                editStep.putExtra("id", listOfSteps.get(position).getId());
                 editStep.putExtra(getString(R.string.pagenum), Integer.valueOf(stringStepNumber));
                 editStep.putExtra(getString(R.string.pagetitle), stringStepTitle);
                 editStep.putExtra(getString(R.string.pagedescrip), stringDescription);
