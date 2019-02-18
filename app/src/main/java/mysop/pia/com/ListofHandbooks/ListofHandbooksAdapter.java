@@ -112,14 +112,19 @@ public class ListofHandbooksAdapter extends RecyclerView.Adapter<ListofHandbooks
     }
 
     private void bookOptions(Viewholder viewholder, int position) {
+
+        if (listOfSOPS.get(position).getSharedStatus() == 4){
+            viewholder.imgBookShared.setVisibility(View.VISIBLE);
+        }
+
         if (listOfSOPS.get(position).getSharedStatus() == 2 || listOfSOPS.get(position).getSharedStatus() == 5) {
-            viewholder.imgBookOptions.setVisibility(View.GONE);
-            viewholder.imgBookSave.setVisibility(View.GONE);
+//            SHOW THIS IS RECIEVED SHARED BOOK
             viewholder.imgBookShared.setVisibility(View.VISIBLE);
             viewholder.tvBookSharedBy.setVisibility(View.VISIBLE);
             viewholder.tvBookSharedByAuthor.setText(listOfSOPS.get(position).getSharedAuthor());
             viewholder.tvBookSharedByAuthor.setVisibility(View.VISIBLE);
-        } else {
+        }
+
             viewholder.imgBookOptions.setOnClickListener(v -> {
 //            OPEN OPTIONS
                 PopupMenu popup = new PopupMenu(context, viewholder.imgBookOptions);
@@ -147,7 +152,6 @@ public class ListofHandbooksAdapter extends RecyclerView.Adapter<ListofHandbooks
                 popup.show();
             });
         }
-    }
 
     private void editBook(String sopTitle, int id, String bookColor) {
         Intent editSOP = new Intent(context, AddHandbook.class);
