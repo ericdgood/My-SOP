@@ -27,6 +27,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import mysop.pia.com.Categories.ShelfRecyclerAdapter;
+import mysop.pia.com.Categories.ShelfRoom.AppDatabase;
 import mysop.pia.com.ListofHandbooks.ListofHandbooksAdapter;
 import mysop.pia.com.MainActivity;
 import mysop.pia.com.Pages.PagesRoom.StepsAppDatabase;
@@ -85,6 +86,7 @@ public class ShareWithUser extends AppCompatActivity {
                         } else {
 //                        SEND ALL BOOKS ON A BOOK SHELF TO USER
                             stepsRoomDatabase().listOfSteps().updateShelfSharing(user.getDisplayName(), ShelfRecyclerAdapter.categoryName);
+                            roomDatabase().mysopDao().updateSharedShelf(ShelfRecyclerAdapter.categoryName);
                             List<StepsRoomData> book = stepsRoomDatabase().listOfSteps().getAllBooks(ShelfRecyclerAdapter.categoryName);
                             sendPhotos(book);
                             mSopStepsDatabaseReference.child(searchUserName).push().setValue(book);
@@ -128,6 +130,13 @@ public class ShareWithUser extends AppCompatActivity {
 
     public StepsAppDatabase stepsRoomDatabase() {
         return Room.databaseBuilder(getApplicationContext(), StepsAppDatabase.class, getString(R.string.steps))
+                .fallbackToDestructiveMigration()
+                .allowMainThreadQueries()
+                .build();
+    }
+
+    public AppDatabase roomDatabase() {
+        return Room.databaseBuilder(getApplicationContext(), AppDatabase.class, getString(R.string.mysop))
                 .fallbackToDestructiveMigration()
                 .allowMainThreadQueries()
                 .build();

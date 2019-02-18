@@ -85,13 +85,13 @@
     <string name="editshelf">Edit Shelf</string>
     <string name="catexsits">This category already exists</string>
     <string name="newcat">Please enter a category name</string>
-    <string name="sharedBy">/ was shared by</string>
+    <string name="sharedBy">\ was shared by \</string>
     <string name="d">id</string>
     <string name="edit1">edit</string>
     <string name="deleteentry">Delete entry</string>
     <string name="rusuredelete">Are you sure you want to delete \</string>
     <string name="questionmark">\?</string>
-    <string name="isdeleted">/ is Deleted</string>
+    <string name="isdeleted">\ is Deleted</string>
     <string name="deleted">Deleted</string>
     <string name="steps">steps</string>
     <string name="usernameset">User nickname is set!</string>
@@ -152,9 +152,6 @@
     <string name="isdeletednow">is Deleted from book</string>
     <string name="handbookspace">Handbook</string>
     <string name="no_image">No Image</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="collaborate">Collaborate</string>
     <string name="sign_out">Sign out</string>
     <string name="create_account">Create account</string>

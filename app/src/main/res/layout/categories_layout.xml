@@ -47,17 +47,13 @@
         tools:ignore="RtlSymmetry" />
 
     <ImageView
-        android:id="@+id/imageview_cat_shared"
+        android:id="@+id/imageview_cat_collab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingBottom="12dp"
+        android:padding="4dp"
         android:contentDescription="@string/shelf_share"
-        android:paddingTop="4dp"
-        android:src="@drawable/ic_action_share"
-        android:visibility="invisible"
-        android:paddingStart="12dp"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:ignore="RtlSymmetry" />
+        android:src="@drawable/collab"
+        android:visibility="gone"/>
 
 
 </android.support.constraint.ConstraintLayout>

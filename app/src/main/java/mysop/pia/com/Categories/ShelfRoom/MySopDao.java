@@ -20,4 +20,7 @@ public interface MySopDao {
 
     @Query("UPDATE MYSOP SET categoryTitle = :shelfTitle WHERE id = :id")
     void updateShelf(String shelfTitle, int id);
+
+    @Query("UPDATE MYSOP SET sharedAuthor = 'shared' WHERE categoryTitle = :shelfTitle")
+    void updateSharedShelf(String shelfTitle);
 }

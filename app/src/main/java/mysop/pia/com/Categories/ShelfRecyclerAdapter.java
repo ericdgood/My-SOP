@@ -30,6 +30,7 @@ import mysop.pia.com.R;
 
 public class ShelfRecyclerAdapter extends RecyclerView.Adapter<ShelfRecyclerAdapter.Viewholder> {
 
+    private static final String TAG = "testing";
     private final AppDatabase db;
     private List<MySOPs> categoryList;
     private Context context;
@@ -48,7 +49,6 @@ public class ShelfRecyclerAdapter extends RecyclerView.Adapter<ShelfRecyclerAdap
 
         viewholder.categoryTitle.setText(categoryList.get(position).getCategoryTitle());
 
-        if (categoryList.get(position).getSharedAuthor() == null) {
             viewholder.imgCatOptions.setOnClickListener(v -> {
 //            OPEN OPTIONS
                 //creating a popup menu
@@ -77,11 +77,6 @@ public class ShelfRecyclerAdapter extends RecyclerView.Adapter<ShelfRecyclerAdap
                 //displaying the popup
                 popup.show();
             });
-        } else {
-            viewholder.imgCatOptions.setVisibility(View.INVISIBLE);
-            viewholder.imgCatShared.setVisibility(View.VISIBLE);
-            viewholder.imgCatShared.setOnClickListener(v -> Toast.makeText(context, categoryList.get(position).getCategoryTitle() + context.getString(R.string.sharedBy) + sharedAuthor, Toast.LENGTH_LONG).show());
-        }
 
 
         if (sharedAuthor != (null) && sharedAuthor.equals(context.getString(R.string.sharedpass))) {
@@ -90,7 +85,7 @@ public class ShelfRecyclerAdapter extends RecyclerView.Adapter<ShelfRecyclerAdap
             viewholder.imageviewCategory.setImageResource(R.drawable.ic_action_share);
             viewholder.categoryTitle.setTextSize(21);
             viewholder.imgCatOptions.setVisibility(View.GONE);
-            viewholder.imgCatShared.setVisibility(View.GONE);
+            viewholder.imgCatCollab.setVisibility(View.GONE);
         }
 
         if (sharedAuthor != (null) && sharedAuthor.equals(context.getString(R.string.bookmarkpass))) {
@@ -99,9 +94,14 @@ public class ShelfRecyclerAdapter extends RecyclerView.Adapter<ShelfRecyclerAdap
             viewholder.categoryTitle.setTextSize(21);
             viewholder.imageviewCategory.setImageResource(R.drawable.baseline_bookmarks_black_36dp);
             viewholder.imgCatOptions.setVisibility(View.GONE);
-            viewholder.imgCatShared.setVisibility(View.GONE);
+            viewholder.imgCatCollab.setVisibility(View.GONE);
         }
 
+        if (sharedAuthor != null && sharedAuthor.equals("shared")){
+            viewholder.imgCatCollab.setVisibility(View.VISIBLE);
+//            TODO: SHOW WHO SHELF IS SHARED WITH OR SHARED FROM
+//            viewholder.imgCatCollab.setOnClickListener(v -> Toast.makeText(context, categoryList.get(position).getCategoryTitle() + context.getString(R.string.sharedBy) + sharedAuthor, Toast.LENGTH_LONG).show());
+        }
 
 //        DO THIS ON PRESS
         viewholder.categoryLayout.setOnClickListener((View view) -> {
@@ -141,8 +141,8 @@ public class ShelfRecyclerAdapter extends RecyclerView.Adapter<ShelfRecyclerAdap
         ImageView imageviewCategory;
         @BindView(R.id.imageview_cat_options)
         ImageView imgCatOptions;
-        @BindView(R.id.imageview_cat_shared)
-        ImageView imgCatShared;
+        @BindView(R.id.imageview_cat_collab)
+        ImageView imgCatCollab;
 
         Viewholder(@NonNull View itemView) {
             super(itemView);
