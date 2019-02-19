@@ -49,17 +49,13 @@ public class ShelfRecyclerAdapter extends RecyclerView.Adapter<ShelfRecyclerAdap
 
         viewholder.categoryTitle.setText(categoryList.get(position).getCategoryTitle());
 
+        if (sharedAuthor == null) {
             viewholder.imgCatOptions.setOnClickListener(v -> {
 //            OPEN OPTIONS
                 //creating a popup menu
                 PopupMenu popup = new PopupMenu(context, viewholder.imgCatOptions);
                 //inflating menu from xml resource
-                if (sharedAuthor == null) {
                     popup.inflate(R.menu.menu_book_shelf);
-                } else {
-
-                    popup.inflate(R.menu.menu_collab_shelf);
-                }
                 //adding click listener
                 popup.setOnMenuItemClickListener(item -> {
                     switch (item.getItemId()) {
@@ -82,6 +78,9 @@ public class ShelfRecyclerAdapter extends RecyclerView.Adapter<ShelfRecyclerAdap
                 //displaying the popup
                 popup.show();
             });
+        } else {
+            viewholder.imgCatOptions.setVisibility(View.GONE);
+        }
 
 
         if (sharedAuthor != null){
