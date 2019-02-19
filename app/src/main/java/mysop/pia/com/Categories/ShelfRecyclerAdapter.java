@@ -54,7 +54,12 @@ public class ShelfRecyclerAdapter extends RecyclerView.Adapter<ShelfRecyclerAdap
                 //creating a popup menu
                 PopupMenu popup = new PopupMenu(context, viewholder.imgCatOptions);
                 //inflating menu from xml resource
-                popup.inflate(R.menu.menu_book_shelf);
+                if (sharedAuthor == null) {
+                    popup.inflate(R.menu.menu_book_shelf);
+                } else {
+
+                    popup.inflate(R.menu.menu_collab_shelf);
+                }
                 //adding click listener
                 popup.setOnMenuItemClickListener(item -> {
                     switch (item.getItemId()) {
@@ -79,6 +84,10 @@ public class ShelfRecyclerAdapter extends RecyclerView.Adapter<ShelfRecyclerAdap
             });
 
 
+        if (sharedAuthor != null){
+            viewholder.imgCatCollab.setVisibility(View.VISIBLE);
+        }
+
         if (sharedAuthor != (null) && sharedAuthor.equals(context.getString(R.string.sharedpass))) {
 //            THIS IS FOR SHARED SHELF
             params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
@@ -95,12 +104,6 @@ public class ShelfRecyclerAdapter extends RecyclerView.Adapter<ShelfRecyclerAdap
             viewholder.imageviewCategory.setImageResource(R.drawable.baseline_bookmarks_black_36dp);
             viewholder.imgCatOptions.setVisibility(View.GONE);
             viewholder.imgCatCollab.setVisibility(View.GONE);
-        }
-
-        if (sharedAuthor != null && sharedAuthor.equals("shared")){
-            viewholder.imgCatCollab.setVisibility(View.VISIBLE);
-//            TODO: SHOW WHO SHELF IS SHARED WITH OR SHARED FROM
-//            viewholder.imgCatCollab.setOnClickListener(v -> Toast.makeText(context, categoryList.get(position).getCategoryTitle() + context.getString(R.string.sharedBy) + sharedAuthor, Toast.LENGTH_LONG).show());
         }
 
 //        DO THIS ON PRESS

@@ -119,6 +119,7 @@ public class ListofHandbooksAdapter extends RecyclerView.Adapter<ListofHandbooks
 
         if (listOfSOPS.get(position).getSharedStatus() == 2 || listOfSOPS.get(position).getSharedStatus() == 5) {
 //            SHOW THIS IS RECIEVED SHARED BOOK
+            viewholder.imgBookSave.setVisibility(View.GONE);
             viewholder.imgBookShared.setVisibility(View.VISIBLE);
             viewholder.tvBookSharedBy.setVisibility(View.VISIBLE);
             viewholder.tvBookSharedByAuthor.setText(listOfSOPS.get(position).getSharedAuthor());
