@@ -15,6 +15,8 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.List;
 
 import butterknife.BindView;
@@ -37,6 +39,8 @@ public class ListofHandbooksAdapter extends RecyclerView.Adapter<ListofHandbooks
     public static int bookShare = 0;
     public static String bookTitle;
 
+    FirebaseUser user;
+
     ListofHandbooksAdapter(Context context, List<StepsRoomData> listOfSOPs, StepsAppDatabase stepsAppDatabase) {
         this.context = context;
         this.listOfSOPS = listOfSOPs;
@@ -56,7 +60,7 @@ public class ListofHandbooksAdapter extends RecyclerView.Adapter<ListofHandbooks
         });
 
 //        BOOK OPTIONS
-        bookOptions(viewholder, position);
+            bookOptions(viewholder, position);
 
 //      BOOKMARK BOOKS
         savedBook = listOfSOPS.get(position).getSavedBook();
@@ -126,6 +130,9 @@ public class ListofHandbooksAdapter extends RecyclerView.Adapter<ListofHandbooks
             viewholder.tvBookSharedByAuthor.setVisibility(View.VISIBLE);
         }
 
+        if (listOfSOPS.get(position).getSharedStatus() == 0 ||
+                listOfSOPS.get(position).getSharedStatus() == 4 ||
+                listOfSOPS.get(position).getSharedStatus() == 1) {
             viewholder.imgBookOptions.setOnClickListener(v -> {
 //            OPEN OPTIONS
                 PopupMenu popup = new PopupMenu(context, viewholder.imgBookOptions);
@@ -152,6 +159,9 @@ public class ListofHandbooksAdapter extends RecyclerView.Adapter<ListofHandbooks
                 //displaying the popup
                 popup.show();
             });
+        }else {
+            viewholder.imgBookOptions.setVisibility(View.GONE);
+        }
         }
 
     private void editBook(String sopTitle, int id, String bookColor) {

@@ -49,7 +49,7 @@ public class ShelfRecyclerAdapter extends RecyclerView.Adapter<ShelfRecyclerAdap
 
         viewholder.categoryTitle.setText(categoryList.get(position).getCategoryTitle());
 
-        if (sharedAuthor == null) {
+        if (sharedAuthor == null || sharedAuthor.equals("shared")) {
             viewholder.imgCatOptions.setOnClickListener(v -> {
 //            OPEN OPTIONS
                 //creating a popup menu
