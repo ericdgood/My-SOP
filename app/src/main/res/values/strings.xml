@@ -14,7 +14,7 @@
     <string name="no_handbooks_bookmarked">No Handbooks bookmarked</string>
     <string name="create_a_new_handbook">Create a new Handbook</string>
     <string name="handbook_title">Handbook Title</string>
-    <string name="color_of_book">Color of book</string>
+    <string name="color_of_book">Priority</string>
     <string name="add_step">add step</string>
     <string name="save_sop">save book</string>
     <string name="firebase">FireBase</string>
@@ -111,12 +111,12 @@
     <string name="booktitle">sopTitle</string>
     <string name="bookshelf">sopCategory</string>
     <string name="bookcolor">bookColor</string>
-    <string name="red">Red</string>
-    <string name="blue">Blue</string>
-    <string name="green">Green</string>
+    <string name="high">High</string>
+    <string name="low">Low</string>
+    <string name="med">Medium</string>
     <string name="yellow">Yellow</string>
     <string name="orange">Orange</string>
-    <string name="wasselected">/ was selected</string>
+    <string name="wasselected">\ was selected</string>
     <string name="editbooktitle">editSopTitle</string>
     <string name="editid">editId</string>
     <string name="bookexsits">This SOP already exists in</string>
@@ -155,5 +155,6 @@
     <string name="collaborate">Collaborate</string>
     <string name="sign_out">Sign out</string>
     <string name="create_account">Create account</string>
+    <string name="priority">Priority</string>
 
 </resources>

@@ -34,16 +34,12 @@ public class AddHandbook extends AppCompatActivity {
     Button buttonAddStep;
     @BindView(R.id.textview_new_sop_label)
     TextView tvAddBookLabel;
-    @BindView(R.id.book_color_blue)
-    ImageView viewBookBlue;
-    @BindView(R.id.book_color_green)
-    ImageView viewBookGreen;
-    @BindView(R.id.book_color_red)
-    ImageView viewBookRed;
-    @BindView(R.id.book_color_yellow)
-    ImageView viewBookYellow;
-    @BindView(R.id.book_color_orange)
-    ImageView viewBookOrange;
+    @BindView(R.id.book_color_low)
+    ImageView viewBooklow;
+    @BindView(R.id.book_color_med)
+    ImageView viewBookmed;
+    @BindView(R.id.book_color_high)
+    ImageView viewBookhigh;
 
     String SOPTitlesCheck;
     String addSopTitle;
@@ -83,42 +79,28 @@ public class AddHandbook extends AppCompatActivity {
         }
 
     private void clearColorBorder(){
-        viewBookRed.setImageResource(0);
-        viewBookBlue.setImageResource(0);
-        viewBookGreen.setImageResource(0);
-        viewBookYellow.setImageResource(0);
-        viewBookOrange.setImageResource(0);
+        viewBookhigh.setImageResource(0);
+        viewBooklow.setImageResource(0);
+        viewBookmed.setImageResource(0);
     }
 
     public void bookColor() {
-        viewBookRed.setOnClickListener(v -> {
-            bookColor = getString(R.string.red);
+        viewBookhigh.setOnClickListener(v -> {
+            bookColor = getString(R.string.high);
             clearColorBorder();
-            viewBookRed.setImageResource(R.drawable.description_border);
+            viewBookhigh.setImageResource(R.drawable.description_border);
             toastColor();
         });
-        viewBookBlue.setOnClickListener(v -> {
-            bookColor = getString(R.string.blue);
+        viewBooklow.setOnClickListener(v -> {
+            bookColor = getString(R.string.low);
             clearColorBorder();
-            viewBookBlue.setImageResource(R.drawable.description_border);
+            viewBooklow.setImageResource(R.drawable.description_border);
             toastColor();
         });
-        viewBookGreen.setOnClickListener(v -> {
-            bookColor = getString(R.string.green);
+        viewBookmed.setOnClickListener(v -> {
+            bookColor = getString(R.string.med);
             clearColorBorder();
-            viewBookGreen.setImageResource(R.drawable.description_border);
-            toastColor();
-        });
-        viewBookYellow.setOnClickListener(v -> {
-            bookColor = getString(R.string.yellow);
-            clearColorBorder();
-            viewBookYellow.setImageResource(R.drawable.description_border);
-            toastColor();
-        });
-        viewBookOrange.setOnClickListener(v -> {
-            bookColor = getString(R.string.orange);
-            clearColorBorder();
-            viewBookOrange.setImageResource(R.drawable.description_border);
+            viewBookmed.setImageResource(R.drawable.description_border);
             toastColor();
         });
     }
@@ -175,19 +157,13 @@ public class AddHandbook extends AppCompatActivity {
     public void showBookColor(String bookColor){
         switch (bookColor) {
             case "Red":
-                viewBookRed.setImageResource(R.drawable.description_border);
+                viewBookhigh.setImageResource(R.drawable.description_border);
                 break;
             case "Blue":
-                viewBookBlue.setImageResource(R.drawable.description_border);
+                viewBooklow.setImageResource(R.drawable.description_border);
                 break;
             case "Green":
-                viewBookGreen.setImageResource(R.drawable.description_border);
-                break;
-            case "Yellow":
-                viewBookYellow.setImageResource(R.drawable.description_border);
-                break;
-            case "Orange":
-                viewBookOrange.setImageResource(R.drawable.description_border);
+                viewBookmed.setImageResource(R.drawable.description_border);
                 break;
             default:
         }

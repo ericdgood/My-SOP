@@ -74,16 +74,12 @@ public class ListofHandbooksAdapter extends RecyclerView.Adapter<ListofHandbooks
         bookColor = listOfSOPS.get(position).getBookColor();
         if (bookColor != null) {
             switch (bookColor) {
-                case "Red":
+                case "High":
                     return context.getColor(R.color.logoRedBookColor);
-                case "Blue":
+                case "Low":
                     return context.getColor(R.color.logoBlueBookColor);
-                case "Green":
+                case "Medium":
                     return context.getColor(R.color.logoGreenBookColor);
-                case "Yellow":
-                    return context.getColor(R.color.logoYellowBookColor);
-                case "Orange":
-                    return context.getColor(R.color.logoOrangeBookColor);
                 default:
             }
         }
