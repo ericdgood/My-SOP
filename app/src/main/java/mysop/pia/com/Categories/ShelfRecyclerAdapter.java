@@ -83,8 +83,11 @@ public class ShelfRecyclerAdapter extends RecyclerView.Adapter<ShelfRecyclerAdap
         }
 
 
-        if (sharedAuthor != null){
+        if (sharedAuthor != null && sharedAuthor.equals("shared")){
             viewholder.imgCatCollab.setVisibility(View.VISIBLE);
+        } else if (sharedAuthor != null){
+            viewholder.imgCatCollab.setVisibility(View.VISIBLE);
+            viewholder.imgCatCollab.setImageResource(R.drawable.collab_in);
         }
 
         if (sharedAuthor != (null) && sharedAuthor.equals(context.getString(R.string.sharedpass))) {
