@@ -17,7 +17,7 @@ Share your Handbooks with others so they can help you accomplish these tasks the
   * No Problem!! Have her share her “Laundry” Handbook so you know how she wants it done. Be the hero husband.
 
 * _Had a water emergency and need to turn off your water, but don’t know how?_ :sweat_drops: :fire_engine:
-  * Document how the plumber turns off you water, so the next emergency you are prepared. Share the Handbook with you roommates so they know how to deal with this emergency if it arises.
+  * Document how the plumber turns off your water, so the next emergency you are prepared. Share the Handbook with your roommates so they know how to deal with this emergency if it arises.
   
 ## Screens
 
